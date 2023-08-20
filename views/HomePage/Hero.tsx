@@ -14,19 +14,29 @@ export default function Hero() {
   return (
     <HeroWrapper>
       <Contents>
-        <CustomOverTitle>the coolest, saas product you have ever seen</CustomOverTitle>
-        <Heading>Make your life easier with our SaaS</Heading>
+        <CustomOverTitle>the better way to build visualizations</CustomOverTitle>
+        <Heading>
+          Welcome to <span id="shared-loader">
+            <div className="cube">
+              <div className="cube-face cube-face-bottom">Open Source</div>
+              <div className="cube-face cube-face-front">Scalable</div>
+              <div className="cube-face cube-face-back">Testable</div>
+              <div className="cube-face cube-face-top">Customizable</div>
+            </div>
+          </span> Data Visualization
+        </Heading>
         <Description>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, tempora qui. Explicabo voluptate iure ipsum molestias
-          repudiandae perspiciatis nostrum praesentium, unde pariatur tempora magni rem. Necessitatibus facilis obcaecati ratione.
+          Level up your insights with the first open source framework built for the modern data stack.
         </Description>
         <CustomButtonGroup>
-          <Button onClick={() => setIsModalOpened(true)}>
-            Subscribe to the newsletter <span>&rarr;</span>
-          </Button>
-          <NextLink href="#whitepaper" passHref>
+          <NextLink href="https://docs.visivo.io/viewpoint" passHref>
+            <Button>
+              Learn More
+            </Button>
+          </NextLink>
+          <NextLink href="https://docs.visivo.io/getting_started" passHref>
             <Button transparent>
-              Features <span>&rarr;</span>
+              Get Started
             </Button>
           </NextLink>
         </CustomButtonGroup>
@@ -96,7 +106,7 @@ const CustomOverTitle = styled(OverTitle)`
 `;
 
 const Heading = styled.h1`
-  font-size: 7.2rem;
+  font-size: 6.8rem;
   font-weight: bold;
   line-height: 1.1;
   margin-bottom: 4rem;
