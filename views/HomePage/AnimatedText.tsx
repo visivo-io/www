@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components';
 
-const FADE_INTERVAL_MS = 1750
-const WORD_CHANGE_INTERVAL_MS = FADE_INTERVAL_MS * 2
+const SHOW_INTERVAL = 1750
+const HIDE_INTERVAL = 750
 const WORDS_TO_ANIMATE = ['Open Source', 'Scalable', 'Testable', 'Customizable']
 
 export const AnimatedText = () => {
@@ -11,19 +11,14 @@ export const AnimatedText = () => {
 
     useEffect(() => {
         const fadeTimeout = setInterval(() => {
+            if (!fade) {
+                setWordOrder((previousWordOrder) => (previousWordOrder + 1) % WORDS_TO_ANIMATE.length)
+            }
             setFade(!fade)
-        }, FADE_INTERVAL_MS)
+        }, fade ? SHOW_INTERVAL : HIDE_INTERVAL)
 
         return () => clearInterval(fadeTimeout)
     }, [fade])
-
-    useEffect(() => {
-        const wordTimeout = setInterval(() => {
-            setWordOrder((prevWordOrder) => (prevWordOrder + 1) % WORDS_TO_ANIMATE.length)
-        }, WORD_CHANGE_INTERVAL_MS)
-
-        return () => clearInterval(wordTimeout)
-    }, [])
 
 
     let fadeClass = "fade-in";
