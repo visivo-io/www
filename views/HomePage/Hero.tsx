@@ -7,6 +7,7 @@ import HeroIllustration from 'components/HeroIllustation';
 import OverTitle from 'components/OverTitle';
 import { useNewsletterModalContext } from 'contexts/newsletter-modal.context';
 import { media } from 'utils/media';
+import { AnimatedText } from './AnimatedText';
 
 export default function Hero() {
   const { setIsModalOpened } = useNewsletterModalContext();
@@ -16,14 +17,9 @@ export default function Hero() {
       <Contents>
         <CustomOverTitle>the better way to build visualizations</CustomOverTitle>
         <Heading>
-          Welcome to <span id="shared-loader">
-            <div className="cube">
-              <div className="cube-face cube-face-bottom">Open Source</div>
-              <div className="cube-face cube-face-front">Scalable</div>
-              <div className="cube-face cube-face-back">Testable</div>
-              <div className="cube-face cube-face-top">Customizable</div>
-            </div>
-          </span> Data Visualization
+          Welcome to<br />
+          <AnimatedText /><br />
+          Data Visualization
         </Heading>
         <Description>
           Level up your insights with the first open source framework built for the modern data stack.

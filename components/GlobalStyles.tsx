@@ -17,6 +17,7 @@ export const GlobalStyle = createGlobalStyle`
   --text: 10,18,30;
   --textSecondary: 255,255,255;
   --primary: 113, 59, 87; 
+  --highlight: 210, 89, 70;
   --secondary: 10,18,30;
   --tertiary: 231,241,251;
   --cardBackground: 255,255,255;
@@ -33,6 +34,7 @@ export const GlobalStyle = createGlobalStyle`
   --text: 237,237,238;
   --textSecondary: 255,255,255;
   --primary: 113, 59, 87; 
+  --highlight: 210, 89, 70;
   --secondary: 10,18,30;
   --tertiary: 231,241,251;
   --cardBackground: 45,55,72;
@@ -160,74 +162,14 @@ select {
 
 }
 
-@keyframes spin {
-  0% {
-      transform: rotateY(0deg) rotateX(0deg);
-  }
-
-  25% {
-      transform: rotateY(0deg) rotateX(90deg);
-  }
-
-  50% {
-      transform: rotateY(0deg) rotateX(180deg);
-  }
-
-  75% {
-      transform: rotateY(0deg) rotateX(270deg);
-  }
-
-  100% {
-      transform: rotateY(0deg) rotateX(360deg);
-  }
+.fade-in {
+  transition: opacity 0.5s ease;
+  color: rgb(var(--highlight));
 }
 
-#shared-loader {
-  box-sizing: border-box;
-  font-family: sans-serif;
-  width: 260px;
-  height: 80px;
-  margin: 0;
-  perspective: 220px;
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  color: rgb(var(--highlight));
 }
-
-.cube {
-  width: 260px;
-  height: 80px;
-  position: relative;
-  transform-style: preserve-3d;
-  transform: translateZ(-200px);
-  transition: transform 3s;
-  animation: spin 10s infinite;
-}
-
-.cube-face {
-  position: absolute;
-  width: 260px;
-  height: 80px;
-  border: 2px solid #fff;
-  line-height: 80px;
-  font-size: 35px;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  background: #D25946;
-}
-
-.cube-face-front {
-  transform: rotateY(0deg) translateZ(40px);
-}
-
-.cube-face-back {
-  transform: rotateY(180deg) rotateZ(180deg) translateZ(40px);
-}
-
-.cube-face-top {
-  transform: rotateX(90deg) translateZ(40px);
-}
-
-.cube-face-bottom {
-  transform: rotateX(-90deg) translateZ(40px);
-}
-
 `;
