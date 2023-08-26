@@ -45,7 +45,7 @@ export default function Features() {
 }
 
 const CustomAutofitGrid = styled(AutofitGrid)`
-  --autofit-grid-item-size: 40rem;
+  --autofit-grid-item-size: 50rem;
 
   ${media('<=tablet')} {
     --autofit-grid-item-size: 30rem;
