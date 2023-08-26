@@ -6,6 +6,7 @@ import Container from 'components/Container';
 import SectionTitle from 'components/SectionTitle';
 import { useNewsletterModalContext } from 'contexts/newsletter-modal.context';
 import { media } from 'utils/media';
+import OverTitle from './OverTitle';
 
 export default function WaveCta() {
   const { setIsModalOpened } = useNewsletterModalContext();
@@ -21,14 +22,15 @@ export default function WaveCta() {
       </svg>
       <CtaWrapper>
         <Container>
-          <Title>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</Title>
+          <Title>Start improving your workflow today</Title>
+          <Description>Install our CLI for local development.  Then activate your trial for deployments, no credit card required.  </Description>
           <CustomButtonGroup>
-            <Button onClick={() => setIsModalOpened(true)}>
-              Subscribe to the newsletter <span>&rarr;</span>
+            <Button href="https://docs.visivo.io/viewpoint">
+              Learn More
             </Button>
-            <NextLink href="/features" passHref>
+            <NextLink href="https://docs.visivo.io/getting_started" passHref>
               <OutlinedButton transparent>
-                Features <span>&rarr;</span>
+                Get Started
               </OutlinedButton>
             </NextLink>
           </CustomButtonGroup>
@@ -50,7 +52,7 @@ const CtaWrapper = styled.div`
 
 const Title = styled(SectionTitle)`
   color: rgb(var(--textSecondary));
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 `;
 
 const OutlinedButton = styled(Button)`
@@ -60,4 +62,11 @@ const OutlinedButton = styled(Button)`
 
 const CustomButtonGroup = styled(ButtonGroup)`
   justify-content: center;
+`;
+
+const Description = styled(SectionTitle)`
+  font-size: 1.8rem;
+  margin-bottom: 4rem;
+  justify-content: center;
+  color: rgba(var(--textSecondary), 0.8);
 `;

@@ -27,22 +27,30 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
         <WhiteBackgroundContainer>
           <Hero />
           {/* <Partners /> */}
-          <BasicSection imageUrl="/demo-illustration-1.svg" title="Designed for technical teams like yours" overTitle="technical">
+          <BasicSection imageUrl="/images/technical.svg" title="Designed for technical teams like yours" overTitle="technical">
             <p>
               Traditional business intelligence tools have become a bottleneck.
               Unlock the latent potential of your engineering and analytics teams.
               Enable them to deliver high quality, maintainable, dashboards that power data driven decisions and enable scalable customer facing data visualization within your application.
             </p>
           </BasicSection>
-          <BasicSection imageUrl="/demo-illustration-2.svg" title="A better workflow for repeatable results" overTitle="repeatable" reversed>
+          <BasicSection imageUrl="/images/repeatable.svg" title="A better workflow for repeatable results" overTitle="repeatable" reversed>
             <p>
               We built our workflow with the data at the beginning.  Combined with 100% version controlled data visualizations, you have
               total control of how your dashboards are built.
             </p>
           </BasicSection>
+          <BasicSection imageUrl="/images/invent.svg" title="We didn't reinvent the wheel" overTitle="familiar">
+            <p>
+              We brought a familiar style of syntax, testing, modularity, scalability and commands into the data visualization space.
+              Starting with simple yaml configurations that live within your existing projects,
+              connected a powerful visualization framework with consistent query building automation to deploy dependable dashboards.
+            </p>
+          </BasicSection>
         </WhiteBackgroundContainer>
         <DarkerBackgroundContainer>
-          <Cta />
+          {/* <Cta /> */}
+
           {/* <FeaturesGallery /> */}
           <Features />
           {/* <Testimonials /> */}
