@@ -13,22 +13,21 @@ export default function Cta() {
     <CtaWrapper>
       <Container>
         <Stack>
-          <OverTitle>Lorem ipsum dolor sit amet</OverTitle>
-          <SectionTitle>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</SectionTitle>
+          <OverTitle>Sign up today</OverTitle>
+          <SectionTitle>Start improving your workflow today</SectionTitle>
           <Description>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda beatae accusamus deleniti nihil quas tempora numquam, vitae
-            culpa.
+            Install our CLI for local development.  Then activate your trial for deployments, no credit card required.
           </Description>
           <ButtonGroup>
-            <NextLink href="#early-access" passHref>
+            <NextLink href="https://docs.visivo.io/viewpoint" passHref>
               <Button>
-                Subscribe to the newsletter <span>&rarr;</span>
+                Learn More
               </Button>
             </NextLink>
-            <NextLink href="#whitepaper" passHref>
-              <OutlinedButton transparent>
-                Features <span>&rarr;</span>
-              </OutlinedButton>
+            <NextLink href="https://docs.visivo.io/getting_started" passHref>
+              <Button transparent>
+                Get Started
+              </Button>
             </NextLink>
           </ButtonGroup>
         </Stack>
