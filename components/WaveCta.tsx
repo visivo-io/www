@@ -23,16 +23,11 @@ export default function WaveCta() {
       <CtaWrapper>
         <Container>
           <Title>Start improving your workflow today</Title>
-          <Description>Install our CLI for local development.  Then activate your trial for deployments, no credit card required.  </Description>
+          <Description>Install our CLI for local development, then activate your trial for deployments. No credit card required.</Description>
           <CustomButtonGroup>
-            <Button href="https://docs.visivo.io/viewpoint">
-              Learn More
+            <Button href="https://app.visivo.io/accounts/register/">
+              Sign Up
             </Button>
-            <NextLink href="https://docs.visivo.io/getting_started" passHref>
-              <OutlinedButton transparent>
-                Get Started
-              </OutlinedButton>
-            </NextLink>
           </CustomButtonGroup>
         </Container>
       </CtaWrapper>

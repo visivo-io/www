@@ -7,34 +7,26 @@ import SectionTitle from 'components/SectionTitle';
 export default function PricingTablesSection() {
   return (
     <Wrapper>
-      <SectionTitle>Flexible pricing for agile teams</SectionTitle>
       <AutofitGrid>
         <PricingCard
           title="Solo"
-          description="Give us a try for free"
-          benefits={['1 seat', '1 active project', 'Ulimited viewers', '10 blocks']}
+          description="For the single user"
+          benefits={['1 Seat', 'Unlimited Dashboards']}
         >
           $5<span>/month</span>
         </PricingCard>
         <PricingCard
           title="Starter"
-          description="Best for individual desginers"
-          benefits={['1 seat', '3 active project', 'Ulimited viewers', '100 blocks', 'CSV Downloader', 'Password protection']}
+          description="For a small team"
+          benefits={['5 Seats', 'Unlimited Dashboards']}
           isOutlined
         >
           $25<span>/month</span>
         </PricingCard>
         <PricingCard
           title="Team"
-          description="Get your team together"
-          benefits={[
-            '20 seat',
-            'Ulimited viewers',
-            'Unlimited blocks',
-            'CSV Downloader',
-            'Password protection',
-            'Customization',
-          ]}
+          description="For a growing organization"
+          benefits={['20 Seats', 'Unlimited Dashboards']}
         >
           $100<span>/month</span>
         </PricingCard>

@@ -11,6 +11,7 @@ export default function FaqSection() {
         will eventually have price discrimination for some features.  However, when we do introduce those
         discrimination it will only be done for new or changing plans.  This is to reward early adopters with a lower price if the number of seats is sufficient for you.
       </Accordion>
+      <Accordion title="Can I get more seats than is currently listed on the largest plan?">Yes.  We can add additional users at $5 per month.  Just send us an email at info@visivo.io</Accordion>
     </Wrapper>
   );
 }

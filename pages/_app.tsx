@@ -21,8 +21,8 @@ import { NavItems } from 'types';
 
 const navItems: NavItems = [
   { title: 'Pricing', href: '/pricing' },
-  { title: 'Contact', href: '/contact' },
-  { title: 'Docs', href: 'https://docs.visivo.io/getting_started', outlined: true },
+  { title: 'Docs', href: 'https://docs.visivo.io/getting_started' },
+  { title: 'App', href: 'https://app.visivo.io/profile', outlined: true },
 ];
 
 const TinaCMS = dynamic(() => import('tinacms'), { ssr: false });
