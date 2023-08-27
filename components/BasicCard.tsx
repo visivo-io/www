@@ -4,13 +4,15 @@ import styled from 'styled-components';
 interface BasicCardProps {
   title: string;
   description: string;
-  imageUrl: string;
+  image: string;
 }
 
-export default function BasicCard({ title, description, imageUrl }: BasicCardProps) {
+export default function BasicCard({ title, description, image }: BasicCardProps) {
+  const className = `fa-solid fa-${image}`
   return (
     <Card>
-      <NextImage src={imageUrl} width={128} height={128} alt={title} />
+      {/* <NextImage src={imageUrl} width={128} height={128} alt={title} /> */}
+      <Icon className={className} />
       <Title>{title}</Title>
       <Description>{description}</Description>
     </Card>
@@ -43,3 +45,7 @@ const Title = styled.div`
 const Description = styled.div`
   opacity: 0.6;
 `;
+
+const Icon = styled.i`
+  font-size: 7em;
+`

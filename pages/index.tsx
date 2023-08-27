@@ -69,6 +69,7 @@ const HomepageWrapper = styled.div`
 
 const DarkerBackgroundContainer = styled.div`
   background: rgb(var(--background));
+  margin-top: 2em;
 
   & > *:not(:first-child) {
     margin-top: 15rem;
