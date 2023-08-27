@@ -21,7 +21,7 @@ import { NavItems } from 'types';
 
 const navItems: NavItems = [
   { title: 'Pricing', href: '/pricing' },
-  { title: 'Docs', href: 'https://docs.visivo.io/getting_started' },
+  { title: 'Docs', href: 'https://docs.visivo.io' },
   { title: 'App', href: 'https://app.visivo.io/profile', outlined: true },
 ];
 

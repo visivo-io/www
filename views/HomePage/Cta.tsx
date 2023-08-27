@@ -24,7 +24,7 @@ export default function Cta() {
                 Learn More
               </Button>
             </NextLink>
-            <NextLink href="https://docs.visivo.io/getting_started" passHref>
+            <NextLink href="https://docs.visivo.io" passHref>
               <OutlinedButton>
                 Get Started
               </OutlinedButton>

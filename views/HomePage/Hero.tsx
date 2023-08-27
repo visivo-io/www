@@ -30,7 +30,7 @@ export default function Hero() {
               Learn More
             </Button>
           </NextLink>
-          <NextLink href="https://docs.visivo.io/getting_started" passHref>
+          <NextLink href="https://docs.visivo.io" passHref>
             <Button transparent>
               Get Started
             </Button>
