@@ -37,10 +37,8 @@ export default function Footer() {
         </ListContainer>
         <BottomBar>
           <ShareBar>
-            <NextLink href="https://www.linkedin.com/visivo-llc" passHref>
-              <a>
-                <LinkedinIcon size={50} round={true} />
-              </a>
+            <NextLink href="https://github.com/visivo-io" passHref>
+              <Icon className='fa-brands fa-github'></Icon>
             </NextLink>
           </ShareBar>
           <Copyright>&copy; Copyright 2023 Visivo LLC</Copyright>
@@ -142,3 +140,7 @@ const BottomBar = styled.div`
     flex-direction: column;
   }
 `;
+
+const Icon = styled.i`
+  font-size: 3em;
+`

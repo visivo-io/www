@@ -7,6 +7,9 @@ export default function ContactPage() {
     <Page title="Who are we?">
       <PrivacyPolicyContainer>
         <RichText>
+          <p>We are a (very) small team.  We have deep experience in software development and business analytics (shocker).</p>
+          <br />
+          <br />
           <p>We want to solve a problem that we know exists.</p>
           <strong>Business intelligence visualizations are too brittle.</strong>
           <br />
