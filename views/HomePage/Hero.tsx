@@ -22,7 +22,7 @@ export default function Hero() {
           Data Visualization
         </Heading>
         <Description>
-          Level up your insights with the first open source framework built for the modern data stack.
+          Level up your insights with the first open-source version-controlled BI framework built for the modern data stack.
         </Description>
         <CustomButtonGroup>
           <NextLink href="https://docs.visivo.io/viewpoint" passHref>
