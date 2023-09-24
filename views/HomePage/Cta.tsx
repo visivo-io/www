@@ -19,15 +19,15 @@ export default function Cta() {
             Install our CLI for local development.  Then activate your trial for deployments, no credit card required.
           </Description>
           <ButtonGroup>
-            <NextLink href="https://docs.visivo.io/viewpoint" passHref>
-              <Button>
-                Learn More
-              </Button>
-            </NextLink>
             <NextLink href="https://docs.visivo.io" passHref>
               <OutlinedButton>
                 Get Started
               </OutlinedButton>
+            </NextLink>
+            <NextLink href="https://docs.visivo.io/viewpoint" passHref>
+              <Button>
+                Our Viewpoint
+              </Button>
             </NextLink>
           </ButtonGroup>
         </Stack>

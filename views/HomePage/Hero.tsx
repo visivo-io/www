@@ -25,14 +25,14 @@ export default function Hero() {
           Level up your insights with the first open-source version-controlled BI framework built for the modern data stack.
         </Description>
         <CustomButtonGroup>
-          <NextLink href="https://docs.visivo.io/viewpoint" passHref>
-            <Button>
-              Learn More
-            </Button>
-          </NextLink>
           <NextLink href="https://docs.visivo.io" passHref>
             <Button transparent>
               Get Started
+            </Button>
+          </NextLink>
+          <NextLink href="https://docs.visivo.io/viewpoint" passHref>
+            <Button>
+              Our Viewpoint
             </Button>
           </NextLink>
         </CustomButtonGroup>
