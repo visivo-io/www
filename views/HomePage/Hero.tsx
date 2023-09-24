@@ -26,9 +26,9 @@ export default function Hero() {
         </Description>
         <CustomButtonGroup>
           <NextLink href="https://docs.visivo.io" passHref>
-            <Button transparent>
+            <OutlinedButton>
               Get Started
-            </Button>
+            </OutlinedButton>
           </NextLink>
           <NextLink href="https://docs.visivo.io/viewpoint" passHref>
             <Button>
@@ -112,4 +112,9 @@ const Heading = styled.h1`
     font-size: 4.6rem;
     margin-bottom: 2rem;
   }
+`;
+
+const OutlinedButton = styled(Button)`
+  border: 1px solid rgb(var(--textSecondary));
+  color: rgb(var(--textSecondary));
 `;
