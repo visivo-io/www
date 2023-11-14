@@ -24,9 +24,9 @@ export default function Cta() {
                 Get Started
               </OutlinedButton>
             </NextLink>
-            <NextLink href="https://docs.visivo.io/viewpoint" passHref>
+            <NextLink href="mailto:support@visivo.io" passHref>
               <Button>
-                Our Viewpoint
+                Book a Demo
               </Button>
             </NextLink>
           </ButtonGroup>

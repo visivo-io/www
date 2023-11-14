@@ -11,7 +11,7 @@ export default function PricingTablesSection() {
           isSecondary
           title="Local"
           description="CLI for local use"
-          benefits={['Unlimited Seats', 'Local Dashboards']}
+          benefits={['Self Host', 'Local Dashboards']}
         >
           $0
         </PricingCard>
