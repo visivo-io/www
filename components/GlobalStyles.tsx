@@ -21,6 +21,8 @@ export const GlobalStyle = createGlobalStyle`
   --secondary: 10,18,30;
   --tertiary: 231,241,251;
   --cardBackground: 255,255,255;
+  --cardOutlinedBackground: 210, 89, 70;
+  --cardSecondaryBackground: 251,251,253;
   --inputBackground: 255,255,255;
   --navbarBackground: 255,255,255;
   --modalBackground: 251,251,253;
@@ -38,6 +40,8 @@ export const GlobalStyle = createGlobalStyle`
   --secondary: 10,18,30;
   --tertiary: 231,241,251;
   --cardBackground: 45,55,72;
+  --cardOutlinedBackground: 210, 89, 70;
+  --cardSecondaryBackground: 26,32,44;
   --inputBackground: 45,55,72;
   --navbarBackground: 45,55,72;
   --modalBackground: 26,32,44;

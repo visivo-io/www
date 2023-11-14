@@ -10,13 +10,14 @@ interface PricingCardProps {
   description: string;
   benefits: string[];
   isOutlined?: boolean;
+  isSecondary?: boolean;
 }
 
-export default function PricingCard({ title, description, benefits, isOutlined, children }: PropsWithChildren<PricingCardProps>) {
+export default function PricingCard({ title, description, benefits, isOutlined, isSecondary, children }: PropsWithChildren<PricingCardProps>) {
   const isAnyBenefitPresent = benefits?.length;
 
   return (
-    <Wrapper isOutlined={isOutlined}>
+    <Wrapper isOutlined={isOutlined} isSecondary={isSecondary}>
       <Title>{title}</Title>
       <Description>{description}</Description>
       <PriceContainer>
@@ -31,21 +32,22 @@ export default function PricingCard({ title, description, benefits, isOutlined, 
           </CustomRichText>
         )}
       </PriceContainer>
-      <NextLink href="https://app.visivo.io/accounts/register/" passHref>
+      <NextLink href={isSecondary ? "https://docs.visivo.io" : "https://app.visivo.io/accounts/register/"} passHref>
         <Button>
-          Get Started
+          {isSecondary ? 'Install' : 'Get Started'}
         </Button>
       </NextLink>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div<{ isOutlined?: boolean }>`
+const Wrapper = styled.div<{ isOutlined?: boolean, isSecondary?: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 3rem;
-  background: rgb(var(--cardBackground));
-  box-shadow: ${(p) => (p.isOutlined ? 'var(--shadow-lg)' : 'var(--shadow-md)')};
+  ${(p) => (p.isOutlined ? 'color: white;' : '')}
+  background: ${(p) => (p.isOutlined ? 'rgb(var(--cardOutlinedBackground))' : p.isSecondary ? 'rgb(var(--cardSecondaryBackground))' : 'rgb(var(--cardBackground))')};
+  box-shadow: ${(p) => (p.isOutlined ? 'var(--shadow-lg)' : p.isSecondary ? 'none' : 'var(--shadow-lg)')};
   transform: ${(p) => (p.isOutlined ? 'scale(1.1)' : 'scale(1.0)')};
   text-align: center;
 
