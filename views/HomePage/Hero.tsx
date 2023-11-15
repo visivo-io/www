@@ -30,7 +30,7 @@ export default function Hero() {
               Get Started
             </OutlinedButton>
           </NextLink>
-          <NextLink href="mailto:support@visivo.io" passHref>
+          <NextLink href="https://calendly.com/visivo-io/30-minute" passHref>
             <Button>
               Book a Demo
             </Button>
