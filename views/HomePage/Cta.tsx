@@ -20,7 +20,7 @@ export default function Cta() {
           </Description>
           <ButtonGroup>
             <NextLink href="https://docs.visivo.io" passHref>
-              <OutlinedButton>
+              <OutlinedButton onClick={window.gtag('event', 'conversion', { 'send_to': 'AW-11411376618/0peZCIeC7vcYEOqTr8Eq' })}>
                 Get Started
               </OutlinedButton>
             </NextLink>
