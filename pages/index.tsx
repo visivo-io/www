@@ -1,4 +1,6 @@
 import { InferGetStaticPropsType } from 'next';
+import { hotjar } from 'react-hotjar'
+import { useEffect } from 'react'
 import Head from 'next/head';
 import styled from 'styled-components';
 import BasicSection from 'components/BasicSection';
@@ -14,6 +16,10 @@ import ScrollableBlogPosts from 'views/HomePage/ScrollableBlogPosts';
 import Testimonials from 'views/HomePage/Testimonials';
 
 export default function Homepage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+  useEffect(() => {
+    hotjar.initialize(3754944, 6)
+  }, [])
+
   return (
     <>
       <Head>
