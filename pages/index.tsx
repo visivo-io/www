@@ -20,13 +20,26 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
     hotjar.initialize(3754944, 6)
   }, [])
 
+  const gtag = "https://www.googletagmanager.com/gtag/js?id=AW-11411376618"
+
   return (
     <>
       <Head>
         <title>{EnvVars.SITE_NAME}</title>
         <meta
           name="description"
-          content="Version controll"
+          content="Version Controlled Visualization"
+        />
+        <script async src={gtag} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'AW-11411376618');`,
+          }}
         />
       </Head>
       <HomepageWrapper>
