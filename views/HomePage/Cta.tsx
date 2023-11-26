@@ -25,7 +25,7 @@ export default function Cta() {
               </OutlinedButton>
             </NextLink>
             <NextLink href="https://calendly.com/visivo-io/30-minute" passHref>
-              <Button>
+              <Button onClick={() => window.gtag('event', 'conversion', { 'send_to': 'AW-11411376618/0peZCIeC7vcYEOqTr8Eq' })}>
                 Book a Demo
               </Button>
             </NextLink>
