@@ -37,7 +37,6 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
           }}
         />
         <script>
-          <script
             dangerouslySetInnerHTML={{
               __html: `
                 (function(h,o,t,j,a,r){
@@ -50,7 +49,6 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
                 })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
             `,
             }}
-          />
         </script>
       </Head>
       <HomepageWrapper>
