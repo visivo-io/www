@@ -4,8 +4,8 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import BasicSection from 'components/BasicSection';
 import Link from 'components/Link';
-import { EnvVars } from 'env';
 import { getAllPosts } from 'utils/postsFetcher';
+import { EnvVars } from 'env';
 import Cta from 'views/HomePage/Cta';
 import Features from 'views/HomePage/Features';
 import FeaturesGallery from 'views/HomePage/FeaturesGallery';
@@ -15,7 +15,6 @@ import ScrollableBlogPosts from 'views/HomePage/ScrollableBlogPosts';
 import Testimonials from 'views/HomePage/Testimonials';
 
 export default function Homepage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const gtag = "https://www.googletagmanager.com/gtag/js?id=AW-11411376618"
 
   return (
     <>
@@ -25,31 +24,6 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
           name="description"
           content="Version Controlled Visualization"
         />
-        <script async src={gtag} />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'AW-11411376618');`,
-          }}
-        />
-        <script>
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(h,o,t,j,a,r){
-                    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                    h._hjSettings={hjid:3754944,hjsv:6};
-                    a=o.getElementsByTagName('head')[0];
-                    r=o.createElement('script');r.async=1;
-                    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                    a.appendChild(r);
-                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-            `,
-            }}
-        </script>
       </Head>
       <HomepageWrapper>
         <WhiteBackgroundContainer>
