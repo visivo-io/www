@@ -41,18 +41,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           gtag('config', 'AW-11411376618');
         `}
       </Script>
-      {/* <Script id="load-google">
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          `,
-        }}
-      </Script> */}
-      <Script id="show-banner">
-        dangerouslySetInnerHTML={{
-          __html: `
+      <Script id="google-analytics">
+        {`
             (function (h, o, t, j, a, r) {
               h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
               h._hjSettings = { hjid: 3754944, hjsv: 6 };
@@ -61,8 +51,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
               a.appendChild(r);
             })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-          `,
-        }}
+        `}
       </Script>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
