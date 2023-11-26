@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           gtag('config', 'AW-11411376618');
         `}
       </Script>
-      <Script id="google-analytics">
+      <Script id="hot-jar">
         {`
             (function (h, o, t, j, a, r) {
               h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
