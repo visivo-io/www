@@ -1,5 +1,4 @@
 import { InferGetStaticPropsType } from 'next';
-import { hotjar } from 'react-hotjar'
 import { useEffect } from 'react'
 import Head from 'next/head';
 import styled from 'styled-components';
@@ -16,10 +15,6 @@ import ScrollableBlogPosts from 'views/HomePage/ScrollableBlogPosts';
 import Testimonials from 'views/HomePage/Testimonials';
 
 export default function Homepage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
-  useEffect(() => {
-    hotjar.initialize(3754944, 6)
-  }, [])
-
   const gtag = "https://www.googletagmanager.com/gtag/js?id=AW-11411376618"
 
   return (
@@ -41,6 +36,22 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
               gtag('config', 'AW-11411376618');`,
           }}
         />
+        <script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(h,o,t,j,a,r){
+                    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                    h._hjSettings={hjid:3754944,hjsv:6};
+                    a=o.getElementsByTagName('head')[0];
+                    r=o.createElement('script');r.async=1;
+                    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                    a.appendChild(r);
+                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+            `,
+            }}
+          />
+        </script>
       </Head>
       <HomepageWrapper>
         <WhiteBackgroundContainer>
