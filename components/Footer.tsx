@@ -21,7 +21,7 @@ const footerItems: FooterItems = [
     items: [
       { title: 'Pricing', href: '/pricing' },
       { title: 'Contact', href: '/contact' },
-      { title: 'FAQ', href: '/pricing' },
+      { title: 'FAQ', href: '/pricing#faq' },
     ],
   },
 ];

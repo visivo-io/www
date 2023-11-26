@@ -9,7 +9,6 @@ import Head from 'next/head';
 import { ColorModeScript } from 'nextjs-color-mode';
 import React, { PropsWithChildren } from 'react';
 import { TinaEditProvider } from 'tinacms/dist/edit-state';
-
 import Footer from 'components/Footer';
 import { GlobalStyle } from 'components/GlobalStyles';
 import Navbar from 'components/Navbar';
@@ -18,6 +17,8 @@ import NewsletterModal from 'components/NewsletterModal';
 import WaveCta from 'components/WaveCta';
 import { NewsletterModalContextProvider, useNewsletterModalContext } from 'contexts/newsletter-modal.context';
 import { NavItems } from 'types';
+import Script from 'next/script'
+import { EnvVars } from 'env';
 
 const navItems: NavItems = [
   { title: 'Pricing', href: '/pricing' },
@@ -30,20 +31,33 @@ const TinaCMS = dynamic(() => import('tinacms'), { ssr: false });
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-11411376618" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'AW-11411376618');
+        `}
+      </Script>
+      <Script id="google-analytics">
+        {`
+            (function (h, o, t, j, a, r) {
+              h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+              h._hjSettings = { hjid: 3754944, hjsv: 6 };
+              a = o.getElementsByTagName('head')[0];
+              r = o.createElement('script'); r.async = 1;
+              r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+              a.appendChild(r);
+            })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+        `}
+      </Script>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
-        {/* <link rel="alternate" type="application/rss+xml" href={EnvVars.URL + 'rss'} title="RSS 2.0" /> */}
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-          ga('create', 'UA-117119829-1', 'auto');
-          ga('send', 'pageview');`,
-          }}
-        /> */}
-        {/* <script async src="https://www.google-analytics.com/analytics.js"></script> */}
+        <link rel="alternate" type="application/rss+xml" href={EnvVars.URL + 'rss'} title="RSS 2.0" />
       </Head>
       <ColorModeScript />
       <GlobalStyle />
