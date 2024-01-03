@@ -14,6 +14,7 @@ const footerItems: FooterItems = [
     title: 'Company',
     items: [
       { title: 'About Us', href: '/about-us' },
+      { title: 'Privacy Policy', href: '/privacy' },
     ],
   },
   {
