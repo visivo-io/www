@@ -28,8 +28,8 @@ export default function BasicSection({ imageUrl, title, overTitle, reversed, chi
   );
 }
 
-const Title = styled.h1`
-  font-size: 5.2rem;
+const Title = styled.h2`
+  font-size: 3.2rem;
   font-weight: bold;
   line-height: 1.1;
   margin-bottom: 4rem;
@@ -46,7 +46,8 @@ const CustomOverTitle = styled(OverTitle)`
 `;
 
 const ImageContainer = styled.div`
-  flex: 1;
+  // flex: 1;
+  flex: 0 0 58%;
 
   position: relative;
   &:before {
@@ -70,7 +71,8 @@ const ImageContainer = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  flex: 1;
+  // flex: 1;
+  flex: 0 0 37%;
 `;
 
 type Props = Pick<BasicSectionProps, 'reversed'>;

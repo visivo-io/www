@@ -105,7 +105,7 @@ const Heading = styled.h1`
   font-size: 6.8rem;
   font-weight: bold;
   line-height: 1.1;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
   letter-spacing: -0.03em;
 
   ${media('<=tablet')} {
