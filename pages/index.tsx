@@ -4,6 +4,7 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import BasicSection from 'components/BasicSection';
 import Link from 'components/Link';
+import GifToVideo from 'components/GifToVideo';
 import { getAllPosts } from 'utils/postsFetcher';
 import { EnvVars } from 'env';
 import Cta from 'views/HomePage/Cta';
@@ -16,6 +17,7 @@ import Testimonials from 'views/HomePage/Testimonials';
 import UxFeatures from 'views/HomePage/UxFeatures';
 import DevelopFeatures from 'views/HomePage/DevelopFeatures';
 import DevOpsFeatures from 'views/HomePage/DevOpsFeatures';
+
 
 export default function Homepage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 
@@ -31,11 +33,13 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
       <HomepageWrapper>
         <WhiteBackgroundContainer>
           <Hero />
+          <GifToVideo />
           {/* <Partners /> */}
           {/* <Testimonials /> */}
           <UxFeatures />
           <DevelopFeatures />
           <DevOpsFeatures />
+          
 
         </WhiteBackgroundContainer>
         <DarkerBackgroundContainer>
