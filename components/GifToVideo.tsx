@@ -26,7 +26,7 @@ const GifToVideo = () => {
         />
       )}
       {!isVideoPlaying && (
-        <button
+        <Button
           onClick={handleButtonClick}
           style={{
             position: 'absolute',
@@ -39,7 +39,7 @@ const GifToVideo = () => {
           }}
         >
           Watch 30-Second Demo
-        </button>
+        </Button>
       )}
     </Container>
   );
@@ -48,28 +48,24 @@ const GifToVideo = () => {
 export default GifToVideo;
 
 const Container = styled.div`
+    width: 90%;
     position: relative;
-    width: 100%;
-    max-width: 100%;
+    margin: 0 auto;
+    max-width: 120rem;
     overflow: hidden;
+    border-radius: 12px;
     `
   
-//   .media {
-//     width: 100%;
-//     height: auto;
-//     display: block;
-//   }
-  
-//   .button {
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     padding: 10px 20px;
-//     font-size: 16px;
-//     cursor: pointer;
-//     background-color: rgba(0, 0, 0, 0.5);
-//     color: white;
-//     border: none;
-//     border-radius: 5px;
-//   }
+const Button = styled.button`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 5px;
+`;

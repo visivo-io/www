@@ -36,7 +36,7 @@ const Title = styled.h2`
   letter-spacing: -0.03em;
 
   ${media('<=tablet')} {
-    font-size: 4.6rem;
+    font-size: 3.2rem;
     margin-bottom: 2rem;
   }
 `;

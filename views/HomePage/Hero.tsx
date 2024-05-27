@@ -40,13 +40,15 @@ export default function Hero() {
       <ImageContainer>
         <HeroIllustration />
       </ImageContainer>
+      
     </HeroWrapper>
+    
   );
 }
 
 const HeroWrapper = styled(Container)`
   display: flex;
-  padding-top: 5rem;
+  padding-top: 4rem;
 
   ${media('<=desktop')} {
     padding-top: 1rem;
@@ -65,7 +67,7 @@ const Contents = styled.div`
 `;
 
 const CustomButtonGroup = styled(ButtonGroup)`
-  margin-top: 4rem;
+  margin-top: 3rem;
 `;
 
 const ImageContainer = styled.div`
