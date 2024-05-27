@@ -1,6 +1,9 @@
 // components/GifToVideo.js
 import { useState } from 'react';
 import styled from 'styled-components';
+import { media } from 'utils/media';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 const GifToVideo = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -28,16 +31,8 @@ const GifToVideo = () => {
       {!isVideoPlaying && (
         <Button
           onClick={handleButtonClick}
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            padding: '10px 20px',
-            fontSize: '16px',
-            cursor: 'pointer',
-          }}
         >
+          <Icon icon={faPlay} />
           Watch 30-Second Demo
         </Button>
       )}
@@ -46,6 +41,19 @@ const GifToVideo = () => {
 };
 
 export default GifToVideo;
+
+
+const Icon = styled(FontAwesomeIcon)`
+    width: 2.5em;
+    height: 3em;
+    margin-right: 5px;
+    position: center;
+
+    ${media('<=desktop')} {
+        width: 1.66em;
+        height: 2.8em;
+      }
+`;
 
 const Container = styled.div`
     width: 90%;
@@ -58,14 +66,22 @@ const Container = styled.div`
   
 const Button = styled.button`
   position: absolute;
+  display: flex;
+  justify-content: center;
   top: 50%;
   left: 50%;
+  max-width: 20rem;
   transform: translate(-50%, -50%);
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(210, 89, 70, 0.95);
   color: white;
   border: none;
   border-radius: 5px;
+  ${media('<=desktop')} {
+    font-size: 12px;
+    max-width: 17rem;
+    background-color: rgba(210, 89, 70, 0.75);
+  }
 `;
