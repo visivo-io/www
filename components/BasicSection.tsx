@@ -17,7 +17,7 @@ export default function BasicSection({ imageUrl, title, overTitle, reversed, chi
   return (
     <BasicSectionWrapper reversed={reversed}>
       <ImageContainer>
-        <NextImage src={imageUrl} alt={title} layout="fill" objectFit="cover" />
+        <NextImage src={imageUrl} alt={title} layout="fill" objectFit="contain" />
       </ImageContainer>
       <ContentContainer>
         <CustomOverTitle>{overTitle}</CustomOverTitle>
@@ -46,14 +46,14 @@ const CustomOverTitle = styled(OverTitle)`
 `;
 
 const ImageContainer = styled.div`
-  // flex: 1;
-  flex: 0 0 58%;
-
+  flex: 0 0 56%;
   position: relative;
+  height: 100%;
+
   &:before {
     display: block;
     content: '';
-    width: 100%;
+    width: 50%;
     padding-top: calc((9 / 16) * 100%);
   }
 
@@ -70,9 +70,20 @@ const ImageContainer = styled.div`
   }
 `;
 
+const StyledNextImage = styled(NextImage)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const ContentContainer = styled.div`
   // flex: 1;
-  flex: 0 0 37%;
+  flex: 0 0 39%;
 `;
 
 type Props = Pick<BasicSectionProps, 'reversed'>;

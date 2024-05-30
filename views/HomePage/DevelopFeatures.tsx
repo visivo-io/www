@@ -10,7 +10,7 @@ export default function DevelopFeatures() {
     <FeaturesWrapper>
         <FeatureSectionTitle>Data Visualization As Code</FeatureSectionTitle>
         <BasicSection 
-            imageUrl="/images/repeatable.svg" 
+            imageUrl="/images/object-flow-chart.png" 
             title="DAG enables robust development" 
             overTitle="Dependency Management"
             reversed>
@@ -21,19 +21,19 @@ export default function DevelopFeatures() {
         </p>
         </BasicSection>
         
-        <BasicSection imageUrl="/images/repeatable.svg" title="Build Visualizations Faster" overTitle="DevTools">
+        <BasicSection imageUrl="/gifs/auto-complete.gif" title="Build visualizations faster" overTitle="DevTools">
         <p>
             VScode linter and auto-complete features make writing YAML configurations a breeze.
         </p>
         </BasicSection>
         <BasicSection 
-            imageUrl="/images/invent.svg" 
-            title="Utilize The Power of Jinja2 Templating" 
+            imageUrl="/images/jinja-for-loop.png" 
+            title="Jinja2 templating for dynamic rendering" 
             overTitle="Dynamic Rendering"
             reversed>
         <p>
             Jinja2 templating allows you to dynamically render your dashboards 
-            based on dynamic variables, conditional logic, and loops.
+            based on environment variables, conditional logic, and loops.
         </p>
         </BasicSection>
     </FeaturesWrapper>

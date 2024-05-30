@@ -35,7 +35,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
           <Hero />
           <GifToVideo />
           {/* <Partners /> */}
-          {/* <Testimonials /> */}
+          <Testimonials /> 
           <UxFeatures />
           <DevelopFeatures />
           <DevOpsFeatures />
@@ -57,7 +57,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
 
 const HomepageWrapper = styled.div`
   & > :last-child {
-    margin-bottom: 15rem;
+    margin-bottom: 10rem;
   }
 `;
 
@@ -66,7 +66,7 @@ const DarkerBackgroundContainer = styled.div`
   margin-top: 2em;
 
   & > *:not(:first-child) {
-    margin-top: 15rem;
+    margin-top: 10rem;
   }
 `;
 
@@ -74,11 +74,11 @@ const WhiteBackgroundContainer = styled.div`
   background: rgb(var(--secondBackground));
 
   & > :last-child {
-    padding-bottom: 15rem;
+    padding-bottom: 5rem;
   }
 
   & > *:not(:first-child) {
-    margin-top: 10rem;
+    margin-top: 5rem;
   }
 `;
 

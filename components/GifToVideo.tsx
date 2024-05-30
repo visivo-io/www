@@ -16,7 +16,7 @@ const GifToVideo = () => {
     <Container>
       {!isVideoPlaying ? (
         <img
-          src="/gifs/demo.gif"
+          src="/gifs/output.gif"
           alt="Loading GIF"
           style={{ width: '100%' }}
         />
@@ -48,6 +48,7 @@ const Icon = styled(FontAwesomeIcon)`
     height: 3em;
     margin-right: 5px;
     position: center;
+    color: white ;
 
     ${media('<=desktop')} {
         width: 1.66em;
@@ -75,13 +76,13 @@ const Button = styled.button`
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: rgba(210, 89, 70, 0.95);
+  background-color: rgba(113, 59, 87, 0.95);
   color: white;
   border: none;
   border-radius: 5px;
   ${media('<=desktop')} {
     font-size: 12px;
     max-width: 17rem;
-    background-color: rgba(210, 89, 70, 0.75);
+    background-color: rgba(113, 59, 87, 0.75);
   }
 `;
