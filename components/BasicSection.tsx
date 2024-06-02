@@ -97,7 +97,7 @@ const BasicSectionWrapper = styled(Container)`
   }
 
   ${media('<=desktop')} {
-    flex-direction: column;
+    flex-direction: column-reverse;
 
     ${ImageContainer} {
       margin: 0 0 2.5rem 0;
