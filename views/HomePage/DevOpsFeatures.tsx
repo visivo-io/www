@@ -9,7 +9,7 @@ export default function DevOpsFeatures() {
   return (
     <FeaturesWrapper>
         <FeatureSectionTitle>Simple to Deploy & Collaborate</FeatureSectionTitle>
-        <BasicSection imageUrl="/images/laptop-iphone-asset.png" title="Keep your HEAD clear & commit to git" overTitle="Version Control">
+        <BasicSection imageUrl="/images/pull-request.png" title="Keep your HEAD clear & commit to git" overTitle="Version Control">
         <p>
             Collaborate with your team, 
             track changes, and maintain your dashboards with the same tools you use for the rest of your code.
