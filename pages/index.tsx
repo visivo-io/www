@@ -35,7 +35,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
           <Hero />
           <GifToVideo />
           {/* <Partners /> */}
-          <Testimonials /> 
+          {/* <Testimonials />  */}
           <UxFeatures />
           <DevelopFeatures />
           <DevOpsFeatures />
