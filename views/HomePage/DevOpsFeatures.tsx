@@ -16,9 +16,9 @@ export default function DevOpsFeatures() {
         </p>
         </BasicSection>
         
-        <BasicSection imageUrl="/images/repeatable.svg" title="Deployments that mirror your workflow" overTitle="CI/CD" reversed>
+        <BasicSection imageUrl="/images/git-workflow.png" title="Deployments that mirror your workflow" overTitle="CI/CD" reversed>
         <p>
-            Create a CI/CD pipeline that deploys dashboards to all of the environments that you need them in.
+            Super charge your development cycle with seamless local development and a CI/CD pipeline that deploys projects to all of your environments.
         </p>
         </BasicSection>
         <BasicSection imageUrl="/images/invent.svg" title="Goodbye broken dashboards" overTitle="Testable">
