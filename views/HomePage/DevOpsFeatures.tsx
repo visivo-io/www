@@ -21,7 +21,7 @@ export default function DevOpsFeatures() {
             Super charge your development cycle with seamless local development and a CI/CD pipeline that deploys projects to all of your environments.
         </p>
         </BasicSection>
-        <BasicSection imageUrl="/images/invent.svg" title="Goodbye broken dashboards" overTitle="Testable">
+        <BasicSection imageUrl="/images/continuous-testing.png" title="Goodbye broken dashboards" overTitle="Testable">
         <p>
             Test your code before it goes live & on every deployment. Get alerts when your dashboards are broken before 
             your stakeholders are impacted.
