@@ -16,13 +16,13 @@ const GifToVideo = () => {
     <Container>
       {!isVideoPlaying ? (
         <img
-          src="/gifs/output.gif"
+          src="/gifs/visivo-demo.gif"
           alt="Loading GIF"
           style={{ width: '100%' }}
         />
       ) : (
         <video
-          src="/videos/demo.mov"
+          src="/videos/visivo-demo.mov"
           controls
           autoPlay
           style={{ width: '100%' }}
