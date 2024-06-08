@@ -18,7 +18,7 @@ export default function BasicSection({ imageUrl, title, overTitle, reversed, chi
     <BasicSectionWrapper reversed={reversed}>
       <ImageContainer>
         <SubImageContainer>
-        <NextImage src={imageUrl} alt={title} layout="fill" objectFit="contain" />
+          <NextImage src={imageUrl} alt={title} layout="fill" objectFit="contain" unoptimized={true} />
         </SubImageContainer>
       </ImageContainer>
       <ContentContainer>
