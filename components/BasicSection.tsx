@@ -17,7 +17,9 @@ export default function BasicSection({ imageUrl, title, overTitle, reversed, chi
   return (
     <BasicSectionWrapper reversed={reversed}>
       <ImageContainer>
+        <SubImageContainer>
         <NextImage src={imageUrl} alt={title} layout="fill" objectFit="contain" />
+        </SubImageContainer>
       </ImageContainer>
       <ContentContainer>
         <CustomOverTitle>{overTitle}</CustomOverTitle>
@@ -70,16 +72,14 @@ const ImageContainer = styled.div`
   }
 `;
 
-const StyledNextImage = styled(NextImage)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
+const SubImageContainer = styled.div`
+    width: 90%;
+    position: relative;
+    margin: 0 auto;
+    max-width: 120rem;
+    overflow: hidden;
+    border-radius: 12px;
+    `
 
 const ContentContainer = styled.div`
   // flex: 1;

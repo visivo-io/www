@@ -33,7 +33,7 @@ const GifToVideo = () => {
           onClick={handleButtonClick}
         >
           <Icon icon={faPlay} />
-          Watch 30-Second Demo
+          Watch 150-Second Demo
         </Button>
       )}
     </Container>
