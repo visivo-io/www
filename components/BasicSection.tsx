@@ -17,7 +17,9 @@ export default function BasicSection({ imageUrl, title, overTitle, reversed, chi
   return (
     <BasicSectionWrapper reversed={reversed}>
       <ImageContainer>
-        <NextImage src={imageUrl} alt={title} layout="fill" objectFit="cover" />
+        <SubImageContainer>
+          <NextImage src={imageUrl} alt={title} layout="fill" objectFit="contain" unoptimized={true} />
+        </SubImageContainer>
       </ImageContainer>
       <ContentContainer>
         <CustomOverTitle>{overTitle}</CustomOverTitle>
@@ -28,15 +30,15 @@ export default function BasicSection({ imageUrl, title, overTitle, reversed, chi
   );
 }
 
-const Title = styled.h1`
-  font-size: 5.2rem;
+const Title = styled.h2`
+  font-size: 3.2rem;
   font-weight: bold;
   line-height: 1.1;
   margin-bottom: 4rem;
   letter-spacing: -0.03em;
 
   ${media('<=tablet')} {
-    font-size: 4.6rem;
+    font-size: 3.2rem;
     margin-bottom: 2rem;
   }
 `;
@@ -46,13 +48,14 @@ const CustomOverTitle = styled(OverTitle)`
 `;
 
 const ImageContainer = styled.div`
-  flex: 1;
-
+  flex: 0 0 56%;
   position: relative;
+  height: 100%;
+
   &:before {
     display: block;
     content: '';
-    width: 100%;
+    width: 50%;
     padding-top: calc((9 / 16) * 100%);
   }
 
@@ -69,8 +72,18 @@ const ImageContainer = styled.div`
   }
 `;
 
+const SubImageContainer = styled.div`
+    width: 90%;
+    position: relative;
+    margin: 0 auto;
+    max-width: 120rem;
+    overflow: hidden;
+    border-radius: 12px;
+    `
+
 const ContentContainer = styled.div`
-  flex: 1;
+  // flex: 1;
+  flex: 0 0 39%;
 `;
 
 type Props = Pick<BasicSectionProps, 'reversed'>;
@@ -84,7 +97,7 @@ const BasicSectionWrapper = styled(Container)`
   }
 
   ${media('<=desktop')} {
-    flex-direction: column;
+    flex-direction: column-reverse;
 
     ${ImageContainer} {
       margin: 0 0 2.5rem 0;

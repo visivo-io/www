@@ -4,6 +4,7 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import BasicSection from 'components/BasicSection';
 import Link from 'components/Link';
+import GifToVideo from 'components/GifToVideo';
 import { getAllPosts } from 'utils/postsFetcher';
 import { EnvVars } from 'env';
 import Cta from 'views/HomePage/Cta';
@@ -13,6 +14,10 @@ import Hero from 'views/HomePage/Hero';
 import Partners from 'views/HomePage/Partners';
 import ScrollableBlogPosts from 'views/HomePage/ScrollableBlogPosts';
 import Testimonials from 'views/HomePage/Testimonials';
+import UxFeatures from 'views/HomePage/UxFeatures';
+import DevelopFeatures from 'views/HomePage/DevelopFeatures';
+import DevOpsFeatures from 'views/HomePage/DevOpsFeatures';
+
 
 export default function Homepage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 
@@ -28,34 +33,21 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
       <HomepageWrapper>
         <WhiteBackgroundContainer>
           <Hero />
+          <GifToVideo />
           {/* <Partners /> */}
-          <BasicSection imageUrl="/images/technical.svg" title="Designed for technical teams like yours" overTitle="technical">
-            <p>
-              Traditional business intelligence tools have become a bottleneck.
-              Unlock the latent potential of your engineering and analytics teams.
-              Enable them to deliver high-quality, maintainable, dashboards that power data-driven decisions and enable scalable customer-facing data visualization within your application.
-            </p>
-          </BasicSection>
-          <BasicSection imageUrl="/images/repeatable.svg" title="A better workflow for repeatable results" overTitle="repeatable" reversed>
-            <p>
-              We built our workflow with the data at the beginning.  Combined with 100% version-controlled data visualizations, you have
-              total control of how your dashboards are built.
-            </p>
-          </BasicSection>
-          <BasicSection imageUrl="/images/invent.svg" title="We didn't reinvent the wheel" overTitle="familiar">
-            <p>
-              We brought a familiar style of syntax, testing, modularity, scalability, and commands into the data visualization space.
-              Starting with simple YAML configurations that live within your existing projects,
-              connected a powerful visualization framework with consistent query-building automation to deploy dependable dashboards.
-            </p>
-          </BasicSection>
+          {/* <Testimonials />  */}
+          <UxFeatures />
+          <DevelopFeatures />
+          <DevOpsFeatures />
+          
+
         </WhiteBackgroundContainer>
         <DarkerBackgroundContainer>
           {/* <Cta /> */}
 
           {/* <FeaturesGallery /> */}
           <Features />
-          {/* <Testimonials /> */}
+
           {/* <ScrollableBlogPosts posts={posts} /> */}
         </DarkerBackgroundContainer>
       </HomepageWrapper>
@@ -65,7 +57,7 @@ export default function Homepage({ posts }: InferGetStaticPropsType<typeof getSt
 
 const HomepageWrapper = styled.div`
   & > :last-child {
-    margin-bottom: 15rem;
+    margin-bottom: 10rem;
   }
 `;
 
@@ -74,7 +66,7 @@ const DarkerBackgroundContainer = styled.div`
   margin-top: 2em;
 
   & > *:not(:first-child) {
-    margin-top: 15rem;
+    margin-top: 10rem;
   }
 `;
 
@@ -82,13 +74,14 @@ const WhiteBackgroundContainer = styled.div`
   background: rgb(var(--secondBackground));
 
   & > :last-child {
-    padding-bottom: 15rem;
+    padding-bottom: 5rem;
   }
 
   & > *:not(:first-child) {
-    margin-top: 15rem;
+    margin-top: 5rem;
   }
 `;
+
 
 export async function getStaticProps() {
   return {

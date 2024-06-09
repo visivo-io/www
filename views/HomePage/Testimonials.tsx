@@ -20,10 +20,10 @@ const TESTIMONIALS = [
   },
   {
     companyLogoUrl: '/testimonials/company-logo-2.svg',
-    content: `It's really wonderful. I use saas product often. Thank You! Saas product has really helped our business.`,
+    content: `I could never figure out how to explain to my friends what my son does for a living. Now I can just show them this website!`,
     author: {
-      name: 'Jimmy Hunter',
-      title: 'Sigma Male University Graduate',
+      name: 'Sophia Jesionek',
+      title: 'Jareds Mom',
       avatarUrl: '/testimonials/author-photo-2.jpeg',
     },
   },
@@ -75,7 +75,7 @@ export default function Testimonials() {
 
 const TestimonialsWrapper = styled(Container)`
   position: relative;
-
+  margin: 1rem;
   .swiper-button-prev,
   .swiper-button-next {
     color: rgb(var(--secondary));
@@ -102,7 +102,7 @@ const TestimonialCard = styled.div`
   align-items: center;
 
   & > *:not(:first-child) {
-    margin-top: 5rem;
+    margin-top: 3rem;
   }
 `;
 

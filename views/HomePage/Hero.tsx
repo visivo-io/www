@@ -40,13 +40,15 @@ export default function Hero() {
       <ImageContainer>
         <HeroIllustration />
       </ImageContainer>
+      
     </HeroWrapper>
+    
   );
 }
 
 const HeroWrapper = styled(Container)`
   display: flex;
-  padding-top: 5rem;
+  padding-top: 4rem;
 
   ${media('<=desktop')} {
     padding-top: 1rem;
@@ -65,7 +67,7 @@ const Contents = styled.div`
 `;
 
 const CustomButtonGroup = styled(ButtonGroup)`
-  margin-top: 4rem;
+  margin-top: 3rem;
 `;
 
 const ImageContainer = styled.div`
@@ -105,7 +107,7 @@ const Heading = styled.h1`
   font-size: 6.8rem;
   font-weight: bold;
   line-height: 1.1;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
   letter-spacing: -0.03em;
 
   ${media('<=tablet')} {
