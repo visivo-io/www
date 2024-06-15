@@ -25,7 +25,7 @@ export default function WaveCta() {
           <Title>Start improving your workflow today</Title>
           <Description>Install our CLI for local development, then activate your trial for deployments. No credit card required.</Description>
           <CustomButtonGroup>
-            <Button href="https://app.visivo.io/accounts/register/">
+            <Button href="https://app.visivo.io/register">
               Sign Up
             </Button>
           </CustomButtonGroup>

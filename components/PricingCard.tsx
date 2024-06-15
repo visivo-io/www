@@ -32,7 +32,7 @@ export default function PricingCard({ title, description, benefits, isOutlined, 
           </CustomRichText>
         )}
       </PriceContainer>
-      <NextLink href={isSecondary ? "https://docs.visivo.io" : "https://app.visivo.io/accounts/register/"} passHref>
+      <NextLink href={isSecondary ? "https://docs.visivo.io" : "https://app.visivo.io/register"} passHref>
         <Button>
           {isSecondary ? 'Install' : 'Get Started'}
         </Button>
