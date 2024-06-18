@@ -7,19 +7,20 @@ export default function ContactPage() {
     <Page title="Who are we?">
       <PrivacyPolicyContainer>
         <RichText>
-          <p>We are a (very) small team.  We have deep experience in software development and business analytics (shocker).</p>
+          <p>We are a small team that is passionate about building great tools for analytics. 
+             We have deep experience in software development and business analytics.</p>
           <br />
           <br />
-          <p>We want to solve a problem that we know exists.</p>
+          <p>We want to solve a problem that we have personally experienced.</p>
           <strong>Business intelligence visualizations are too brittle.</strong>
           <br />
           <br />
-          <p>We want to solve this problem our way.</p>
-          <strong>We are not going to be everything to everybody.</strong>
+          <p>We may not be the right fit for your company, but reach out and we'll be happy to make tooling recommendations.</p>
+          <strong>We're the best solution for technical teams or companies with in-house analytics. </strong>
           <br />
           <br />
-          <p>We want to provide clear value</p>
-          <strong>Our pricing and policies will strive for clarity and simplicity.</strong>
+          <p>We want to provide clear value.</p>
+          <strong>Our pricing & solutions will strive for clarity and simplicity.</strong>
         </RichText>
       </PrivacyPolicyContainer>
     </Page>
