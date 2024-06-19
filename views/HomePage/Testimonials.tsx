@@ -10,32 +10,19 @@ import { media } from 'utils/media';
 
 const TESTIMONIALS = [
   {
-    companyLogoUrl: '/testimonials/company-logo-1.svg',
-    content: `Really good. I am so pleased with this product. I didn't even need training.`,
+    companyLogoUrl: '/testimonials/rwx_logo_dark.svg',
+    content: `The ease of 
+              developing and maintaining dashboards has resulted in our team 
+              quickly building a much higher degree of visibility into our 
+              data. It's a huge improvement in security over 
+              giving a tool unfettered access to databases.`,
     author: {
-      name: 'Clyde Edwards',
-      title: 'Very Serious Man',
-      avatarUrl: '/testimonials/author-photo-1.jpeg',
+      name: 'Dan Manges',
+      title: 'Co-Founder & CEO - RWX',
+      avatarUrl: '/testimonials/dan-manges.jpeg',
     },
   },
-  {
-    companyLogoUrl: '/testimonials/company-logo-2.svg',
-    content: `I could never figure out how to explain to my friends what my son does for a living. Now I can just show them this website!`,
-    author: {
-      name: 'Sophia Jesionek',
-      title: 'Jareds Mom',
-      avatarUrl: '/testimonials/author-photo-2.jpeg',
-    },
-  },
-  {
-    companyLogoUrl: '/testimonials/company-logo-3.svg',
-    content: `Since I invested in saas product I made over 100,000 dollars profits. It really saves me time and effort. saas product is exactly what our business has been lacking.`,
-    author: {
-      name: 'Marjorie Morgan',
-      title: 'Chief Chad Officer',
-      avatarUrl: '/testimonials/author-photo-3.jpeg',
-    },
-  },
+  
 ];
 
 export default function Testimonials() {
@@ -140,7 +127,7 @@ const AuthorName = styled.p`
 
 const AuthorImageContainer = styled.div`
   display: flex;
-  border-radius: 10rem;
+  border-radius: 7rem;
   margin-right: 1rem;
   overflow: hidden;
 `;
