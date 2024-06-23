@@ -15,9 +15,9 @@ export default function DevelopFeatures() {
             overTitle="Dependency Management"
             reversed>
         <p>
-            Visivo projects are automatically built with a Directed Acyclic Graph (DAG) managing 
-            relationships between your components. 
-            This ensures that your dashboards are always up-to-date, accurate and easy to debug. 
+            Visivo projects are automatically built with a Directed Acyclic Graph (DAG) that 
+            manages relationships between your components. This ensures that your dashboards
+            are always up-to-date, accurate and easy to debug. 
         </p>
         </BasicSection>
         

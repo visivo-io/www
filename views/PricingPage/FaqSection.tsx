@@ -7,11 +7,12 @@ export default function FaqSection() {
     <Wrapper>
       <SectionTitle>Frequently asked questions</SectionTitle>
       <Accordion title="Your pricing seems simple, do I get anything different on larger plans?">
-        Yes our current pricing scheme is quite simple.  It is $5 per user.  We are constantly adding features adding
-        will eventually have price discrimination for some features.  We will maintain the current price structure for existing plans when those changes occur.
+        Yes, our current pricing scheme is quite simple. It is $5 per user. We are constantly 
+        adding features and will eventually have price discrimination for some features. 
+        We will maintain the current price structure for existing plans when those changes occur.
       </Accordion>
       <Accordion title="Can I get more seats than is currently listed on the largest plan?">
-        Yes.  We can add additional users at $5 per month.  Just send us an email at info@visivo.io</Accordion>
+        Yes, we can add additional users at $5 per month. Just send us an email at info@visivo.io</Accordion>
     </Wrapper>
   );
 }

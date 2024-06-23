@@ -19,7 +19,7 @@ export default function UxFeatures() {
         
         <BasicSection imageUrl="/gifs/interactivity.gif" title="Interactivity without slow load times" overTitle="Interactive" reversed>
         <p>
-            Unlike traditional BI tools, Visivo does not need to re-fetch data every time a user interacts your dashboard.
+            Unlike traditional BI tools, Visivo does not need to re-fetch data every time a user interacts with your dashboard.
         </p>
         </BasicSection>
         

@@ -23,8 +23,9 @@ export default function DevOpsFeatures() {
         </BasicSection>
         <BasicSection imageUrl="/images/continuous-testing.png" title="Goodbye broken dashboards" overTitle="Testable">
         <p>
-            Test your code before it goes live & on every deployment. Get alerts when your dashboards are broken before 
-            your stakeholders are impacted.
+        Test new charts, tables and dashboards before they go live in production.
+        Ensure your tests are passing before data refresh.
+        Receive alerts when your dashboards are broken and fix problems before your stakeholders are impacted.
         </p>
         </BasicSection>
     </FeaturesWrapper>
