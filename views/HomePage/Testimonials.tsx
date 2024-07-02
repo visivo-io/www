@@ -81,10 +81,6 @@ const TestimonialsWrapper = styled(Container)`
   .swiper-button-prev,
   .swiper-button-next {
     color: rgb(var(--secondary));
-
-    ${media('<=desktop')} {
-      display: none;
-    }
   }
 
   .swiper-button-prev {
