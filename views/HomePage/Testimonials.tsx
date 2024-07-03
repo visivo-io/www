@@ -1,7 +1,6 @@
 import NextImage from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
-
 import { A11y, Autoplay, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Container from 'components/Container';
@@ -29,47 +28,59 @@ export default function Testimonials() {
   return (
     <div>
       <Separator />
-      <TestimonialsWrapper>
-        <Swiper modules={[Navigation, Autoplay, A11y]} slidesPerView={1} autoplay={{ delay: 8000 }} centeredSlides navigation loop>
-          {TESTIMONIALS.map((singleTestimonial, idx) => (
-            <SwiperSlide key={idx}>
-              <TestimonialCard>
-                <NextImage
-                  src={singleTestimonial.companyLogoUrl}
-                  alt={`${singleTestimonial.author.name}'s company logo`}
-                  width={200}
-                  height={40}
-                />
-                <Content>“{singleTestimonial.content}”</Content>
-                <AuthorContainer>
-                  <AuthorImageContainer>
-                    <NextImage src={singleTestimonial.author.avatarUrl} alt={singleTestimonial.author.name} width={48} height={48} />
-                  </AuthorImageContainer>
-                  <AuthorContent>
-                    <AuthorName>{singleTestimonial.author.name}</AuthorName>
-                    <AuthorTitle>{singleTestimonial.author.title}</AuthorTitle>
-                  </AuthorContent>
-                </AuthorContainer>
-              </TestimonialCard>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </TestimonialsWrapper>
+      <CenteredContainer>
+        <TestimonialsWrapper>
+          <Swiper modules={[Navigation, Autoplay, A11y]} slidesPerView={1} autoplay={{ delay: 8000 }} centeredSlides navigation loop>
+            {TESTIMONIALS.map((singleTestimonial, idx) => (
+              <SwiperSlide key={idx}>
+                <TestimonialCard>
+                  <NextImage
+                    src={singleTestimonial.companyLogoUrl}
+                    alt={`${singleTestimonial.author.name}'s company logo`}
+                    width={200}
+                    height={40}
+                  />
+                  <Content>“{singleTestimonial.content}”</Content>
+                  <AuthorContainer>
+                    <AuthorImageContainer>
+                      <NextImage src={singleTestimonial.author.avatarUrl} alt={singleTestimonial.author.name} width={48} height={48} />
+                    </AuthorImageContainer>
+                    <AuthorContent>
+                      <AuthorName>{singleTestimonial.author.name}</AuthorName>
+                      <AuthorTitle>{singleTestimonial.author.title}</AuthorTitle>
+                    </AuthorContent>
+                  </AuthorContainer>
+                </TestimonialCard>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </TestimonialsWrapper>
+      </CenteredContainer>
       <Separator />
     </div>
   );
 }
 
+const CenteredContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh;
+`;
+
 const TestimonialsWrapper = styled(Container)`
   position: relative;
-  margin: 1rem;
+  margin: .2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
   .swiper-button-prev,
   .swiper-button-next {
     color: rgb(var(--secondary));
-
-    ${media('<=desktop')} {
-      display: none;
-    }
   }
 
   .swiper-button-prev {
@@ -98,7 +109,7 @@ const Content = styled.blockquote`
   font-size: 2.2rem;
   font-weight: bold;
   font-style: italic;
-  max-width: 60%;
+  max-width: 80%;
 
   ${media('<=desktop')} {
     max-width: 100%;
