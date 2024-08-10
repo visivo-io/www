@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
+import tw from "tailwind-styled-components"
 import { EnvVars } from 'env';
 import { media } from 'utils/media';
 import Container from './Container';
-import SectionTitle from './SectionTitle';
 
 export interface PageProps {
   title: string;
@@ -43,14 +43,12 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(var(--secondary));
-  min-height: 40rem;
+  margin-top: 3rem;
 `;
 
-const Title = styled(SectionTitle)`
-  color: rgb(var(--textSecondary));
-  margin-bottom: 2rem;
-`;
+const Title = tw.div`
+  text-center mb-4 text-6xl tracking-tight font-extrabold text-gray-900
+`
 
 const Description = styled.div`
   font-size: 1.8rem;
@@ -65,6 +63,6 @@ const Description = styled.div`
 `;
 
 const ChildrenWrapper = styled.div`
-  margin-top: 10rem;
-  margin-bottom: 10rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 `;

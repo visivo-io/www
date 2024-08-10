@@ -8,34 +8,83 @@ export default function PricingTablesSection() {
     <Wrapper>
       <AutofitGrid>
         <PricingCard
-          isSecondary
-          title="Local"
-          description="CLI for local use"
-          benefits={['Self Host', 'Local Dashboards']}
-        >
-          $0
+          title="Open Source"
+          benefits={[
+            "1 seat included",
+            "16 deployments per day",
+            "3 active stages",
+            "1 project per stage",
+            "Limited support"
+          ]}        >
+          Free
         </PricingCard>
         <PricingCard
           title="Solo"
-          description="For the single user"
-          benefits={['1 Seat', 'Local CLI', 'Private Deployments', 'Unlimited Dashboard']}
-        >
-          $5<span>/month</span>
+          benefits={[
+            "1 seat included",
+            "16 deployments per day",
+            "3 active stages",
+            "1 project per stage",
+            "Limited support"
+          ]}        >
+          $0<span>/month</span>
         </PricingCard>
-        <PricingCard
-          title="Starter"
-          description="For a small team"
-          benefits={['5 Seats', 'Local CLI', 'Private Deployments', 'Unlimited Dashboards']}
-          isOutlined
-        >
-          $25<span>/month</span>
-        </PricingCard>
+      </AutofitGrid>
+      <AutofitGrid>
         <PricingCard
           title="Team"
-          description="For a growing organization"
-          benefits={['20 Seats', 'Local CLI', 'Private Deployments', 'Unlimited Dashboards']}
+          isOutlined
+          benefits={[
+            "10 seats included*",
+            "256 deployments /day",
+            "9 active stages",
+            "Infinite projects /stage",
+            "1 month time travel",
+            "1 day support SLA"
+          ]}
         >
-          $100<span>/month</span>
+          $599<span>/month</span>
+        </PricingCard>
+        <PricingCard
+          title="Business"
+          benefits={[
+            "25 seats included*",
+            "4096 deployments /day",
+            "27 active stages",
+            "Infinite projects /stage",
+            "3 months time travel",
+            "4 hour support SLA",
+            "Access controls",
+            "Dedicated support manager"
+          ]}
+        >
+          $1999<span>/month</span>
+        </PricingCard>
+      </AutofitGrid>
+      <AutofitGrid>
+        <PricingCard
+          title="Startup"
+          benefits={[
+            "Infinite deployments /day",
+            "Infinite projects /stage",
+            "Custom time travel",
+            "Single Sign On",
+            "1 hour support SLA",
+          ]}
+        >
+          Custom
+        </PricingCard>
+        <PricingCard
+          title="Enterprise"
+          benefits={[
+            "Infinite deployments /day",
+            "Infinite projects /stage",
+            "Custom time travel",
+            "Single Sign On",
+            "1 hour support SLA",
+          ]}
+        >
+          Custom
         </PricingCard>
       </AutofitGrid>
     </Wrapper>
