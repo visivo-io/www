@@ -10,8 +10,8 @@ import { faInfinity } from '@fortawesome/free-solid-svg-icons';
 
 interface PricingCardProps {
   title: string;
-  price: string;
-  length: string;
+  price?: string;
+  length?: string;
   description?: string;
   benefits: string[];
   isSecondary?: boolean;
@@ -22,24 +22,26 @@ export default function PricingCard({ title, description, benefits, price, lengt
 
   return (
     <Card>
-      <Title>{title}</Title>
-      {description && <Description>{description}</Description>}
-      <PriceContainer>
-        <Price>{price}</Price>
-        <Length>{length}</Length>
+      <div>
+        <Title>{title}</Title>
+        {description && <Description>{description}</Description>}
+        {(price || length) && <PriceContainer>
+          {price && <Price>{price}</Price>}
+          {length && <Length>{length}</Length>}
+        </PriceContainer>}
         {isAnyBenefitPresent && (
-          <ul className='mb-8 space-y-4 text-left' >
+          <ul className='mb-6 space-y-2 text-left' >
             {benefits.map((singleBenefit, idx) => (
               <li className='flex items-center space-x-3' key={idx}>
                 <svg className="flex-shrink-0 w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                <span>
+                <span className='text-2xl flex flex-row'>
                   {singleBenefit.includes("Infinite") && <InfinityIcon icon={faInfinity} />}{singleBenefit.replace("Infinite ", "")}
                 </span>
               </li>
             ))}
           </ul>
         )}
-      </PriceContainer>
+      </div>
       <NextLink href={"https://app.visivo.io/register"} passHref>
         <Button>
           {'Get Started'}
@@ -57,15 +59,23 @@ const InfinityIcon = styled(FontAwesomeIcon) <{ isSecondary?: boolean }>`
 `;
 
 const Card = tw.div`
-  flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow xl:p-8">
+  flex 
+  flex-col 
+  p-6 
+  mx-auto 
+  max-w-lg 
+  text-center 
+  justify-between
+  min-w-card
+  text-gray-900 bg-white border-l-2 border-gray-100 xl:p-8">
 `
 
 const Title = tw.h3`
-  mb-4 text-2xl font-semibold
+  mb-4 text-4xl font-semibold
 `;
 
 const Description = tw.p`
-  font-light text-gray-500 sm:text-lg 
+  font-light text-gray-500 sm:text-xl
 `;
 
 const PriceContainer = tw.div`
@@ -76,4 +86,4 @@ const Price = tw.span`
   mr-2 text-5xl font-extrabold
 `;
 
-const Length = tw.span`text-gray-500 `
+const Length = tw.span`text-gray-500 text-xl`
