@@ -7,18 +7,6 @@ export default function PricingTablesSection() {
   return (
     <Wrapper>
       <PriceRow>
-        <Description>
-          Free options to get you started.
-        </Description>
-        <PricingCard
-          title="Open Source"
-          price="$0"
-          benefits={[
-            "Self hosted",
-            "Community support",
-            "Static sites"
-          ]}>
-        </PricingCard>
         <PricingCard
           title="Solo"
           price="$0"
@@ -30,11 +18,6 @@ export default function PricingTablesSection() {
             "1 project per stage",
             "Limited support"
           ]} />
-      </PriceRow>
-      <PriceRow>
-        <Description>
-          Fixed price plans for established companies.
-        </Description>
         <PricingCard
           title="Team"
           price="$599"
@@ -63,23 +46,9 @@ export default function PricingTablesSection() {
             "Dedicated support manager"
           ]}
         />
-      </PriceRow>
-      <PriceRow>
-        <Description>
-          Custom price plans to handle unique needs.
-        </Description>
-        <PricingCard
-          title="Growth"
-          benefits={[
-            "Custom time travel",
-            "Single Sign On",
-            "5 hour support SLA",
-            "Fractional analytics support"
-          ]}
-        >
-        </PricingCard>
         <PricingCard
           title="Enterprise"
+          price="Custom"
           benefits={[
             "Infinite deployments /day",
             "Infinite projects /stage",
@@ -87,23 +56,16 @@ export default function PricingTablesSection() {
             "Single Sign On",
             "1 hour support SLA",
           ]}
-        >
-        </PricingCard>
+        />
       </PriceRow>
-    </Wrapper>
+    </Wrapper >
   );
 }
 
-const Description = tw.div`
-  grow 
-  mb-5 
-  font-light 
-  text-gray-500 
-  text-3xl 
-  m-auto
-`
 const PriceRow = tw.div`
-  flex w-full p-6 bg-white rounded-lg border border-gray-100 shadow xl:p-8">
+  p-6 
+  flex
+  flex-wrap
 `
 const Wrapper = styled.div`
   & > *:not(:first-child) {

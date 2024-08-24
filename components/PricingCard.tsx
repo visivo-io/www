@@ -61,13 +61,20 @@ const InfinityIcon = styled(FontAwesomeIcon) <{ isSecondary?: boolean }>`
 const Card = tw.div`
   flex 
   flex-col 
+  bg-white 
+  rounded-lg 
+  border 
+  border-gray-100 
+  shadow 
   p-6 
   mx-auto 
+  my-2
   max-w-lg 
   text-center 
   justify-between
   min-w-card
-  text-gray-900 bg-white border-l-2 border-gray-100 xl:p-8">
+  text-gray-900 
+  bg-white 
 `
 
 const Title = tw.h3`
