@@ -1,105 +1,96 @@
 import NextLink from 'next/link';
+import tw from "tailwind-styled-components"
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { media } from 'utils/media';
 import Button from './Button';
 import RichText from './RichText';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfinity } from '@fortawesome/free-solid-svg-icons';
 
 interface PricingCardProps {
   title: string;
-  description: string;
+  price?: string;
+  length?: string;
+  description?: string;
   benefits: string[];
-  isOutlined?: boolean;
   isSecondary?: boolean;
 }
 
-export default function PricingCard({ title, description, benefits, isOutlined, isSecondary, children }: PropsWithChildren<PricingCardProps>) {
+export default function PricingCard({ title, description, benefits, price, length }: PropsWithChildren<PricingCardProps>) {
   const isAnyBenefitPresent = benefits?.length;
 
   return (
-    <Wrapper isOutlined={isOutlined} isSecondary={isSecondary}>
-      <Title>{title}</Title>
-      <Description>{description}</Description>
-      <PriceContainer>
-        <Price>{children}</Price>
+    <Card>
+      <div>
+        <Title>{title}</Title>
+        {description && <Description>{description}</Description>}
+        {(price || length) && <PriceContainer>
+          {price && <Price>{price}</Price>}
+          {length && <Length>{length}</Length>}
+        </PriceContainer>}
         {isAnyBenefitPresent && (
-          <CustomRichText>
-            <ul>
-              {benefits.map((singleBenefit, idx) => (
-                <li key={idx}>{singleBenefit}</li>
-              ))}
-            </ul>
-          </CustomRichText>
+          <ul className='mb-6 space-y-2 text-left' >
+            {benefits.map((singleBenefit, idx) => (
+              <li className='flex items-center space-x-3' key={idx}>
+                <svg className="flex-shrink-0 w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                <span className='text-2xl flex flex-row'>
+                  {singleBenefit.includes("Infinite") && <InfinityIcon icon={faInfinity} />}{singleBenefit.replace("Infinite ", "")}
+                </span>
+              </li>
+            ))}
+          </ul>
         )}
-      </PriceContainer>
-      <NextLink href={isSecondary ? "https://docs.visivo.io" : "https://app.visivo.io/register"} passHref>
+      </div>
+      <NextLink href={"https://app.visivo.io/register"} passHref>
         <Button>
-          {isSecondary ? 'Install' : 'Get Started'}
+          {'Get Started'}
         </Button>
       </NextLink>
-    </Wrapper>
+    </Card>
   );
 }
 
-const Wrapper = styled.div<{ isOutlined?: boolean, isSecondary?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  padding: 3rem;
-  ${(p) => (p.isOutlined ? 'color: white;' : '')}
-  background: ${(p) => (p.isOutlined ? 'rgb(var(--cardOutlinedBackground))' : p.isSecondary ? 'rgb(var(--cardSecondaryBackground))' : 'rgb(var(--cardBackground))')};
-  box-shadow: ${(p) => (p.isOutlined ? 'var(--shadow-lg)' : p.isSecondary ? 'none' : 'var(--shadow-lg)')};
-  transform: ${(p) => (p.isOutlined ? 'scale(1.1)' : 'scale(1.0)')};
-  text-align: center;
-
-  & > *:not(:first-child) {
-    margin-top: 1rem;
-  }
-
-  ${media('<=desktop')} {
-    box-shadow: var(--shadow-md);
-    transform: none;
-    order: ${(p) => (p.isOutlined ? -1 : 0)};
-  }
+const InfinityIcon = styled(FontAwesomeIcon) <{ isSecondary?: boolean }>`
+    width: 1.0em;
+    height: 1em;
+    margin-right: 3px;
+    vertical-align: middle !important;
 `;
 
-const Title = styled.h3`
-  font-size: 4rem;
-  text-transform: capitalize;
+const Card = tw.div`
+  flex 
+  flex-col 
+  bg-white 
+  rounded-lg 
+  border 
+  border-gray-100 
+  shadow 
+  p-6 
+  mx-auto 
+  my-2
+  max-w-lg 
+  text-center 
+  justify-between
+  min-w-card
+  text-gray-900 
+  bg-white 
+`
+
+const Title = tw.h3`
+  mb-4 text-4xl font-semibold
 `;
 
-const Description = styled.p`
-  font-size: 2.5rem;
+const Description = tw.p`
+  font-light text-gray-500 sm:text-xl
 `;
 
-const PriceContainer = styled.div`
-  margin: auto;
-
-  & > *:not(:first-child) {
-    margin-top: 2rem;
-  }
+const PriceContainer = tw.div`
+  flex justify-center items-baseline my-8
 `;
 
-const Price = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  font-size: 4rem;
-  line-height: 1;
-  font-weight: bold;
-
-  span {
-    font-size: 2rem;
-    font-weight: normal;
-  }
+const Price = tw.span`
+  mr-2 text-5xl font-extrabold
 `;
 
-const CustomRichText = styled(RichText)`
-  li {
-    margin: auto;
-    width: fit-content;
-  }
-`;
-
-const CustomButton = styled(Button)`
-  width: 100%;
-`;
+const Length = tw.span`text-gray-500 text-xl`
