@@ -27,7 +27,7 @@ const GifToVideo = () => {
           src="/videos/visivo-demo.mov"
           controls
           autoPlay
-          style={{ width: '100%' }}
+          style={{ width: '100%' }} 
         />
       )}
       {!isVideoPlaying && (
