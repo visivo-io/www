@@ -10,7 +10,7 @@ export default function DevelopFeatures() {
     <FeaturesWrapper>
         <FeatureSectionTitle>Data Visualization As Code</FeatureSectionTitle>
         <BasicSection 
-            imageUrl="/images/object-flow-chart.png" 
+            imageUrl="/images/object-flow-chart.webp" 
             title="DAG enables robust development" 
             overTitle="Dependency Management"
             reversed>
@@ -21,13 +21,13 @@ export default function DevelopFeatures() {
         </p>
         </BasicSection>
         
-        <BasicSection imageUrl="/gifs/auto-complete.gif" title="Build visualizations faster" overTitle="DevTools">
+        <BasicSection imageUrl="/gifs/webp/auto-complete.webp" title="Build visualizations faster" overTitle="DevTools">
         <p>
             VScode linter and auto-complete features make writing YAML configurations a breeze.
         </p>
         </BasicSection>
         <BasicSection 
-            imageUrl="/images/jinja-for-loop.png" 
+            imageUrl="/images/jinja-for-loop.webp" 
             title="Jinja2 templating for dynamic rendering" 
             overTitle="Dynamic Rendering"
             reversed>
