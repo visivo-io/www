@@ -10,21 +10,21 @@ export default function UxFeatures() {
     <FeaturesWrapper>
         <FeatureSectionTitle>Craft an unparalleled user experience</FeatureSectionTitle>
         
-        <BasicSection imageUrl="/images/chart-types.png" title="Layout & configurations options" overTitle="Unblock Creativity">
+        <BasicSection imageUrl="/images/chart-types.webp" title="Layout & configurations options" overTitle="Unblock Creativity">
         <p>
             With over 20+ trace types and thousands of configuration options, 
             you can build the perfect dashboard for your stakeholders.
         </p>
         </BasicSection>
         
-        <BasicSection imageUrl="/gifs/interactivity.gif" title="Interactivity without slow load times" overTitle="Interactive" reversed>
+        <BasicSection imageUrl="/gifs/webp/interactivity.webp" title="Interactivity without slow load times" overTitle="Interactive" reversed>
         <p>
             Unlike traditional BI tools, Visivo does not need to re-fetch data every time a user interacts with your dashboard.
         </p>
         </BasicSection>
         
 
-        <BasicSection imageUrl="/images/laptop-iphone-asset.png" title="Meet your stakeholders where they are" overTitle="Mobile Optimized">
+        <BasicSection imageUrl="/images/laptop-iphone-asset.webp" title="Meet your stakeholders where they are" overTitle="Mobile Optimized">
         <p>
             Deliver your insights to your team on the go and in the office. 
         </p>

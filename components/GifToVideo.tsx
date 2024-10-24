@@ -15,17 +15,19 @@ const GifToVideo = () => {
   return (
     <Container>
       {!isVideoPlaying ? (
-        <img
-          src="/gifs/visivo-demo.gif"
-          alt="Loading GIF"
-          style={{ width: '100%' }}
-        />
+        <video
+        src="/gifs/visivo-demo.webm" // Use the WebM file for initial display
+        style={{ width: '100%' }}
+        muted
+        loop
+        autoPlay
+      />
       ) : (
         <video
           src="/videos/visivo-demo.mov"
           controls
           autoPlay
-          style={{ width: '100%' }}
+          style={{ width: '100%' }} 
         />
       )}
       {!isVideoPlaying && (
