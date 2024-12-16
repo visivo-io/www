@@ -25,14 +25,14 @@ export default function Hero() {
           Level up your insights with the first open-source version-controlled BI framework built for the modern data stack.
         </Description>
         <CustomButtonGroup>
-          <NextLink href="https://docs.visivo.io" passHref>
+          <NextLink href="https://app.visivo.io/register" passHref>
             <OutlinedButton>
               Get Started
             </OutlinedButton>
           </NextLink>
           <NextLink href="https://calendly.com/visivo-io/30-minute" passHref>
             <Button>
-              Book a Demo
+              Let's Talk
             </Button>
           </NextLink>
         </CustomButtonGroup>
@@ -40,9 +40,9 @@ export default function Hero() {
       <ImageContainer>
         <HeroIllustration />
       </ImageContainer>
-      
+
     </HeroWrapper>
-    
+
   );
 }
 
