@@ -163,8 +163,6 @@ const NavbarContainer = styled.div<NavbarContainerProps>`
 
   background-color: rgb(var(--navbarBackground));
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
-  visibility: ${(p) => (p.hidden ? 'hidden' : 'visible')};
-  transform: ${(p) => (p.hidden ? `translateY(-8rem) translateZ(0) scale(1)` : 'translateY(0) translateZ(0) scale(1)')};
 
   transition-property: transform, visibility, height, box-shadow, background-color;
   transition-duration: 0.15s;
