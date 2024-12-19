@@ -33,7 +33,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="-mt-48 bg-gray-100 pb-8 pt-48 sm:-mt-80 sm:pt-72 lg:pb-16 dark:bg-gray-800">
+      {/* <div className="-mt-48 bg-gray-100 pb-8 pt-48 sm:-mt-80 sm:pt-72 lg:pb-16 dark:bg-gray-800">
         <div className="mx-auto px-4 text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-20">
           <div className="flex flex-wrap items-center justify-center text-gray-500 sm:justify-between">
             <a href="#" className="mb-5 mr-5 hover:text-gray-900 lg:mb-0 dark:hover:text-gray-400">
@@ -66,7 +66,7 @@ export default function Hero() {
             </a>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

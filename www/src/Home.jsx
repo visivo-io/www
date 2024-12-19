@@ -1,10 +1,11 @@
 import Hero from "./components/Hero";
 import Features from "./components/Features";
-
+import Testimonials from "./components/Testimonials";
 const Home = () => {
   return (
     <div>
       <Hero />
+      <Testimonials />
       <Features />
       <section className="border-y border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-900">
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:py-24">
