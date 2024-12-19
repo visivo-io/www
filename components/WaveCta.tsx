@@ -28,6 +28,9 @@ export default function WaveCta() {
             <Button href="https://app.visivo.io/register">
               Sign Up
             </Button>
+            <Button href="https://docs.visivo.io">
+              Install CLI
+            </Button>
           </CustomButtonGroup>
         </Container>
       </CtaWrapper>

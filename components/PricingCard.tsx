@@ -2,9 +2,7 @@ import NextLink from 'next/link';
 import tw from "tailwind-styled-components"
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import { media } from 'utils/media';
 import Button from './Button';
-import RichText from './RichText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfinity } from '@fortawesome/free-solid-svg-icons';
 

@@ -19,14 +19,14 @@ export default function Cta() {
             Install our CLI for local development.  Then activate your trial for deployments, no credit card required.
           </Description>
           <ButtonGroup>
-            <NextLink href="https://docs.visivo.io" passHref>
+            <NextLink href="https://app.visivo.io/register" passHref>
               <OutlinedButton onClick={() => window.gtag('event', 'conversion', { 'send_to': 'AW-11411376618/0peZCIeC7vcYEOqTr8Eq' })}>
                 Get Started
               </OutlinedButton>
             </NextLink>
             <NextLink href="https://calendly.com/visivo-io/30-minute" passHref>
               <Button onClick={() => window.gtag('event', 'conversion', { 'send_to': 'AW-11411376618/0peZCIeC7vcYEOqTr8Eq' })}>
-                Book a Demo
+                Let's Talk
               </Button>
             </NextLink>
           </ButtonGroup>
