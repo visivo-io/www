@@ -14,8 +14,8 @@ const Section = ({ imageUrl, title, description, details, reversed }) => {
   const renderContent = () => {
     return (
       <div className="flex space-y-4 sm:space-y-6 lg:space-y-8">
-        <div className="flex flex-col items-center justify-center">
-          <p className="mt-4 text-lg font-bold text-highlight-500 dark:text-gray-400">
+        <div className="flex flex-col">
+          <p className="mt-4 text-lg font-bold text-highlight-500 dark:text-highlight-400">
             {description}
           </p>
           <h2 className="text-2xl font-bold leading-tight text-gray-900 dark:text-white">
