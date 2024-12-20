@@ -2,10 +2,10 @@ export default function ContactPage() {
   return (
 
 
-    <section className="border-y border-gray-100 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
+    <section className="border-y border-gray-200 dark:border-gray-700 dark:bg-gray-900">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:py-24">
-        <div className="mx-auto max-w-screen-lg space-y-6 ">
-          <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-4xl dark:text-white">Privacy Policy</h1>
+        <div className="mx-auto max-w-screen-lg space-y-6 text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Privacy Policy</h1>
           <p>Last updated: January 03, 2024</p>
           <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
           <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a href="https://www.termsfeed.com/privacy-policy-generator/" target="_blank">Privacy Policy Generator</a>.</p>
