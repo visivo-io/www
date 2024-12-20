@@ -45,6 +45,7 @@ function App() {
             <Footer.LinkGroup>
               <Footer.Link href="/about-us">About</Footer.Link>
               <Footer.Link href="/privacy">Privacy Policy</Footer.Link>
+              <Footer.Link href="https://github.com/visivo-io">GitHub</Footer.Link>
             </Footer.LinkGroup>
           </div>
           <Footer.Divider />
