@@ -1,21 +1,20 @@
 
 export default function AboutUs() {
   return (
-    <div>
-      <p>We are a small team that is passionate about building great tools for analytics.
-        We have deep experience in software development and business analytics.</p>
-      <br />
-      <br />
-      <p>We want to solve a problem that we have personally experienced.</p>
-      <strong>Business intelligence visualizations are too brittle.</strong>
-      <br />
-      <br />
-      <p>We may not be the right fit for your company, but reach out and we&#39;ll be happy to make tooling recommendations.</p>
-      <strong>We&#39;re the best solution for technical teams or companies with in-house analytics. </strong>
-      <br />
-      <br />
-      <p>We want to provide clear value.</p>
-      <strong>Our pricing & solutions will strive for clarity and simplicity.</strong>
-    </div>
+    <section className="border-y border-gray-100 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
+      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:py-24">
+        <div className="mx-auto max-w-screen-lg space-y-6 ">
+          <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-4xl dark:text-white">About Us</h1>
+          <p>We are a small team that is passionate about building great tools for analytics.
+            We have deep experience in software development and business analytics.</p>
+          <p>We want to solve a problem that we have personally experienced.</p>
+          <strong>Business intelligence visualizations are too brittle.</strong>
+          <p>We may not be the right fit for your company, but reach out and we&#39;ll be happy to make tooling recommendations.</p>
+          <strong>We&#39;re the best solution for technical teams or companies with in-house analytics. </strong>
+          <p>We want to provide clear value.</p>
+          <strong>Our pricing & solutions will strive for clarity and simplicity.</strong>
+        </div>
+      </div>
+    </section>
   );
 }
