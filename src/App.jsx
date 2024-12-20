@@ -23,7 +23,9 @@ function App() {
         </Navbar.Collapse>
         <div className="flex">
           <DarkThemeToggle className="mr-2" />
-          <Button color="primary">App</Button>
+          <a href="https://app.visivo.io">
+            <Button color="primary">App</Button>
+          </a>
         </div>
       </Navbar >
 
