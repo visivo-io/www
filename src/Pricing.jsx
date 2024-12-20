@@ -94,6 +94,7 @@ const Pricing = () => {
               <Yearly>Designed to meet your needs</Yearly>
               <GetStarted />
               <ul role="list" className="space-y-4 text-left text-gray-900 dark:text-gray-400">
+                <Bullet>Custom seats</Bullet>
                 <Bullet>Custom deployments</Bullet>
                 <Bullet>Custom time travel</Bullet>
                 <Bullet>1 hour support SLA</Bullet>

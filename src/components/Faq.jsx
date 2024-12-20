@@ -4,11 +4,11 @@ const Section = tw.div`
   mb-10
 `
 const Heading = tw.h3`
-  mb-4 flex items-center text-lg font-medium text-gray-900
+  mb-4 flex items-center text-lg font-medium text-gray-900 dark:text-gray-300
 `
 
 const Answer = tw.p`
-  text-gray-500
+  text-gray-800 dark:text-gray-200
 `
 
 const QuestionMark = () => {
@@ -19,9 +19,9 @@ const QuestionMark = () => {
 
 const Faq = () => {
   return (
-    <section className="bg-white">
+    <section className="bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
-        <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-gray-900">Frequently asked questions</h2>
+        <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">Frequently asked questions</h2>
         <div className="grid border-t border-gray-200 pt-8 text-left md:grid-cols-1 md:gap-16">
           <div>
             <Section>
