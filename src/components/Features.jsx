@@ -3,8 +3,8 @@ import React from 'react';
 const Section = ({ imageUrl, title, description, details, reversed }) => {
   const renderImage = () => {
     return (
-      <div className="block p-10">
-        <img className="w-full object-cover dark:hidden" src={imageUrl}
+      <div className="block p-10 lg:col-span-2">
+        <img className="w-full object-contain dark:hidden max-h-[500px]" src={imageUrl}
           alt="Feature illustration" />
         <img className="hidden w-full object-cover dark:block"
           src={imageUrl} alt="Feature illustration" />
@@ -29,7 +29,7 @@ const Section = ({ imageUrl, title, description, details, reversed }) => {
     )
   }
   return (
-    <div className="mx-10 mt-8 grid grid-cols-1 gap-8 lg:mt-10 lg:grid-cols-2 lg:gap-16">
+    <div className="mx-10 mt-8 grid items-center justify-center grid-cols-1 gap-8 lg:mt-10 lg:grid-cols-3 lg:gap-16">
       {reversed ? renderContent() : renderImage()}
       {reversed ? renderImage() : renderContent()}
     </div>
@@ -40,7 +40,7 @@ const Section = ({ imageUrl, title, description, details, reversed }) => {
 export default function UxFeatures() {
   return (
     <div>
-      <div className="mt-5">
+      <div className="pt-5 dark:bg-gray-900">
         <div className="mx-auto max-w-7xl">
           <div className="mt-10 text-center text-5xl font-bold dark:text-gray-300">Craft an unparalleled user experience</div>
           <Section
@@ -61,7 +61,7 @@ export default function UxFeatures() {
             details="Deliver your insights to your team on the go and in the office." />
         </div>
       </div>
-      <div className="mt-5 bg-white py-20 dark:bg-gray-900">
+      <div className="mt-5 bg-gray-100 py-20 dark:bg-gray-800">
         <div className="mx-auto max-w-7xl">
           <div className="text-center text-5xl font-bold dark:text-gray-300">Data Visualization As Code</div>
           <Section
@@ -83,7 +83,7 @@ export default function UxFeatures() {
             details="Jinja2 templating allows you to dynamically render your dashboards based on environment variables, conditional logic, and loops." />
         </div>
       </div>
-      <div className="mt-5 py-20">
+      <div className="mt-5 py-20 dark:bg-gray-900">
         <div className="mx-auto max-w-7xl">
           <div className="text-center text-5xl font-bold dark:text-gray-300">Simple to Deploy & Collaborate</div>
           <Section

@@ -31,7 +31,7 @@ function App() {
         <Outlet />
       </main>
 
-      <Footer container>
+      <Footer container className="dark:bg-gray-900">
         <div className="w-full text-center">
           <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
             <Footer.Brand

@@ -17,7 +17,7 @@ const TESTIMONIALS = [
 
 export default function Testimonials() {
   return (
-    <section className="border-y border-gray-100 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+    <section className="border-y border-gray-100 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:py-24">
         <div id="testimonial-carousel" className="relative text-center" data-carousel="slide">
           <div className="relative mx-auto h-52 max-w-screen-md overflow-x-hidden overflow-y-visible rounded-lg sm:h-48">

@@ -7,7 +7,7 @@ const Home = () => {
       <Hero />
       <Testimonials />
       <Features />
-      <section className="border-y border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <section className="border-y border-gray-100 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:py-24">
           <div className="mx-auto max-w-screen-sm space-y-6 text-center">
             <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-4xl dark:text-white">
