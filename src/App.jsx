@@ -18,6 +18,7 @@ function App() {
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Visivo</span>
         </Navbar.Brand>
         <Navbar.Collapse>
+          <Navbar.Link href="/gallery">Gallery</Navbar.Link>
           <Navbar.Link href="/pricing">Pricing</Navbar.Link>
           <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
         </Navbar.Collapse>
