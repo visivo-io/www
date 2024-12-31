@@ -33,7 +33,7 @@ function App() {
         </Navbar.Collapse>
       </Navbar>
 
-      <main className="w-full flex-col items-center justify-center gap-2 dark:bg-gray-800">
+      <main className="w-full flex-col items-center justify-center dark:bg-gray-800">
         <Outlet />
       </main>
 

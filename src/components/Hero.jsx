@@ -3,7 +3,7 @@ import GifToVideo from "./GifToVideo";
 export default function Hero() {
   return (
     <section className="w-full bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-screen-xl px-4 py-8 pt-20 sm:py-16 sm:pt-24 lg:py-24 lg:pt-32">
+      <div className="mx-auto max-w-screen-xl px-4 py-8 pt-4 sm:py-16 sm:pt-16 lg:py-24 lg:pt-24">
         <div className="text-center">
           <h1
             className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
