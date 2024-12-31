@@ -9,11 +9,11 @@ const EXAMPLE_ITEMS = [
     githubUrl: "https://github.com/visivo-io/linear-dashboard/blob/main/project.visivo.yml"
   },
   {
-    title: "Marketing Analytics",
-    description: "Campaign performance tracking and ROI analysis",
-    imageUrl: "/images/examples/marketing-analytics.webp",
-    demoUrl: "#",
-    githubUrl: "https://github.com/visivo-io/examples/marketing-analytics"
+    title: "Trace Gallery",
+    description: "Explore the different ways that you can use each trace type in Visivo",
+    imageUrl: "/images/gallery/trace-gallery.webp",
+    demoUrl: "https://examples.visivo.io/",
+    githubUrl: "https://github.com/visivo-io/visivo/tree/main/test-projects/docs-examples"
   },
   // Add more gallery items as needed
 ];
