@@ -10,7 +10,7 @@ export default function Hero() {
             The better way to build visualizations
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-gray-500 md:text-lg lg:text-xl dark:text-gray-400">
-            Level up your insights with the first open-source version-controlled BI framework built for the modern data stack.
+          The open-source BI-As-Code framework that helps data teams ship faster using version control and CI/CD.
           </p>
         </div>
 
