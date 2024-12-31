@@ -30,8 +30,14 @@ const Section = ({ imageUrl, title, description, details, reversed }) => {
   }
   return (
     <div className="mx-10 mt-8 grid items-center justify-center grid-cols-1 gap-8 lg:mt-10 lg:grid-cols-3 lg:gap-16">
-      {reversed ? renderContent() : renderImage()}
-      {reversed ? renderImage() : renderContent()}
+      <div className="lg:hidden">
+        {renderContent()}
+        {renderImage()}
+      </div>
+      <div className="hidden lg:block lg:contents">
+        {reversed ? renderContent() : renderImage()}
+        {reversed ? renderImage() : renderContent()}
+      </div>
     </div>
   );
 };
