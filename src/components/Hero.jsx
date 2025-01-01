@@ -3,14 +3,14 @@ import GifToVideo from "./GifToVideo";
 export default function Hero() {
   return (
     <section className="w-full bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-screen-xl px-4 py-8 pt-20 sm:py-16 sm:pt-24 lg:py-24 lg:pt-32">
+      <div className="mx-auto max-w-screen-xl px-4 py-8 pt-4 sm:py-16 sm:pt-16 lg:py-24 lg:pt-24">
         <div className="text-center">
           <h1
             className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
             The better way to build visualizations
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-gray-500 md:text-lg lg:text-xl dark:text-gray-400">
-            Level up your insights with the first open-source version-controlled BI framework built for the modern data stack.
+          The open-source BI-As-Code framework that helps data teams ship faster using version control and CI/CD.
           </p>
         </div>
 

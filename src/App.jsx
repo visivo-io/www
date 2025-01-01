@@ -12,24 +12,28 @@ const customTheme = {
 function App() {
   return (
     <Flowbite theme={{ theme: customTheme }}>
-      <Navbar fluid={true} className="bg-gray-100">
+      <Navbar fluid={true} className="sticky top-0 z-50 w-full bg-gray-100">
         <Navbar.Brand href="/">
           <img src="/images/logo.png" className="mr-3 h-6 sm:h-9" alt="Visivo Logo" />
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Visivo</span>
         </Navbar.Brand>
-        <Navbar.Collapse>
-          <Navbar.Link href="/pricing">Pricing</Navbar.Link>
-          <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
-        </Navbar.Collapse>
-        <div className="flex">
+        
+        <div className="flex md:order-2">
           <DarkThemeToggle className="mr-2" />
           <a href="https://app.visivo.io">
             <Button color="primary">App</Button>
           </a>
+          <Navbar.Toggle />
         </div>
-      </Navbar >
+        
+        <Navbar.Collapse>
+          <Navbar.Link href="/examples">Examples</Navbar.Link>
+          <Navbar.Link href="/pricing">Pricing</Navbar.Link>
+          <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
+        </Navbar.Collapse>
+      </Navbar>
 
-      <main className="w-full flex-col items-center justify-center gap-2 dark:bg-gray-800">
+      <main className="w-full flex-col items-center justify-center dark:bg-gray-800">
         <Outlet />
       </main>
 
