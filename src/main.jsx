@@ -7,6 +7,7 @@ import AboutUs from "./AboutUs.jsx";
 import Pricing from "./Pricing.jsx";
 import Examples from "./Examples.jsx";
 import ProductAnalytics from "./solutions/ProductAnalytics.jsx";
+import BusinessIntelligence from "./solutions/BusinessIntelligence.jsx";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="about-us" element={<AboutUs />} />
           <Route path="examples" element={<Examples />} />
           <Route path="solutions/product-analytics" element={<ProductAnalytics />} />
+          <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} />
         </Route>
       </Routes>
     </BrowserRouter>
