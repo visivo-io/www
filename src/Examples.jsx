@@ -15,6 +15,13 @@ const EXAMPLE_ITEMS = [
     demoUrl: "https://examples.visivo.io/",
     githubUrl: "https://github.com/visivo-io/visivo/tree/main/test-projects/docs-examples"
   },
+  {
+    title: "Ohio State Spreads",
+    description: "Compare Ohio State Football spreads to the outcome of their games",
+    imageUrl: "/images/gallery/osu-football.png",
+    demoUrl: "https://visivo-buckeyes-football.netlify.app/",
+    githubUrl: "https://github.com/visivo-io/2024-college-football-dashboards"
+  },
   // Add more gallery items as needed
 ];
 

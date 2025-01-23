@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import tw from "tailwind-styled-components"
 import Faq from "./components/Faq"
 const Card = tw.div`
@@ -34,8 +35,63 @@ const Price = tw.span`
   text-5xl font-extrabold text-gray-900 dark:text-white
 `
 const Yearly = tw.p`
-  mb-1 mt-4 text-gray-500 dark:text-gray-400
+  mb-1 mt-4 text-gray-500 dark:text-gray-400 min-h-[3rem]
 `
+
+const PlanToggle = ({ isEnterprise, setIsEnterprise }) => {
+  return (
+    <div className="flex items-center justify-center space-x-2 mb-4">
+      <span className={`text-sm ${!isEnterprise ? 'text-gray-900 font-medium' : 'text-gray-500'} dark:text-gray-400`}>
+        Growth
+      </span>
+      <button
+        onClick={() => setIsEnterprise(!isEnterprise)}
+        className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-700"
+      >
+        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${isEnterprise ? 'translate-x-6' : 'translate-x-1'}`} />
+      </button>
+      <span className={`text-sm ${isEnterprise ? 'text-gray-900 font-medium' : 'text-gray-500'} dark:text-gray-400`}>
+        Enterprise
+      </span>
+    </div>
+  );
+};
+
+const EnterpriseGrowthCard = () => {
+  const [isEnterprise, setIsEnterprise] = useState(false);
+  
+  return (
+    <div className="flex flex-col">  
+      <Card>
+        <Title>{isEnterprise ? 'Enterprise' : 'Growth'}</Title>
+        <Price>Custom</Price>
+        <Yearly>
+          {isEnterprise 
+            ? "Designed to meet your team's needs"
+            : "We love helping growing companies. Let's work together."}
+        </Yearly>
+        <GetStarted />
+        <ul role="list" className="space-y-4 text-left text-gray-900 dark:text-gray-400">
+          <Bullet>Custom seats</Bullet>
+          <Bullet>Custom deployments</Bullet>
+          <Bullet>Custom time travel</Bullet>
+          {isEnterprise ? (
+            <>
+              <Bullet>1 hour support SLA</Bullet>
+              <Bullet>Single Sign On</Bullet>
+            </>
+          ) : (
+            <Bullet>Analytics consulting</Bullet>
+          )}
+        </ul>
+      </Card>
+      <div className="mt-auto mb-0">
+        <PlanToggle isEnterprise={isEnterprise} setIsEnterprise={setIsEnterprise} />
+      </div>
+    </div>
+  );
+};
+
 const Pricing = () => {
   return (
     <>
@@ -65,7 +121,7 @@ const Pricing = () => {
             <Card>
               <Title>Team</Title>
               <Price>$599</Price>
-              <Yearly>20% discount, paid annually</Yearly>
+              <Yearly>per month, 20% discount if paid annually</Yearly>
               <GetStartedHighlight />
               <ul role="list" className="space-y-4 text-left text-gray-900 dark:text-gray-400">
                 <Bullet>10 seats included *</Bullet>
@@ -77,30 +133,18 @@ const Pricing = () => {
             <Card>
               <Title>Business</Title>
               <Price>$1999</Price>
-              <Yearly>20% discount, paid annually</Yearly>
+              <Yearly>per month, 20% discount if paid annually</Yearly>
               <GetStarted />
               <ul role="list" className="space-y-4 text-left text-gray-900 dark:text-gray-400">
-                <Bullet>25 seats included *</Bullet>
+                <Bullet>100 seats </Bullet>
                 <Bullet>4096 deployments /day</Bullet>
                 <Bullet>3 months time travel</Bullet>
-                <Bullet>4 hour support SLA</Bullet>
+                <Bullet>2 hour support SLA</Bullet>
                 <Bullet>Access controls</Bullet>
                 <Bullet>Dedicated support manager</Bullet>
               </ul>
             </Card>
-            <Card>
-              <Title>Enterprise</Title>
-              <Price>Custom</Price>
-              <Yearly>Designed to meet your needs</Yearly>
-              <GetStarted />
-              <ul role="list" className="space-y-4 text-left text-gray-900 dark:text-gray-400">
-                <Bullet>Custom seats</Bullet>
-                <Bullet>Custom deployments</Bullet>
-                <Bullet>Custom time travel</Bullet>
-                <Bullet>1 hour support SLA</Bullet>
-                <Bullet>Single Sign On</Bullet>
-              </ul>
-            </Card>
+            <EnterpriseGrowthCard />
           </div>
         </div>
       </section>

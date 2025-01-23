@@ -1,4 +1,4 @@
-import { DarkThemeToggle, Navbar, Button, Flowbite, Footer } from "flowbite-react";
+import { DarkThemeToggle, Navbar, Button, Flowbite, Footer, Dropdown } from "flowbite-react";
 import { Outlet } from "react-router-dom";
 
 const customTheme = {
@@ -27,6 +27,14 @@ function App() {
         </div>
         
         <Navbar.Collapse>
+          {/* <Dropdown label="Solutions" inline>
+            <Dropdown.Item href="/solutions/product-analytics">
+              Product Analytics
+            </Dropdown.Item>
+            <Dropdown.Item href="/solutions/business-intelligence">
+              Business Intelligence
+            </Dropdown.Item>
+          </Dropdown> */}
           <Navbar.Link href="/examples">Examples</Navbar.Link>
           <Navbar.Link href="/pricing">Pricing</Navbar.Link>
           <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
