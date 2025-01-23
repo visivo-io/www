@@ -21,8 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="privacy" element={<Privacy />} />
           <Route path="about-us" element={<AboutUs />} />
           <Route path="examples" element={<Examples />} />
-          <Route path="solutions/product-analytics" element={<ProductAnalytics />} />
-          <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} />
+          {/* <Route path="solutions/product-analytics" element={<ProductAnalytics />} />
+          <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
