@@ -63,6 +63,7 @@ function App() {
           <Footer.Divider />
           <Footer.Copyright href="#" by="Visivo™" year={2024} />
         </div>
+        <chatlio-widget widgetid="9b6c297a-87af-43b4-4a16-fa838c02755c"></chatlio-widget>
       </Footer>
     </Flowbite>
   );
