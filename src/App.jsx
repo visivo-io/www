@@ -27,14 +27,14 @@ function App() {
         </div>
         
         <Navbar.Collapse>
-          {/* <Dropdown label="Solutions" inline>
-            <Dropdown.Item href="/solutions/product-analytics">
-              Product Analytics
+          <Dropdown label="Solutions" inline>
+            <Dropdown.Item href="/solutions/engineering-analytics">
+              Engineering Analytics
             </Dropdown.Item>
             <Dropdown.Item href="/solutions/business-intelligence">
               Business Intelligence
             </Dropdown.Item>
-          </Dropdown> */}
+          </Dropdown>
           <Navbar.Link href="/examples">Examples</Navbar.Link>
           <Navbar.Link href="/pricing">Pricing</Navbar.Link>
           <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
