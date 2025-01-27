@@ -27,15 +27,16 @@ function App() {
         </div>
         
         <Navbar.Collapse>
-          {/* <Dropdown label="Solutions" inline>
-            <Dropdown.Item href="/solutions/product-analytics">
-              Product Analytics
+          <Dropdown label="Solutions" inline>
+            <Dropdown.Item href="/solutions/engineering-analytics">
+              Engineering Analytics
             </Dropdown.Item>
             <Dropdown.Item href="/solutions/business-intelligence">
               Business Intelligence
             </Dropdown.Item>
-          </Dropdown> */}
+          </Dropdown>
           <Navbar.Link href="/examples">Examples</Navbar.Link>
+          {/* <Navbar.Link href="/blog">Blog</Navbar.Link> */}
           <Navbar.Link href="/pricing">Pricing</Navbar.Link>
           <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
         </Navbar.Collapse>
@@ -63,6 +64,7 @@ function App() {
           <Footer.Divider />
           <Footer.Copyright href="#" by="Visivo™" year={2024} />
         </div>
+        <chatlio-widget widgetid="9b6c297a-87af-43b4-4a16-fa838c02755c"></chatlio-widget>
       </Footer>
     </Flowbite>
   );

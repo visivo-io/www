@@ -6,10 +6,12 @@ import Privacy from "./Privacy.jsx";
 import AboutUs from "./AboutUs.jsx";
 import Pricing from "./Pricing.jsx";
 import Examples from "./Examples.jsx";
-import ProductAnalytics from "./solutions/ProductAnalytics.jsx";
 import BusinessIntelligence from "./solutions/BusinessIntelligence.jsx";
+import EngineeringAnalytics from "./solutions/EngineeringAnalytics.jsx";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import BlogGallery from "./components/blog/BlogGallery.jsx";
+import BlogPost from "./components/blog/BlogPost.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -21,8 +23,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="privacy" element={<Privacy />} />
           <Route path="about-us" element={<AboutUs />} />
           <Route path="examples" element={<Examples />} />
-          {/* <Route path="solutions/product-analytics" element={<ProductAnalytics />} />
-          <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} /> */}
+          {/* <Route path="blog" element={<BlogGallery />} />
+          <Route path="blog/:slug" element={<BlogPost />} /> */}
+          <Route path="solutions/engineering-analytics" element={<EngineeringAnalytics />} />
+          <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} /> 
         </Route>
       </Routes>
     </BrowserRouter>
