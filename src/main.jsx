@@ -6,12 +6,13 @@ import Privacy from "./Privacy.jsx";
 import AboutUs from "./AboutUs.jsx";
 import Pricing from "./Pricing.jsx";
 import Examples from "./Examples.jsx";
+import BlogSection from "./BlogSection.jsx";
 import BusinessIntelligence from "./solutions/BusinessIntelligence.jsx";
 import EngineeringAnalytics from "./solutions/EngineeringAnalytics.jsx";
+import BlogPost from "./components/BlogPost.jsx";
+import NotFound from "./NotFound.jsx";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import BlogGallery from "./components/blog/BlogGallery.jsx";
-import BlogPost from "./components/blog/BlogPost.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -23,10 +24,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="privacy" element={<Privacy />} />
           <Route path="about-us" element={<AboutUs />} />
           <Route path="examples" element={<Examples />} />
-          {/* <Route path="blog" element={<BlogGallery />} />
-          <Route path="blog/:slug" element={<BlogPost />} /> */}
+          <Route path="blog" element={<BlogSection />} />
+          <Route path="blog/:slug" element={<BlogPost />} /> {/* Dynamic blog post route */}
           <Route path="solutions/engineering-analytics" element={<EngineeringAnalytics />} />
-          <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} /> 
+          <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} />
+          <Route path="*" element={<NotFound />} /> {/* 404 catch-all route */}
         </Route>
       </Routes>
     </BrowserRouter>
