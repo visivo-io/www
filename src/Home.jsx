@@ -1,6 +1,7 @@
 import Hero from "./components/Hero";
 import Features from "./components/Features";
 import Testimonials from "./components/Testimonials";
+import InstallCommand from "./components/InstallCommand";
 const Home = () => {
   return (
     <div>
@@ -16,6 +17,7 @@ const Home = () => {
             <p className="text-gray-500 md:text-lg dark:text-gray-400">
               Install our CLI for local development, then activate your trial for deployments. No credit card required.
             </p>
+            <InstallCommand />
             <div className="flex justify-center gap-4">
               <a href="https://app.visivo.io/register"
                 className="inline-flex rounded-lg bg-primary-500 px-5 py-3 text-sm font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">

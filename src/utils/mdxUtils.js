@@ -1,11 +1,15 @@
 const authors = {
+    "Jared Jesionek": {
+        title: "CEO & Co-founder of Visivo",
+        image: "../../public/images/jared.jpeg"
+    },
+    "Tim Overly": {
+        title: "CTO & Co-founder of Visivo",
+        image: "../../public/images/tim.png"  
+    },
     "Jese Leos": {
       title: "Graphic Designer, educator & CEO Flowbite",
       image: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-    },
-    "Roberta Casas": {
-      title: "Another Person",
-      image: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
     },
     "Sofia McGuire": {
       title: "Assistant to the GPT",
@@ -30,9 +34,50 @@ export async function getPostBySlug(slug) {
         image: authorInfo.image
       },
       date: frontmatter.date,
+      slug: slug,
+      tag: frontmatter.tag,
+      imgSrc: frontmatter.imgSrc,
+      imgAlt: frontmatter.imgAlt || "Blog Post Image",
+      readTime: frontmatter.readTime || "4 min read", 
+      description: frontmatter.description
     };
   } catch (error) {
     console.error(`Error reading post file: ${error}`);
     return null;
   }
+}
+
+export async function getAllPosts() {
+  const posts = [];
+  
+  // Get all .mdx files from the posts directory
+  const postFiles = import.meta.glob('../../posts/*.mdx');
+  
+  for (const path in postFiles) {
+    // Extract slug from filename (remove path and extension)
+    const slug = path.split('/').pop().replace('.mdx', '');
+    
+    try {
+      const post = await getPostBySlug(slug);
+      if (post) {
+        posts.push({
+          slug,
+          imgSrc: post.imgSrc,
+          imgAlt: post.imgAlt,
+          tag: post.tag,
+          title: post.title,
+          description: post.description,
+          authorImg: post.author.image,
+          authorName: post.author.name,
+          date: post.date,
+          readTime: post.readTime
+        });
+      }
+    } catch (error) {
+      console.error(`Error loading post ${slug}:`, error);
+    }
+  }
+  
+  // Sort posts by date (most recent first)
+  return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 } 

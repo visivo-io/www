@@ -1,58 +1,95 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BlogArticleCard from "./components/BlogArticleCard";
+import { getAllPosts } from "./utils/mdxUtils";
 
 const BlogSection = () => {
-  const articles = [
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+
+  const externalArticles = [
     {
-      slug: "our-first-office",
-      imgSrc: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/blog/office-laptops.png",
-      imgAlt: "office laptop working",
-      tag: "Article",
-      title: "Our first office",
-      description: "Over the past year, Volosoft has undergone many changes! After months of preparation and some hard work, we moved to our new office.",
-      authorImg: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png",
-      authorName: "Jese Leos",
-      date: "Aug 15, 2021",
-      readTime: "16 min read",
-    },
-    {
-      slug: "we-partnered-with-google",
-      imgSrc: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/blog/google-hq.png",
-      imgAlt: "Google HQ",
-      tag: "Article",
-      title: "We partnered up with Google",
-      description: "Over the past year, Volosoft has undergone many changes! After months of preparation and some hard work, we moved to our new office.",
-      authorImg: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png",
-      authorName: "Roberta Casas",
-      date: "Aug 15, 2021",
-      readTime: "16 min read",
-    },
-    {
-      slug: "our-first-react-project",
-      imgSrc: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/blog/office-laptops-2.png",
-      imgAlt: "office laptops",
-      tag: "Article",
-      title: "Our first project with React",
-      description: "Over the past year, Volosoft has undergone many changes! After months of preparation and some hard work, we moved to our new office.",
-      authorImg: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png",
-      authorName: "Sofia McGuire",
-      date: "Aug 15, 2021",
-      readTime: "16 min read",
-    },
+      title: "External Article Example",
+      description: "This is an example of an external article that links to another website",
+      tag: "External",
+      imgSrc: "/path/to/image.jpg",
+      imgAlt: "External Article Image",
+      authorName: "Tim Overly",
+      authorImg: "/images/tim.png",
+      date: "Mar 21, 2024",
+      readTime: "5 min read",
+      external_link: "https://medium.com/@tim_visivo/quickly-create-a-github-dashboard-using-visivo-10371f1dfea1"
+    }
   ];
+
+  useEffect(() => {
+    getAllPosts()
+      .then(posts => {
+        setArticles([...posts, ...externalArticles]);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error loading posts:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  const filteredArticles = articles.filter(article => {
+    const matchesSearch = (
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    const matchesTag = !selectedTag || article.tag === selectedTag;
+    return matchesSearch && matchesTag;
+  });
+
+  const uniqueTags = [...new Set(articles.map(article => article.tag))];
+
+  if (loading) {
+    return <div>Loading...</div>; // You might want to add a proper loading spinner here
+  }
 
   return (
     <section className="bg-white dark:bg-gray-900">
-      <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        <div className="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Our Blog</h2>
+      <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-6">
+        <div className="mx-auto max-w-screen-sm text-center mb-8 lg:mb-8">
+          <h4 className="mb-4 text-1xl tracking-tight font-extrabold text-gray-900 dark:text-white">Blog</h4>
           <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
-            We use an agile approach to test assumptions and connect with the needs of your audience early and often.
+            Our vision for the future of analytics, thoughts on the current state of data. 
           </p>
         </div>
+        <div className="mb-8">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="w-full sm:w-96 relative">
+              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Search articles..."
+                className="w-full p-2 pl-10 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <select
+              className="w-full sm:w-48 p-2 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              value={selectedTag}
+              onChange={(e) => setSelectedTag(e.target.value)}
+            >
+              <option value="">All Tags</option>
+              {uniqueTags.map(tag => (
+                <option key={tag} value={tag}>{tag}</option>
+              ))}
+            </select>
+          </div>
+        </div>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article, index) => (
-            <BlogArticleCard key={index} {...article} />
+          {filteredArticles.map((article, index) => (
+            <BlogArticleCard key={article.slug} {...article} />
           ))}
         </div>
       </div>

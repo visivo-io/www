@@ -1,0 +1,66 @@
+export const frontmatter = {
+  title: "Annotation's Role in BI",
+  date: "Mar 20, 2024",
+  description: "Learn how to enhance your data visualizations with annotations and shapes using Visivo's powerful configuration options.",
+  author: "Jared Jesionek",
+  tag: "Tutorial",
+  imgSrc: "./images/annotations.png",
+  imgAlt: "Chart with annotations example",
+  readTime: "5 min"
+};
+
+# Enhancing Data Visualizations with Annotations in Visivo
+
+## Why Annotations Matter in Data Visualization
+
+Charts and graphs are essential tools for data communication, but raw visualizations often leave room for misinterpretation. Annotations add crucial context, making key insights clearer and more actionable. By labeling trends, highlighting important data points, or explaining anomalies, annotations help both technical and non-technical users understand the story behind the data.
+
+### Key Benefits of Using Annotations:
+- **Clarity:** Helps viewers quickly grasp the significance of data points.
+- **Context:** Provides explanations for trends, outliers, and key insights.
+- **Engagement:** Makes charts more interactive and user-friendly.
+- **Decision Support:** Ensures stakeholders can interpret data accurately for informed decisions.
+
+## How to Use Annotations in Visivo
+
+Visivo provides built-in support for adding annotations and shapes, enabling users to enhance their charts effectively. Below are key features and how to implement them:
+
+### Adding Text Annotations
+Text annotations allow you to place explanatory labels on charts to highlight key points. Here’s an example:
+
+```yaml
+annotations:
+  - x: "2024-01-01"
+    y: 500
+    text: "Sales spike due to holiday season"
+    showarrow: true
+    arrowhead: 4
+```
+
+### Highlighting Regions with Shapes
+Shapes can be used to emphasize specific areas, such as trends or thresholds. Below is an example of a shaded region indicating a critical period:
+
+```yaml
+shapes:
+  - type: rect
+    xref: x
+    yref: paper
+    x0: "2024-01-01"
+    x1: "2024-02-01"
+    y0: 0
+    y1: 1
+    fillcolor: "rgba(255,0,0,0.3)"
+    line:
+      width: 0
+```
+
+### Best Practices for Annotations
+- **Use concise labels** to avoid cluttering the chart.
+- **Ensure proper placement** so that annotations don’t obstruct key data points.
+- **Use contrasting colors** for visibility against the chart’s background.
+- **Highlight only key insights** to maintain a clean and effective visualization.
+
+## Conclusion
+Annotations are a powerful way to enhance data storytelling, making insights more accessible and actionable. With Visivo’s annotation and shape features, users can improve clarity, engagement, and decision-making in their dashboards. Whether highlighting trends, marking milestones, or emphasizing key data points, Visivo makes it easy to create more informative visualizations.
+
+To learn more, check out our official [Annotations & Shapes Documentation](https://docs.visivo.io/topics/annotations/).

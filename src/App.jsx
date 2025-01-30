@@ -49,9 +49,9 @@ function App() {
             </Dropdown>
           </div>
           <Navbar.Link href="/examples">Examples</Navbar.Link>
-          {/* <Navbar.Link href="/blog">Blog</Navbar.Link>  */}
           <Navbar.Link href="/pricing">Pricing</Navbar.Link>
           <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
+          <Navbar.Link href="/blog">Blog</Navbar.Link> 
         </Navbar.Collapse>
       </Navbar>
 
