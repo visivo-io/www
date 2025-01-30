@@ -10,23 +10,55 @@ const BlogSection = () => {
 
   const externalArticles = [
     {
-      title: "External Article Example",
-      description: "This is an example of an external article that links to another website",
-      tag: "External",
-      imgSrc: "/path/to/image.jpg",
-      imgAlt: "External Article Image",
+      title: "Visualizing GitHub Data",
+      description: "Quickly gain insights into your Github Repositories with Visivo",
+      tag: "Dashboard",
+      imgSrc: "/images/visivo_github.jpg",
+      imgAlt: "Visivo Github",
       authorName: "Tim Overly",
       authorImg: "/images/tim.png",
-      date: "Mar 21, 2024",
-      readTime: "5 min read",
+      date: "Sept 28, 2023",
+      readTime: "4 min",
       external_link: "https://medium.com/@tim_visivo/quickly-create-a-github-dashboard-using-visivo-10371f1dfea1"
+    }, 
+    {
+      title: "RWX Chooses Visivo",
+      description: "Visivo is the most dev friendly and secure analytics",
+      tag: "Case Study",
+      imgSrc: "/images/rwx_visivo.webp",
+      imgAlt: "RWX Chooses Visivo",
+      authorName: "Dan Manges",
+      authorImg: "/images/dan.jpeg",
+      date: "April 23, 2024",
+      readTime: "5 min",
+      external_link: "https://www.rwx.com/blog/visivo-analytics"
+    },
+    {
+      title: "Visualizing Pytest Results",
+      description: "Step by step guide for leveraging Pytest, Fivetran & Visivo to quickly create monitoring for your CI/CD.",
+      tag: "Dashboard",
+      imgSrc: "/images/pytest_results.jpg",
+      imgAlt: "Visivo Pytest",
+      authorName: "Jared Jesionek",
+      authorImg: "/images/Jared.jpeg",
+      date: "Sept 25, 2023",
+      readTime: "6 min",
+      external_link: "https://medium.com/dev-genius/visualizing-pytest-results-with-the-modern-data-stack-29daeab99b66"
     }
   ];
-
+  
   useEffect(() => {
     getAllPosts()
       .then(posts => {
-        setArticles([...posts, ...externalArticles]);
+        // Combine posts and external articles
+        const allArticles = [...posts, ...externalArticles];
+        
+        // Sort by date in descending order (most recent first)
+        const sortedArticles = allArticles.sort((a, b) => {
+          return new Date(b.date) - new Date(a.date);
+        });
+
+        setArticles(sortedArticles);
         setLoading(false);
       })
       .catch(error => {

@@ -7,13 +7,9 @@ const authors = {
         title: "CTO & Co-founder of Visivo",
         image: "../../public/images/tim.png"  
     },
-    "Jese Leos": {
-      title: "Graphic Designer, educator & CEO Flowbite",
-      image: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-    },
-    "Sofia McGuire": {
-      title: "Assistant to the GPT",
-      image: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png"
+    "Dan Manges": {
+      title: "Co-Founder & CEO of RWX",
+      image: "../../public/images/dan.jpeg"
     }
   };
 
