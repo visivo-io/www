@@ -28,11 +28,22 @@ function App() {
         
         <Navbar.Collapse>
           <div className="flex items-center">
-            <Dropdown label="Solutions" inline={true}>
-              <Dropdown.Item href="/solutions/engineering-analytics">
+            <Dropdown 
+              label="Solutions" 
+              inline={true}
+              className="text-gray-700 md:hover:text-cyan-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              
+            >
+              <Dropdown.Item 
+                href="/solutions/engineering-analytics" 
+                className="text-gray-700 md:hover:text-cyan-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
                 Engineering Analytics
               </Dropdown.Item>
-              <Dropdown.Item href="/solutions/business-intelligence">
+              <Dropdown.Item 
+                href="/solutions/business-intelligence" 
+                className="text-gray-700 md:hover:text-cyan-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
                 Business Intelligence
               </Dropdown.Item>
             </Dropdown>
