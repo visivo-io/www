@@ -40,7 +40,7 @@ const BlogSection = () => {
       imgSrc: "/images/pytest_results.jpg",
       imgAlt: "Visivo Pytest",
       authorName: "Jared Jesionek",
-      authorImg: "/images/Jared.jpeg",
+      authorImg: "/images/jared.jpeg",
       date: "Sept 25, 2023",
       readTime: "6 min",
       external_link: "https://medium.com/dev-genius/visualizing-pytest-results-with-the-modern-data-stack-29daeab99b66"
