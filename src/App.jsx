@@ -17,7 +17,7 @@ function App() {
           <img src="/images/logo.png" className="mr-3 h-6 sm:h-9" alt="Visivo Logo" />
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Visivo</span>
         </Navbar.Brand>
-        
+
         <div className="flex md:order-2">
           <DarkThemeToggle className="mr-2" />
           <a href="https://app.visivo.io">
@@ -25,22 +25,31 @@ function App() {
           </a>
           <Navbar.Toggle />
         </div>
-        
+
         <Navbar.Collapse>
-          <div className="flex items-center">
-            <Dropdown label="Solutions" inline={true}>
-              <Dropdown.Item href="/solutions/engineering-analytics">
+          <div className="flex items-center text-gray-200 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700">
+            <Dropdown
+              label="Solutions"
+              inline={true}
+            >
+              <Dropdown.Item
+                href="/solutions/engineering-analytics"
+                className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
+              >
                 Engineering Analytics
               </Dropdown.Item>
-              <Dropdown.Item href="/solutions/business-intelligence">
+              <Dropdown.Item
+                href="/solutions/business-intelligence"
+                className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
+              >
                 Business Intelligence
               </Dropdown.Item>
             </Dropdown>
           </div>
           <Navbar.Link href="/examples">Examples</Navbar.Link>
-          {/* <Navbar.Link href="/blog">Blog</Navbar.Link>  */}
           <Navbar.Link href="/pricing">Pricing</Navbar.Link>
           <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
+          <Navbar.Link href="/blog">Blog</Navbar.Link>
         </Navbar.Collapse>
       </Navbar>
 
