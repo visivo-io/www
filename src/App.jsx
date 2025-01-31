@@ -27,7 +27,7 @@ function App() {
         </div>
 
         <Navbar.Collapse>
-          <div className="flex items-center text-gray-200 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700">
+          <div className="flex items-center text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700">
             <Dropdown
               label="Solutions"
               inline={true}
