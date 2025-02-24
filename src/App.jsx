@@ -44,6 +44,12 @@ function App() {
               >
                 Business Intelligence
               </Dropdown.Item>
+              <Dropdown.Item
+                href="/solutions/embedding"
+                className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
+              >
+                Embedding
+              </Dropdown.Item>
             </Dropdown>
           </div>
           <Navbar.Link href="/examples">Examples</Navbar.Link>
