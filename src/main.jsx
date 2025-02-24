@@ -9,6 +9,7 @@ import Examples from "./Examples.jsx";
 import BlogSection from "./BlogSection.jsx";
 import BusinessIntelligence from "./solutions/BusinessIntelligence.jsx";
 import SoftwareEngineering from "./solutions/SoftwareEngineering.jsx";
+import Embedding from "./solutions/Embedding.jsx";
 import BlogPost from "./components/BlogPost.jsx";
 import NotFound from "./NotFound.jsx";
 import "./index.css";
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="blog/:slug" element={<BlogPost />} /> {/* Dynamic blog post route */}
           <Route path="solutions/software-engineering" element={<SoftwareEngineering />} />
           <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} />
+          <Route path="solutions/embedding" element={<Embedding />} />
           <Route path="*" element={<NotFound />} /> {/* 404 catch-all route */}
         </Route>
       </Routes>
