@@ -8,7 +8,7 @@ import Pricing from "./Pricing.jsx";
 import Examples from "./Examples.jsx";
 import BlogSection from "./BlogSection.jsx";
 import BusinessIntelligence from "./solutions/BusinessIntelligence.jsx";
-import EngineeringAnalytics from "./solutions/EngineeringAnalytics.jsx";
+import SoftwareEngineering from "./solutions/SoftwareEngineering.jsx";
 import BlogPost from "./components/BlogPost.jsx";
 import NotFound from "./NotFound.jsx";
 import "./index.css";
@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="examples" element={<Examples />} />
           <Route path="blog" element={<BlogSection />} />
           <Route path="blog/:slug" element={<BlogPost />} /> {/* Dynamic blog post route */}
-          <Route path="solutions/engineering-analytics" element={<EngineeringAnalytics />} />
+          <Route path="solutions/software-engineering" element={<SoftwareEngineering />} />
           <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} />
           <Route path="*" element={<NotFound />} /> {/* 404 catch-all route */}
         </Route>
