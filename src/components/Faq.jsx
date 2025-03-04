@@ -27,20 +27,6 @@ const Faq = () => {
             <Section>
               <Heading>
                 <QuestionMark />
-                Can I get more seats on a given plan? *
-              </Heading>
-              <Answer>Yes, additional seats are available on our paid plans for $15/month.</Answer>
-            </Section>
-            <Section>
-              <Heading>
-                <QuestionMark />
-                What do I do if I am more than a Solo and Less than a Team?
-              </Heading>
-              <Answer>We can work with you on custom pricing if you are in a growing organization and need fewer than 10 seats.  Contact us at sales@visivo.io.</Answer>
-            </Section>
-            <Section>
-              <Heading>
-                <QuestionMark />
                 How do I use the Open Source tool?
               </Heading>
               <Answer>The open source CLI is used for local development with every plan.  It can also be used on its own to create dashboards you wish to host internally. Checkout our documentation for more information.</Answer>
