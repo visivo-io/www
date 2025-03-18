@@ -1,15 +1,15 @@
 const authors = {
     "Jared Jesionek": {
         title: "CEO & Co-founder of Visivo",
-        image: "/images/jared.jpeg"
+        image: "/images/Jared.webp"
     },
     "Tim Overly": {
         title: "CTO & Co-founder of Visivo",
-        image: "/images/tim.png"  
+        image: "/images/tim.webp"  
     },
     "Dan Manges": {
       title: "Co-Founder & CEO of RWX",
-      image: "/images/dan.jpeg"
+      image: "/images/dan.webp"
     }
   };
 

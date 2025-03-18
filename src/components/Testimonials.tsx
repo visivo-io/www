@@ -1,6 +1,6 @@
 const TESTIMONIALS = [
   {
-    companyLogoUrl: '/testimonials/rwx_logo_dark.svg',
+    companyLogoUrl: '/images/rwx_logo_dark.svg',
     content: `The ease of 
               developing and maintaining dashboards has resulted in our team 
               quickly building a much higher degree of visibility into our 
@@ -9,7 +9,7 @@ const TESTIMONIALS = [
     author: {
       name: 'Dan Manges',
       title: 'Co-Founder & CEO - RWX',
-      avatarUrl: '/testimonials/dan-manges.jpeg',
+      avatarUrl: '/images/dan.webp',
     },
   },
 
