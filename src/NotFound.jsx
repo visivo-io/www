@@ -85,7 +85,7 @@ function NotFound() {
           }}
         >
           <img 
-            src="/images/big-logo.png" 
+            src="/images/big-logo.webp" 
             alt="Visivo Logo" 
             className="h-16 w-auto"
           />
