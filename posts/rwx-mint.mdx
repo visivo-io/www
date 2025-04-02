@@ -1,0 +1,54 @@
+export const frontmatter = {
+  title: "RWX Mint: Our Favorite CI/CD Tool",
+  date: "Feb 5, 2025",
+  description: "RWX Mint has been a huge step up from Github Actions.",
+  author: "Jared Jesionek",
+  tag: "Partnership",
+  imgSrc: "./images/visivo_rwx.webp",
+  imgAlt: "Chart with annotations example",
+  readTime: "5 min"
+};
+
+## Why Visivo Uses RWX Mint for CI/CD
+
+At Visivo, we're always looking for ways to improve our development workflow, expand testing coverage, and maintain fast CI/CD feedback loops. 
+
+While a robust CI/CD pipeline is needed to ensure high quality code, it can slow down the development feedback cycle. Mint addresses this trade off and reduces it's impact so that you can expand your testing _and_ decrease test suite run time. 
+
+## The Power of RWX Mint
+
+Mint is a DAG-based job runner for CI/CD. The syntax is similar enough to GitHub Actions so the refactor isn't too bad. After adopting Mint we saw immediate 
+benefits from caching, parallel processing, a slick UI and remote debugging. 
+
+#### **10x Faster CI/CD Runtimes**
+
+Mint's DAG-based job runner allows us to parallelize tasks efficiently. Instead of running steps sequentially, dependencies are mapped out and executed in parallel wherever possible. As a result, our CI/CD pipelines are now **10x faster** than they were on Github Actions. You can see below just how much runs in parallel!
+![](/images/rwx-flame.png)
+
+#### **Intelligent Caching Saves Time**
+
+One of the most frustrating aspects of CI/CD is waiting for repetitive tasks to execute over and over. Mint's intelligent caching mechanism speeds up builds by skipping unnecessary work. By caching workflow tasks, we've significantly cut down redundant processing time, making our deployments faster and smoother.
+
+#### **A Modern UI with Better Error Handling**
+
+While GitHub Actions provides logs, debugging failures can be tedious. Mint's modern UI makes error reporting **far more intuitive**, surfacing issues clearly without needing to sift through walls of text. This has made troubleshooting CI/CD failures much less painful.
+
+#### **Remote Debugging for Faster Development**
+
+One of Mint's standout features is **remote debugging** ([docs](https://www.rwx.com/docs/mint/remote-debugging)). Developing CI/CD scripts can be a slow feedback loop—commit, push, wait, debug. Mint eliminates this pain point by allowing **real-time debugging** of workflows remotely. This has been a game-changer for our team, dramatically reducing iteration time on new automation.
+
+#### **Excellent Support and Migration Assistance**
+
+RWX's team has been **incredibly responsive** whenever we had migration questions. Their quick turnaround times and hands-on support made the transition smooth, which is not something we've experienced with other CI/CD providers.
+
+
+## How We use Mint 
+You can see below where Mint fits into our stack. It manages both our CI/CD and production deployments. Between the caching and parallel processing we see run times that are 3-5x faster than github actions in production and 10-14x faster in CI-CD where we need to test multiple enviornments.
+![](/images/rwx_ci_cd.png)
+
+## RWX's Take on Visivo
+
+RWX published [a blog post](https://www.rwx.com/blog/visivo-analytics) about how Visivo integrates with Mint. we're excited about continuing to refine our deployment processes with their platform.
+
+For those interested in exploring Mint further, check out their [documentation](https://www.rwx.com/docs/mint). If you're building a modern data tool like Visivo, it's well worth considering for CI/CD.
+
