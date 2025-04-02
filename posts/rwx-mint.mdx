@@ -11,20 +11,18 @@ export const frontmatter = {
 
 ## Why Visivo Uses RWX Mint for CI/CD
 
-At Visivo, we're always looking for new tools that streamline our development workflow, reduce friction, and improve efficiency. 
-When it came to optimizing our CI/CD pipeline, RWX Mint was a natural fit. Having implemented it at Empora companies prior to Visivo, I knew it could deliver significant improvements over traditional CI/CD tools like GitHub Actions.
+At Visivo, we're always looking for ways to improve our development workflow, expand testing coverage, and maintain fast CI/CD feedback loops. 
 
-I'll go into a little detail on why we think it's a better choice for modern teams and how we use it at Visivo.
-
+While a robust CI/CD pipeline is needed to ensure high quality code, it can slow down the development feedback cycle. Mint addresses this trade off and reduces it's impact so that you can expand your testing _and_ decrease test suite run time. 
 
 ## The Power of RWX Mint
 
-Mint is a DAG-based job runner for CI/CD. The syntax is similar enough to GitHub Actions where the transition will not be hard and the advantages are well worth it. After adopting it for Visivo, we saw immediate 
-cost and speed benefits from **caching**, **parallel processing a la DAG**  
+Mint is a DAG-based job runner for CI/CD. The syntax is similar enough to GitHub Actions so the refactor isn't too bad. After adopting Mint we saw immediate 
+benefits from caching, parallel processing, a slick UI and remote debugging. 
 
 #### **10x Faster CI/CD Runtimes**
 
-Mint's DAG-based job runner allows us to parallelize tasks efficiently. This means that instead of running steps sequentially, dependencies are mapped out and executed in parallel wherever possible. As a result, our CI/CD pipelines are now **10x faster** than they were before. You can see below just how much runs in parallel!
+Mint's DAG-based job runner allows us to parallelize tasks efficiently. Instead of running steps sequentially, dependencies are mapped out and executed in parallel wherever possible. As a result, our CI/CD pipelines are now **10x faster** than they were on Github Actions. You can see below just how much runs in parallel!
 ![](/images/rwx-flame.png)
 
 #### **Intelligent Caching Saves Time**
