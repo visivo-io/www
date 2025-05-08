@@ -62,6 +62,7 @@ const PlanToggle = ({ isYearly, setIsYearly }) => {
   );
 };
 
+
 const Pricing = () => {
   const [isYearly, setIsYearly] = useState(true);
 
@@ -114,7 +115,7 @@ const Pricing = () => {
               <GetStarted />
               <ul role="list" className="space-y-4 text-left text-gray-900 dark:text-gray-400">
                 <Bullet>All Basic features plus:</Bullet>
-                <Bullet>10 seat minimum</Bullet>
+                <Bullet>6 seat minimum</Bullet>
                 <Bullet>4096 deployments /day</Bullet>
                 <Bullet>3 months time travel</Bullet>
                 <Bullet>Slack support channel</Bullet>

@@ -1,0 +1,924 @@
+{
+    "Plotly Dash": {
+        "targetUsers": [
+            "Developers",  "Highly technical Data Scientists", "Students"
+        ],
+        "deploymentModel": [
+            "Self-hosted (open-source) or Plotly Enterprise Server"
+        ],
+        "pricing": "Open-source (MIT); Enterprise plans for support",
+        "cost": "$",
+        "visualization": "Fully custom UI with code; any plotly or HTML component; highly flexible but code-driven",
+        "uniqueDiffs": "Extreme flexibility in design and functionality (code-level control). − Requires programming; not a drag-drop tool for non-devs.",
+        "gitIntegration": true,
+        "ciCdOriginal": "Via typical dev workflows (deploy apps with CI; tests possible in code)",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Highly interactive UIs with callbacks; can update on user input in real-time",
+        "realTime": false,
+        "integrations": [
+            "dbt",
+            "Github",
+            "GitLab",
+            "Google Sheets"
+        ],
+        "easeOfDevOriginal": "1 (requires complex coding skills & self-hosted infrastructure)",
+        "easeOfDev": 1,
+        "aiFeaturesOriginal": "No native AI features, can use LLMS to assist in development",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "Requires direct DB/API access in code (no built-in data layer); no built-in virtualization or push. App pulls data as coded; security handled by app deployment (auth, etc. configurable)",
+        "website": "plotly.com/dash",
+        "urlSlug": "plotly-dash"
+    },
+    "Rill Data": {
+        "targetUsers": [
+            "Operations Teams", "Analytics Engineers"
+        ],
+        "deploymentModel": [
+            "Cloud service (Managed)"
+        ],
+        "pricing": "Cloud Team plan >$250/mo - Pay by GB of data in dashboards after 1st 10GB",
+        "cost": "$$$",
+        "visualization": "Focus on metrics dashboards; limited chart types optimized for fast slice-and-dice; styling is opinionated (less custom code)",
+        "uniqueDiffs": "Embedded DuckDB engine – co-locates data & compute for speed. True 'metrics store' approach (define metrics once) for consistency. − Still maturing feature set; requires data to be loaded into Rill, and fewer visualization options than full BI suites.",
+        "gitIntegration": true,
+        "ciCdOriginal": "No ability to unit test metric outputs & limited CI/CD outside of compile validation",
+        "ciCd": false,
+        "realTimeOriginal": "No: In-memory engine (DuckDB) serves data from staging resources; interactive filtering and drill-down provides direct queries to DB",
+        "realTime": false,
+        "integrations": [
+            "Integrates with data lakes (Parquet/CSV) and DBs via import",
+            "Slack integration for alerts",
+            "Custom Code Based Integration"
+        ],
+        "easeOfDevOriginal": "3 (fast to do basic things, but highly opinionated and limited customization makes other things more difficult)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "No support for LLMs built in. Custom viz libary makes LLMs less useful in development.",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "Yes, you can build visually and have the code compile back, however it's not a two way street. You can't build code and have it convert to a visual in a hot reload.",
+        "visualToCode": true,
+        "dagBasedOriginal": "No - Rill follows the traditional Looker approach of defining metrics and then using those in dashboards.",
+        "dagBased": false,
+        "security": "DB Access: Not required at runtime (data is ingested into Rill's engine) – queries run in-memory. Virtualization: Data stays in engine (no live DB hits). Push: Data must be loaded (push ETL to Rill). Security: Supports read-only embedded DB; role-based dashboard access (authentication via service).",
+        "website": "rilldata.com",
+        "urlSlug": "rill-data"
+    },
+    "Lightdash": {
+        "targetUsers": [
+            "Looker Users who want a cheaper alternative",
+            "Analytics engineers",
+            "Business users who want to explore data"
+        ],
+        "deploymentModel": [
+            "Self-host (Docker, CLI)",  "Lightdash Cloud"
+        ],
+        "pricing": "Open-source (MIT); Cloud hosted plans (basic $800/mo & Cloud Pro $2,400/mo)",
+        "cost": "$$",
+        "visualization": "Modeled after Looker: define metrics in dbt, then drag-and-drop UI. Provides common charts & filters; less free-form than code, but ensures consistency via definitions.",
+        "uniqueDiffs": "Directly leverages dbt's semantic layer: 'write metrics in dbt, Lightdash enables self-serve'. Open-source alternative to Looker. − Requires an existing dbt project and good documentation; not usable without dbt setup. Fewer visualization types than Tableau/PowerBI.",
+        "gitIntegration": true,
+        "ciCdOriginal": "No - There's some support for CI/CD through validating compiled code, but no way to unit test metrics. Partial – integrates with dbt tests; can use CLI to preview and promote content",
+        "ciCd": false,
+        "realTimeOriginal": "Queries run on-demand on your warehouse; not real-time streaming. Interactive filters and drill-down supported (within defined metrics).",
+        "realTime": false,
+        "integrations": [
+            "dbt",
+            "Github",
+            "GitLab",
+            "Google Sheets"
+        ],
+        "easeOfDevOriginal": "2 (requires dbt; lots of boilerplate to get started, very slow application hinders productivity)",
+        "easeOfDev": 2,
+        "aiFeaturesOriginal": "No support for LLMs - combindation of code based metrics and cloud development makes it difficult to use LLMs for the entire development process.",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No - you define metrics in code and then build charts and dashboards visually. They are starting to introduce two way sync's but it's not yet fully baked.",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, connects directly to DB (runs SQL on warehouse). Virtualization: Relies on live queries (no internal storage). Push: Data is pulled via queries on demand or scheduled caching. Security: Uses dbt/warehouse for access control; supports role-based access in app; inherits dbt's data perms.",
+        "website": "lightdash.com",
+        "urlSlug": "lightdash"
+    },
+    "Looker (Google)": {
+        "targetUsers": [
+            "Enterprise Organizations",
+            "Google Cloud Accounts"
+        ],
+        "deploymentModel": [
+            "Cloud-hosted (Google Cloud)"
+        ],
+        "pricing": "Commercial (Proprietary); enterprise pricing (no free tier)",
+        "cost": "$$$$$",
+        "visualization": "Robust web dashboards and exploratory interface. Good selection of chart types; custom visualizations via plugins or custom code. Highly customizable via LookML for data logic, but visual formatting is UI-driven (some limitations vs. Tableau).",
+        "uniqueDiffs": "LookML semantic layer – centralized metrics definitions ensure a 'single source of truth'. Strong governance (row-level security, permissions) and embedded analytics support. − Requires upfront modeling (learning LookML); expensive. Visual customization and ad-hoc analysis flexibility less than Tableau/PowerBI.",
+        "gitIntegration": true,
+        "ciCdOriginal": "Yes: Supports dev/staging/prod model; LookML content validation tests (and third-party tools like Spectacles). CI possible via API.",
+        "ciCd": false,
+        "realTimeOriginal": "Quasi: Live query mode (every dashboard filter runs fresh queries) with caching. Not real-time push, but data is up-to-minute when queried. Interactivity through filters, drill-down, and data exploration UI.",
+        "realTime": false,
+        "integrations": [
+            "Google Cloud",
+            "Google Analytics",
+            "Google Sheets"
+        ],
+        "easeOfDevOriginal": "2 (initial modeling has a big learning curve)",
+        "easeOfDev": 2,
+        "aiFeaturesOriginal": "Not in core (some AI integrations via Google, e.g. Looker Q&A or upcoming Vertex AI connections)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes (direct read queries to DB with cached results). Virtualization: No internal engine – relies on source DB ('in-database' analytics). Push: No, pull-based queries (though persistent derived tables can be pushed into DB). Other: Fine-grained RBAC; row-level security; SSO/SAML support.",
+        "website": "looker.com",
+        "urlSlug": "looker-google"
+    },
+    "Microsoft Power BI": {
+        "targetUsers": [
+            "Business analysts", 
+            "Excel power users",
+            "enterprise BI teams",
+            "Business analysts"
+        ],
+        "deploymentModel": [
+            "Desktop + Cloud Service (PowerBI.com)",
+            "on-prem Report Server"
+        ],
+        "pricing": "Free desktop for windows; Pro $10/user/mo for sharing; Premium by capacity. Proprietary license.",
+        "cost": "$$$",
+        "visualization": "Rich library of visuals (bar, line, maps, etc.) plus custom visuals marketplace. Highly customizable formatting. Dashboard-style layouts with interactive tiles. Advanced calculations via DAX formula language.",
+        "uniqueDiffs": "Tight integration with Microsoft ecosystem (Excel, Azure). Easy to start for Excel users. AI features like Natural Language Q&A and Quick Insights built-in. − Desktop Windows-only; complex on very large datasets without Premium. DAX formulas have steep learning curve for some.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Partially: Deployment Pipelines in Power BI Service support CI/CD-like promotion. No built-in test framework (DAX tests via third-party).",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Live connection and DirectQuery for real-time data; also supports push streaming datasets. Interactivity is a core strength (cross-filtering, slicers, drill-down).",
+        "realTime": false,
+        "integrations": [
+            "100+ connectors (SQL DBs, Spark, Snowflake, Excel, Salesforce, etc.)",
+            "Azure ML and Python/R integration",
+            "Power BI Gateway for custom integrations"
+        ],
+        "easeOfDevOriginal": "3 (intuitive drag-and-drop; advanced features add complexity; very difficult to maintain quality and single source of truth)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "Yes: AI visuals (Key Influencers), NLQ ('Q&A' feature), upcoming GPT-powered enhancements.",
+        "aiFeatures": true,
+        "visualToCodeOriginal": "No - Powerbi dashboards do compile into XML but it's not human readable and you can develop code without the GUI",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Import mode stores data in in-memory caches (no DB needed at view time); DirectQuery mode requires DB connection for each view. Virtualization: DirectQuery and live connect act as virtualization (query on demand). Push: Supports push data via streaming API for real-time dashboards. Other: Robust security with Azure AD; row-level security definable in reports; data encryption on cloud.",
+        "website": "powerbi.microsoft.com",
+        "urlSlug": "microsoft-power-bi"
+    },
+    "Tableau (Salesforce)": {
+        "targetUsers": [
+            "Enterprise Organizations",
+            "Data analysts & business users (self-service BI)"
+        ],
+        "deploymentModel": [
+            "Desktop + Tableau Server", 
+            "Desktop + (on-prem) Tableau Server",
+            "Desktop + Tableau Cloud (SaaS)"
+        ],
+        "pricing": "Commercial (Proprietary); ~$70/user/mo for Creator. Public edition free (cloud, limited)",
+        "cost": "$$$$$",
+        "visualization": "Best-in-class drag-and-drop visualization. Wide variety of chart types and mapping; highly refined visual customization. Dashboards with interactive actions. Limited custom theming without extensions, but very flexible analytically.",
+        "uniqueDiffs": "+ Renowned for its ease of use and visual analytics power – users can explore data fluidly. Strong community and support. AI: 'Ask Data' (NL queries) and 'Explain Data' insights in newer versions. − Licensing cost; less programmable (proprietary formulas, no Git). Large deployments require governance to avoid 'spreadmarts.'",
+        "gitIntegration": false,
+        "ciCdOriginal": "Partial: Supports dev/staging sites for content promotion. No built-in test suite; rely on data source testing externally.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Live connection mode for near real-time updates (or scheduled extracts). Interactive filters, highlight actions, drill-down hierarchies. Auto-refresh and alerting available on Server.",
+        "realTime": false,
+        "integrations": [
+            "Major SQL and cloud data warehouses",
+            "Python/R via TabPy",
+            "dbt through published data sources"
+        ],
+        "easeOfDevOriginal": "3 (very intuitive for basic use, but advanced charts are difficult to create. Maintaining a single source of truth is difficult)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "Some: Starting to introduce NL query ('Ask Data') and automated insights ('Explain Data'). Overall it's still not very good at using LLMs to assist in development or answer questionss",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Optional – can import data into Tableau's Hyper engine or query live. Virtualization: Live query leaves data at source (virtualized access). Push: Extracts are pull-based (scheduled). Other: Row-level security via data source filters; fine-grained user permissions on Server; supports SAML/OAuth for auth.",
+        "website": "tableau.com",
+        "urlSlug": "tableau-salesforce"
+    },
+    "Evidence.dev": {
+        "targetUsers": [
+            "Analytics engineers",
+            "Data-savvy users who prefer code/markdown workflow",
+            "Engineers & Academics"
+        ],
+        "deploymentModel": [
+            "Self-host (static site)",
+            "Self-host (server)",
+            "Vercel/Netlify deployment"
+        ],
+        "pricing": "Open-source (MIT); free to use. New hosted service as of fall 2024 (can also deploy on Vercel, Netlify, etc.)",
+        "cost": "$",
+        "visualization": "Reports built as Markdown with embedded SQL and charts. Outputs static HTML dashboards. Customization via editing Markdown/HTML/CSS; not a point-and-click UI.",
+        "uniqueDiffs": "+ Write dashboards as code – lightweight, reproducible, easily integrated with dbt pipelines. Great for data narratives that combine text, data, and charts. − Static output means no ad-hoc drilling by end users; requires comfort with writing Markdown/SQL.",
+        "gitIntegration": true,
+        "ciCdOriginal": "Yes: Fits into CI – you can rebuild and deploy site on commit. Testing is manual (validate queries, etc.).",
+        "ciCd": false,
+        "realTimeOriginal": "Partial: Generates static dashboards – not live updating unless rebuilt. Limited interactivity (supports filters parameters that reload visuals, but no dynamic exploration beyond provided controls).",
+        "realTime": false,
+        "integrations": [
+            "SQL databases via JDBC/ODBC",
+            "dbt metadata integration",
+            "Static site deployment platforms"
+        ],
+        "easeOfDevOriginal": "3 (for coders, straightforward; for non-coders, not suitable)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "No",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Queries run at build time (or page load if in server mode); not needed for end viewer (static pages). Virtualization: By nature, it materializes results into the page (no live DB query once published). Push: Yes – essentially a push of data into static site. Other: No runtime user management (pages are static); security depends on where you host (you wouldn't include sensitive data in a public build).",
+        "website": "evidence.dev",
+        "urlSlug": "evidence-dev"
+    },
+    "Omni": {
+        "targetUsers": [
+            "SQL users",
+            "Spreadsheet users",
+            "Business executives",
+            "Data teams"
+        ],
+        "deploymentModel": [
+            "Cloud (SaaS on AWS)",
+            "Private cloud",
+            "Enterprise VPC"
+        ],
+        "pricing": "Commercial (Proprietary SaaS); demo & trial available (pricing not public)",
+        "cost": "$$$$",
+        "visualization": "Combines spreadsheet-like calculations, SQL, and drag/drop. Users can create charts with one-click from data tables. Good selection of standard visuals, with focus on ease (smart defaults). Custom styling is somewhat guided (aims for simplicity over exhaustive options).",
+        "uniqueDiffs": "Spreadsheet meets SQL: users can use Excel formulas or SQL interchangeably. AI \"calculation assistant\" suggests formulas from natural language. Governed semantic model ensures consistent metrics. − Newer product – not as feature-rich in visualization customization as legacy tools; purely cloud (may not suit those needing on-prem).",
+        "gitIntegration": false,
+        "ciCdOriginal": "Yes: Emphasizes DevOps integration – content and model can be promoted through environments, fitting into CI/CD.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Direct-query architecture (queries the DB on the fly) ensures up-to-date data; interactive filtering, Excel-like pivoting available. Not real-time streaming, but auto updates on query results.",
+        "realTime": false,
+        "integrations": [
+            "dbt (bi-directional sync)",
+            "Cloud data warehouses (Snowflake, BigQuery, Redshift)",
+            "Spreadsheet data sources"
+        ],
+        "easeOfDevOriginal": "5 (designed to be 'easy for everyone')",
+        "easeOfDev": 5,
+        "aiFeaturesOriginal": "Yes: AI bot for formulas (NL to Excel formula); likely NL querying on roadmap.",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, Omni directly queries your databases (encrypted connections). Virtualization: Queries data in place (no data copy) – essentially virtualization with a semantic layer. Push: No, it's live query (though cached metrics can be materialized on demand). Other: Strong security focus – column & row-level controls, SAML SSO, data encrypted at rest. SOC 2 compliant.",
+        "website": "omni.co",
+        "urlSlug": "omni"
+    },
+    "Sigma Computing": {
+        "targetUsers": [
+            "Business users (spreadsheet aficionados)",
+            "BI & data teams",
+            "Financial analysts"
+        ],
+        "deploymentModel": [
+            "Cloud (SaaS) - AWS",
+            "Cloud (SaaS) - GCP",
+            "Multi-tenant deployment"
+        ],
+        "pricing": "Commercial SaaS; no free tier (trial available). Proprietary.",
+        "cost": "$$$$",
+        "visualization": "Spreadsheet-like UI on cloud data: users drag columns, create formulas in cells (Excel-style). Visualizations are built atop these 'workbooks.' Good variety of charts, but geared towards data in tables first. Custom visuals possible via SQL or minimal coding (no full script extensions as in PowerBI).",
+        "uniqueDiffs": "Familiar Excel-like interface on big data – low learning curve for spreadsheet users. No data extraction – queries run in your warehouse, so leverages its power. Unique ability to \"write-back\" or materialize prepared datasets into the DB. − Performance can suffer on very large datasets or complex filters (depends on warehouse; UI might hang on millions of rows). Less suitable for pixel-perfect presentations (focuses on ad-hoc exploration).",
+        "gitIntegration": false,
+        "ciCdOriginal": "Partial: Content promotion via Environments (Dev, Prod) is supported. No automated testing, but you can materialize datasets to validate results.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Always live-querying the cloud warehouse (Snowflake, etc.) on user interaction. Near real-time data (with some caching). Highly interactive filtering and pivots (instant response depends on warehouse performance).",
+        "realTime": false,
+        "integrations": [
+            "Cloud data warehouses",
+            "dbt metadata sync",
+            "Embedding API for apps"
+        ],
+        "easeOfDevOriginal": "4 (quick for anyone used to spreadsheets; some SQL may help for advanced use)",
+        "easeOfDev": 4,
+        "aiFeaturesOriginal": "Not yet (no NL query at time of writing, though 'AI-assisted formula suggestions' are likely in roadmap)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes – requires direct access to cloud DB (Sigma sends SQL to your warehouse). Virtualization: Yes – leaves data in DB, no local storage (except temp cache), effectively a virtualization approach. Push: Not typical; however, users can push (materialize) a result back to DB if needed. Other: Data never leaves your cloud environment (Sigma runs within cloud region). Supports row-level security via warehouse and within Sigma. SSO support available.",
+        "website": "sigmacomputing.com",
+        "urlSlug": "sigma-computing"
+    },
+    "Streamlit": {
+        "targetUsers": [
+            "Data scientists",
+            "Python developers",
+            "ML engineers"
+        ],
+        "deploymentModel": [
+            "Open-source (Python library)",
+            "Self-hosted server",
+            "Streamlit Cloud",
+            "Snowflake-managed enterprise"
+        ],
+        "pricing": "Open-source (Apache 2.0); Free community hosting (limited), Snowflake-managed enterprise hosting",
+        "cost": "$",
+        "visualization": "Not a traditional BI dashboard tool – rather, a Python app framework. You write Python to output charts, tables, and UI widgets. Highly flexible (use any Python viz library like Altair, Plotly, etc.), but all customization is via code.",
+        "uniqueDiffs": "Super easy and fast to turn a Python script into a shareable web app. Perfect for quickly prototyping data apps and internal tools. − Not aimed at non-coders – lack of GUI means business users won't build in it. No built-in multi-user management or security layers (rely on external auth if needed).",
+        "gitIntegration": false,
+        "ciCdOriginal": "CI/CD by deploying updated code. No built-in test framework for dashboards (standard Python testing applies for code).",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Very interactive – supports widgets (sliders, dropdowns) that trigger script re-run. Can connect to live data or even listen to updates (though not real-time push by default). Often used for real-time ML model demos.",
+        "realTime": false,
+        "integrations": [
+            "Python data science libraries",
+            "SQL databases",
+            "Snowflake native integration"
+        ],
+        "easeOfDevOriginal": "5 (for Python developers); 1 (for non-programmers)",
+        "easeOfDev": 5,
+        "aiFeaturesOriginal": "No (aside from using AI libs within your code)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, if app connects to a DB, it uses direct credentials (no abstraction). Virtualization: No, Streamlit just runs code – any virtualization must be coded. Push: No – app pulls data or receives via API. Other: Security depends on deployment (can use authentication proxies or Snowflake's SSO when integrated). No built-in row-level security – must code filters per user if needed.",
+        "website": "streamlit.io",
+        "urlSlug": "streamlit"
+    },
+    "Apache Superset": {
+        "targetUsers": [
+            "Data analysts",
+            "SQL-savvy business users",
+            "Data engineers"
+        ],
+        "deploymentModel": [
+            "Self-host (Apache OSS)",
+            "Preset Cloud (managed)",
+            "Docker deployment"
+        ],
+        "pricing": "Open-source (Apache 2.0); Preset Cloud offers paid hosting/support",
+        "cost": "$",
+        "visualization": "Rich set of visualizations (bar, line, time-series, big number, etc.) via built-in plugins. Dashboards support filters and cross-highlighting. Customization is decent (colors, chart options) but not as polished as Tableau. Can create custom viz plugins with React/D3 if needed.",
+        "uniqueDiffs": "Open-source BI with no vendor lock-in. Large community and improving UI. Suitable for embedding into internal tools. − Setup and maintenance require engineering effort (Docker, config). UI can be less intuitive for non-technical users; SQL knowledge often needed for custom queries.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Limited natively. Enterprise workflows (like Preset) may introduce content promotion. No native testing of charts/queries (aside from ensuring queries run).",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Designed for interactive dashboards – supports auto-refresh on charts, and dynamic filtering. Queries run on demand on the connected DB (with caching enabled to speed up). Not real-time streaming, but can pull frequently.",
+        "realTime": false,
+        "integrations": [
+            "SQL databases via SQLAlchemy",
+            "Authentication systems (OAuth, LDAP)",
+            "dbt outputs as data sources"
+        ],
+        "easeOfDevOriginal": "3 (user-friendly once set up, but setup is technical)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "No (no NL querying or AI features built-in)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, connects directly to databases with provided creds (queries run in DB). Virtualization: No internal data storage beyond caches – queries are delegated to sources. Push: No, data is pulled via queries on demand or scheduled caching. Other: Supports row-level security filters and role-based access to datasets/dashboards. Uses your DB's security for data access (you supply read-only creds).",
+        "website": "superset.apache.org",
+        "urlSlug": "apache-superset"
+    },
+    "Metabase": {
+        "targetUsers": [
+            "Non-technical business users",
+            "Product teams",
+            "Data teams for quick analytics"
+        ],
+        "deploymentModel": [
+            "Self-host OSS (Java)",
+            "Metabase Cloud (hosted SaaS)",
+            "Docker deployment"
+        ],
+        "pricing": "Open-source core (AGPL v3); Enterprise features in paid plans",
+        "cost": "$$",
+        "visualization": "Simplified UI: users can create questions (queries) via a point-and-click interface or SQL editor. Visualizations cover basic needs (bar, line, pie, maps, etc.). Dashboards allow filter widgets to link multiple cards. Customization is basic – focus is on quick insights over polished design.",
+        "uniqueDiffs": "Extremely easy for non-technical users to ask questions – great for self-service on simple queries. − No semantic layer – each \"question\" is standalone, which can lead to inconsistent metrics if not careful. Lacks advanced visuals and fine formatting; not ideal for complex dashboards or large-scale governance.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Limited. Enterprise offers serialization of dashboards to files (for migration/versioning). No testing framework; relies on user verification.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes (interactive): Supports filters on dashboards and drill-through (click on a chart element to see underlying records). Queries execute on the DB when a card is loaded or filter applied. Can schedule automatic pulses but not live streaming.",
+        "realTime": false,
+        "integrations": [
+            "Major SQL databases",
+            "NoSQL databases (MongoDB, Druid)",
+            "dbt metadata via community plugin"
+        ],
+        "easeOfDevOriginal": "5 (for basic usage – no SQL needed for simple queries)",
+        "easeOfDev": 5,
+        "aiFeaturesOriginal": "Yes: Recently introduced 'Metabase AI' (in preview) for natural language questions (converting NL to queries).",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, Metabase connects directly to each data source to run queries. Virtualization: No intermediate layer – it's live queries (with caching). Push: No (pull-based queries; can cache results in application DB). Other: Supports row-level security with query filters (enterprise). Offers auditing of questions run. Embedding to apps with signed tokens available (with its own permissions).",
+        "website": "metabase.com",
+        "urlSlug": "metabase"
+    },
+    "Preset": {
+        "targetUsers": [
+            "Data teams wanting managed Superset",
+            "Organizations without resources to self-host",
+            "Enterprise analytics teams"
+        ],
+        "deploymentModel": [
+            "Cloud (multi-tenant)",
+            "Cloud (VPC)",
+            "Managed service"
+        ],
+        "pricing": "Managed service (subscription per creator & usage). Underlying Superset is Apache-licensed.",
+        "cost": "$$$",
+        "visualization": "Identical visualization capabilities to Apache Superset (Preset is built on Superset) – plus a nicer UI/UX and theme. Custom visualizations can be added via Preset's marketplace.",
+        "uniqueDiffs": "Easiest way to use Superset – fully managed infrastructure and support from Superset experts. New features and custom connectors often available. − Still catching up to feature parity with mature BI tools in terms of collaboration (Git, fine-grained content permissions).",
+        "gitIntegration": false,
+        "ciCdOriginal": "Better than OSS: Preset offers staging environments and team collaboration features. Automated testing still manual (you test queries & charts in UI).",
+        "ciCd": false,
+        "realTimeOriginal": "Same as Superset: on-demand queries with caching. Preset Cloud ensures high uptime for 'real-time feel,' and adds alerting on schedule.",
+        "realTime": false,
+        "integrations": [
+            "Same database integrations as Superset",
+            "dbt Cloud for metadata",
+            "OAuth connections to popular DBs"
+        ],
+        "easeOfDevOriginal": "4 (once onboarded, UI is fairly easy; setup is handled by Preset)",
+        "easeOfDev": 4,
+        "aiFeaturesOriginal": "No (inherits Superset's feature set – no AI yet)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes (your databases' credentials are stored in Preset; it queries them directly). Virtualization: No, live queries on sources (with optional result caching). Push: No – you supply data to your DB, Preset pulls on viz. Other: Managed security – SSO integration, teams/roles setup in UI. Data stays in your cloud DB; Preset does not persist data (aside from cached query results).",
+        "website": "preset.io",
+        "urlSlug": "preset"
+    },
+    "Hex": {
+        "targetUsers": [
+            "Data scientists",
+            "Analytics engineers",
+            "Data teams collaborating on notebooks"
+        ],
+        "deploymentModel": [
+            "Cloud (SaaS)",
+            "Private cloud",
+            "Enterprise VPC"
+        ],
+        "pricing": "SaaS subscription (free tier with limited projects; paid for teams). Closed-source.",
+        "cost": "$$$",
+        "visualization": "Hybrid UI: notebook-style cells that can contain Pandas dataframes, SQL, or Python code, and separate 'app' view for interactive visual output. Visualizations can be created by pointing and clicking on a dataframe result (common chart types), or fully custom via Python libraries. Can add input widgets for interactivity.",
+        "uniqueDiffs": "Mix of code and no-code: data pros can write Python or SQL, then non-tech stakeholders can use the polished published app with interactive controls. Strong collaboration (multiple users can edit same notebook). − Geared towards data team usage – not a pure drag-and-drop BI for end users. To fully utilize, one needs coding ability.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Yes: Hex projects can be scheduled and run via API – enabling CI pipelines to run analyses. It allows tests within notebooks (assertions in code). Not a traditional CI, but you can integrate with GitHub Actions for deployment of Hex apps.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Not streaming, but notebooks can be parameterized with widgets and re-run quickly on new inputs. Users viewing a Hex app can interact with filters that trigger computations. Collaborative editing in real-time (like Google Docs for code).",
+        "realTime": false,
+        "integrations": [
+            "Cloud data warehouses (Snowflake, BigQuery, etc.)",
+            "dbt models and Git repos",
+            "Python/SQL data sources"
+        ],
+        "easeOfDevOriginal": "4 (very user-friendly for those with some coding; not for pure business users)",
+        "easeOfDev": 4,
+        "aiFeaturesOriginal": "Yes: AI 'Hex Magic' – an AI assistant to suggest code, explain errors, etc., boosting developer productivity.",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, connects directly using provided credentials to sources. Virtualization: No separate semantic layer; queries are run in notebooks. Push: No, though can output results to external sinks via code. Other: Offers granular access controls on projects (who can view/edit). Supports OAuth for data sources so credentials aren't exposed.",
+        "website": "hex.tech",
+        "urlSlug": "hex"
+    },
+    "Redash": {
+        "targetUsers": [
+            "SQL analysts",
+            "Data engineers",
+            "Technical teams needing quick dashboards"
+        ],
+        "deploymentModel": [
+            "Self-host (open-source)",
+            "Docker deployment",
+            "Community cloud forks"
+        ],
+        "pricing": "Open-source (BSD 2-Clause); acquired by Databricks, maintained community version.",
+        "cost": "$",
+        "visualization": "Very basic visualizations: each query can be visualized as a table, chart (line, bar, pie, scatter) or pivot. Limited formatting options. Dashboards are grids of query results visualizations and text. Suited for lightweight reporting.",
+        "uniqueDiffs": "Light footprint, easy to deploy. Great for engineers to quickly share SQL results with team (share link to dashboard). − Minimal feature set by modern standards: no semantic layer, weak visualization variety, and no fine-grained permissions (all users can see all queries by default in OSS). The project has slowed development (Databricks shifted focus).",
+        "gitIntegration": false,
+        "ciCdOriginal": "No native CI. Queries can be scheduled, but testing query logic is manual. Upgrades and maintenance are manual in OSS.",
+        "ciCd": false,
+        "realTimeOriginal": "Partial: Refresh dashboards by scheduling query updates. No push/streaming. Provides some interactivity via query parameters – e.g., user can input a filter value for a parameterized SQL query and refresh the chart.",
+        "realTime": false,
+        "integrations": [
+            "SQL and NoSQL databases",
+            "API-based data sources",
+            "Simple query runner architecture"
+        ],
+        "easeOfDevOriginal": "2 (for anyone who knows SQL it's straightforward; non-SQL users get limited value)",
+        "easeOfDev": 2,
+        "aiFeaturesOriginal": "No",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, stores DB credentials and queries the source directly for each refresh. Virtualization: No – it's a thin layer over the DB. Push: No, only pull (with caching of recent results). Other: Basic user roles; can embed visualizations via public URLs (security relies on random tokens). Lacks advanced security features like row-level controls.",
+        "website": "redash.io",
+        "urlSlug": "redash"
+    },
+    "Holistics": {
+        "targetUsers": [
+            "Data teams (analytics engineers)",
+            "Business users exploring defined data",
+            "Data-driven organizations"
+        ],
+        "deploymentModel": [
+            "Cloud SaaS (Holistics 4)",
+            "On-prem enterprise",
+            "Private cloud"
+        ],
+        "pricing": "Commercial (proprietary). Free trial available.",
+        "cost": "$$$$",
+        "visualization": "Combines a code-based 'data modeling layer' with a drag/drop UI for end users. Data team defines datasets, dimensions, measures in YAML (or UI), then business users create charts by selecting those fields. Visualization options cover common needs (charts, pivots) with moderate customization. Focus is on accuracy & consistency over flashy visuals.",
+        "uniqueDiffs": "Unified metrics layer: define once in code, use anywhere – similar to LookML but using SQL and a simpler DSL. This ensures a single source of truth across charts. − Requires data modeling effort upfront; not as plug-and-play. Smaller community (less third-party resources than bigger tools).",
+        "gitIntegration": false,
+        "ciCdOriginal": "Yes: With Git integration, teams use pull requests for model changes. You can promote changes to production easily (the modeling layer acts like code). No automated testing built-in, but one can test SQL models.",
+        "ciCd": false,
+        "realTimeOriginal": "Partial: Dashboards query live or cached data; users interact via filters and drill-down. Not real-time streaming. Holistics can schedule data pre-fetching. Interactivity is oriented around the predefined metrics (no arbitrary slicing outside model).",
+        "realTime": false,
+        "integrations": [
+            "SQL databases (Snowflake, BigQuery, PostgreSQL, etc.). dbt integration: Yes – can import dbt models and exposures, aligning Holistics model with dbt transforms.",
+            "SQL databases (Snowflake",
+            "BigQuery",
+            "PostgreSQL",
+            "etc.). dbt integration: Yes – can import dbt models and exposures",
+            "aligning Holistics model with dbt transforms."
+        ],
+        "easeOfDevOriginal": "3 (technical setup, but easy for end users once models are in place)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "No (no NL or AI features noted)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, queries run on your DB. Optionally can cache query results in its warehouse for speed. Virtualization: Holistics does not store data long-term; it queries live or caches in temp tables. Push: No, it's pull (with ability to schedule cache refresh). Other: Supports row-level security definitions in the modeling layer; robust role-based view permissions.",
+        "website": "holistics.io",
+        "urlSlug": "holistics"
+    },
+    "Mode": {
+        "targetUsers": [
+            "Data analysts",
+            "Data scientists",
+            "Business teams consuming insights"
+        ],
+        "deploymentModel": [
+            "Cloud (SaaS)",
+            "Enterprise deployment",
+            "Private cloud"
+        ],
+        "pricing": "Subscription per user (tiered features). Proprietary.",
+        "cost": "$$$$",
+        "visualization": "Hybrid analytics: Start with SQL query, then seamlessly use results in a Python or R notebook within Mode. Visualizations: either use the built-in chart builder on query results (which is simple but covers basics), or output custom plots from the notebook (Matplotlib, etc.). You can combine these in a report. Good for analytical narratives.",
+        "uniqueDiffs": "Combines analytics workflows: SQL + Python/R in one tool, enabling advanced analysis (statistical, ML) with sharing in one place. Great collaboration – team commentary and shareable, embeddable reports. − Not aimed at strict self-service for non-analysts (business users usually consume results, not build). Lacks a governed semantic layer – relies on analysts to maintain consistency.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Limited: Mode's workflow is ad-hoc analysis -> share. It doesn't have an official promotion pipeline. Testing relies on analysts (no built-in test harness). However, reports can be scheduled to run and notify on failures.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: When a Mode report runs, it executes SQL (and any subsequent notebook code) on fresh data. Can schedule auto-runs. Interactivity via filter widgets that re-run queries with parameters, and drill-down links. Not real-time push but on-demand and scheduled updates.",
+        "realTime": false,
+        "integrations": [
+            "Multiple SQL databases",
+            "Python/R for advanced analytics",
+            "API and webhooks for automation"
+        ],
+        "easeOfDevOriginal": "3 (analysts find it straightforward; end-users only view)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "No (though one can manually use AI libraries in notebooks, Mode hasn't announced NL querying or similar as of 2025)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, Mode executes queries against your DB whenever a report refreshes. Virtualization: No separate layer – it's basically a client querying the DB. Push: No, except you can schedule exports of results to external systems. Other: Row-level security must be implemented in SQL (no built-in feature for it). Supports SSO and fine-grained access to reports (who can view/edit).",
+        "website": "mode.com",
+        "urlSlug": "mode"
+    },
+    "Grafana": {
+        "targetUsers": [
+            "DevOps engineers",
+            "IT monitoring teams",
+            "Data engineers for time-series analytics"
+        ],
+        "deploymentModel": [
+            "Open-source (AGPLv3)",
+            "Grafana Enterprise",
+            "Grafana Cloud",
+            "Self-hosted"
+        ],
+        "pricing": "OSS free; Grafana Enterprise (paid add-ons); Grafana Cloud (free tier & paid).",
+        "cost": "$$",
+        "visualization": "Optimized for time-series and metrics visualizations (graphs, gauges, alerts). Supports logs and traces panels too. Basic charts for category data exist but not Grafana's strong suit. Highly customizable dashboards via JSON config or UI. Many community panels (plugins) to extend visualization types.",
+        "uniqueDiffs": "Best for operational dashboards – combining metrics, logs, and traces in one UI (especially with Grafana Cloud). Very extensible via plugins. − Not designed for ad-hoc business analytics on arbitrary data – e.g., no built-in SQL query builder for relational data (user must write queries or use other tools to prepare data). Visualizations not as geared for presentation (more for investigation).",
+        "gitIntegration": false,
+        "ciCdOriginal": "Yes: Grafana's provisioning + JSON definitions allow CI/CD (update files and auto-deploy dashboards). Testing is mainly for alerts (you can simulate alert triggers).",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Grafana was built for real-time monitoring. Auto-refresh can be set to seconds. It pulls from sources like Prometheus, InfluxDB, etc. for live data. Interactive: users can apply time range filters, toggle series, and drill into logs.",
+        "realTime": false,
+        "integrations": [
+            "Time-series databases (Prometheus, InfluxDB)",
+            "SQL databases and cloud metrics",
+            "Alerting systems (PagerDuty, Slack)"
+        ],
+        "easeOfDevOriginal": "3 (for technical users, it's straightforward; not for non-tech users)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "No (though some anomaly-detection plugins exist, Grafana itself doesn't provide NLQ or AI insights natively)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, connects directly to data sources (or through its agents). Virtualization: More like federation – it queries multiple backends via plugins. Push: Metric data is often pushed into time-series DBs which Grafana then reads – so indirectly yes (in monitoring use-cases). Grafana itself pulls from those DBs. Other: Auth via LDAP/OAuth. Granular permissions on dashboards and data sources. Encryption and other enterprise security features in paid version.",
+        "website": "grafana.com",
+        "urlSlug": "grafana"
+    },
+    "Deepnote": {
+        "targetUsers": [
+            "Data science teams",
+            "Educators",
+            "Analysts collaborating on notebooks"
+        ],
+        "deploymentModel": [
+            "Cloud (browser-based)",
+            "Enterprise deployment",
+            "Private cloud"
+        ],
+        "pricing": "Free tier (limited projects); paid for premium features. Closed-source.",
+        "cost": "$$$",
+        "visualization": "Jupyter-like notebooks with collaborative editing. Supports interactive visualizations by writing code (Python, R, SQL blocks). Has a GUI for basic charts: you can switch a SQL cell's results into a chart view (bar/line) quickly. Can arrange outputs into a dashboard layout for sharing. Custom viz requires coding (e.g., Plotly, seaborn).",
+        "uniqueDiffs": "Real-time collaboration on notebooks (like Google Docs for Jupyter) – multiple users can work simultaneously. Great for mixed code-and-text narratives and then turning into lightweight dashboards for stakeholders. − Still requires coding for most analysis; not a drop-in replacement for tools like Tableau for a pure business user.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Yes: Provides scheduling of notebooks and an API, so you can integrate runs in CI workflows. Deepnote's focus on Reproducibility means you can test notebooks by re-running and comparing outputs. Some teams use Git PRs to validate changes to notebooks.",
+        "ciCd": false,
+        "realTimeOriginal": "Partial: Not real-time streaming, but notebooks can be parametrized and re-run for updated data. Shared 'published' notebooks are static unless refreshed by an author. Interactivity is possible using widgets (e.g., ipywidgets) but not as seamless as a dedicated BI tool. Collaboration is real-time in edit mode.",
+        "realTime": false,
+        "integrations": [
+            "SQL databases (PostgreSQL, BigQuery, etc.)",
+            "Cloud storage (Google Drive, S3)",
+            "dbt workflow integration"
+        ],
+        "easeOfDevOriginal": "4 (for those who code; very friendly UI compared to raw Jupyter)",
+        "easeOfDev": 4,
+        "aiFeaturesOriginal": "Yes: Deepnote AI provides code autocomplete and even 'AI notebook' generation from prompts – first notebook platform with an integrated AI co-pilot.",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, uses direct credentials to query databases in SQL cells. Virtualization: No separate layer – it's a client executing queries or code. Push: No (though you could push data via Python in a notebook to an external system). Other: Deepnote runs in cloud with project-specific isolation; offers Google SSO. Not designed for role-based consumption – notebooks can be shared via link with view/edit rights.",
+        "website": "deepnote.com",
+        "urlSlug": "deepnote"
+    },
+    "Project Jupyter": {
+        "targetUsers": [
+            "Data scientists",
+            "Researchers",
+            "Engineers"
+        ],
+        "deploymentModel": [
+            "Open-source (local)",
+            "Jupyter server",
+            "JupyterHub deployment"
+        ],
+        "pricing": "Free (BSD license)",
+        "cost": "$",
+        "visualization": "Not a conventional BI tool – it's a computing environment. Visuals come from libraries (Matplotlib, Plotly, etc.) within code cells. Highly flexible outputs (any HTML/JS). Sharing typically static (not interactive unless using Voila or similar to create dashboards).",
+        "uniqueDiffs": "Extreme flexibility – you can do anything in code. Huge ecosystem of libraries for analysis and visualization. − Not user-friendly for non-coders; to share insights, often notebook is converted to PDF/HTML which is static. Multi-user collaboration and security are not provided out-of-the-box (need JupyterHub or similar).",
+        "gitIntegration": false,
+        "ciCdOriginal": "Via external means: e.g., use Papermill to run notebooks in CI for testing or scheduled runs. No built-in notion of environment promotion.",
+        "ciCd": false,
+        "realTimeOriginal": "Partial: Jupyter notebooks execute on demand. No built-in real-time update – user must re-run cells to get new data. Interactivity can be added with widgets (sliders, etc.) which allow UI within the notebook, but this requires running kernel.",
+        "realTime": false,
+        "integrations": [
+            "Python/Julia/R libraries",
+            "SQL connectors",
+            "Custom API integrations"
+        ],
+        "easeOfDevOriginal": "2 (easy for coding literate, not at all for others)",
+        "easeOfDev": 2,
+        "aiFeaturesOriginal": "No (though Jupyter can be extended; e.g. Jupyter AI extension can integrate LLMs, but that's experimental)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: If a notebook connects to a DB, it does so directly (with credentials in code or config). Virtualization: No – but you could use tools like Trino via Python to virtualize in code. Push: No, unless custom code to push data. Other: Jupyter itself has no auth (except if behind JupyterHub). Security concerns if sharing notebooks with sensitive data output.",
+        "website": "jupyter.org",
+        "urlSlug": "project-jupyter"
+    },
+    "Looker Studio": {
+        "targetUsers": [
+            "Business users",
+            "Marketers",
+            "Google ecosystem users"
+        ],
+        "deploymentModel": [
+            "Cloud (Google Cloud)",
+            "Enterprise deployment",
+            "Private cloud"
+        ],
+        "pricing": "Free to use (with Google account); Pro version for enterprise (Looker Studio Pro) introduced with SLAs.",
+        "cost": "$",
+        "visualization": "Drag-and-drop report editor. Offers charts like time series, bar, geo maps, tables. Customization is decent (colors, labels), though not as fine-grained as Tableau. Supports community visualizations (bring custom JS charts). Layout is canvas-style – good for dashboards and infographics.",
+        "uniqueDiffs": "Completely free for most use-cases. Extremely easy for simple needs – non-tech users can create a shareable dashboard in minutes. Being Google, sharing and embedding is seamless. − Lacks advanced analytics (no calculated fields beyond basic formulas, limited data shaping). Performance can suffer on large data sets unless using aggregated extracts. No row-level security (one report = one set of credentials or extracted data).",
+        "gitIntegration": false,
+        "ciCdOriginal": "Minimal: No built-in dev lifecycle. Typically one environment (though you can copy reports). Testing is manual (validate data correctness).",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Queries data on view; you can set auto-refresh intervals for certain sources. Provides filter controls and date pickers for interactivity. Not real-time streaming (refreshes no more frequent than every few minutes even for Google Sheets data).",
+        "realTime": false,
+        "integrations": [
+            "500+ data connectors",
+            "Google products (Analytics, Ads)",
+            "SQL databases via Simba drivers"
+        ],
+        "easeOfDevOriginal": "2 (very accessible UI, but very limited options, also very difficult to maintain)",
+        "easeOfDev": 2,
+        "aiFeaturesOriginal": "No (aside from Google's experimental integrations – as of 2025, no NL query in Looker Studio)",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Yes, live connects to sources using provided credentials (or OAuth tokens). Option to cache query results in Google's cache for performance. Virtualization: Data remains in source or cache – Data Studio doesn't store data persistently (except cached). Push: No, it pulls data when rendering charts. Other: Uses Google account auth for access; you can manage view/edit permissions on reports. Lacks fine security on data level (you'd need separate reports or filters per audience).",
+        "website": "lookerstudio.google.com",
+        "urlSlug": "looker-studio"
+    },
+    "ThoughtSpot": {
+        "targetUsers": [
+            "Business users (especially C-suite)",
+            "Data teams for scalable analytics",
+            "Search-driven analytics users"
+        ],
+        "deploymentModel": [
+            "Cloud (SaaS)",
+            "On-prem appliance",
+            "Private cloud"
+        ],
+        "pricing": "Commercial (Proprietary); enterprise pricing (by user and/or data volume)",
+        "cost": "$$$$$",
+        "visualization": "Search-driven analytics UI: users type questions in natural language and ThoughtSpot generates charts/tables as answers. Dashboards (pinboards) can be created from these answers. Visualizations are generally standard (bar, line, scatter, etc.) and auto-chosen by the engine (with ability to change chart type). Emphasis on simplicity – limited custom formatting beyond basic styling.",
+        "uniqueDiffs": "Natural language search interface – Googling your data. Extremely scalable architecture (built to handle billions of rows). Strong AI analytics capabilities (SpotIQ automatically finds anomalies/patterns). − Requires well-modeled data and user training to ask the right questions. Expensive at scale. Limited chart customization; not meant for pixel-perfect reports.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Improving: ThoughtSpot now provides tools to manage content promotion between environments using TML files. Still, testing is mostly about validating results manually.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: ThoughtSpot's Relational Search is near real-time – each query runs live on the data source or in-memory index. It can handle large volumes in sub-seconds via its optimized engine. Highly interactive: users literally ask follow-up questions or drill down by clicking on data points (it then computes a new answer).",
+        "realTime": false,
+        "integrations": [
+            "Cloud data warehouses",
+            "dbt metadata sync",
+            "Embedding API for apps"
+        ],
+        "easeOfDevOriginal": "4 (for end users asking questions – easy if data is modeled; 2 for setup – data engineers must do significant modeling)",
+        "easeOfDev": 4,
+        "aiFeaturesOriginal": "Yes: A pioneer in AI analytics – NL query, AI-driven insights (automated anomaly detection via SpotIQ), and new GPT-based chatbot features for conversational analytics.",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: If using live query (Embrace), it requires direct read access to the DB. If using imported data, queries hit the in-memory engine (no external DB access needed at query time). Virtualization: Yes – Embrace is essentially virtualization (no data copy, live query on external DB). Push: With imported mode, data is pushed into TS's storage from source on a schedule. Other: Robust security – row and column-level security, user and group permissions, and audit logs. Supports SSO and OAuth.",
+        "website": "thoughtspot.com",
+        "urlSlug": "thoughtspot"
+    },
+    "Sisense": {
+        "targetUsers": [
+            "Product teams (embedded analytics)",
+            "Enterprise analysts",
+            "OEM partners"
+        ],
+        "deploymentModel": [
+            "Windows/Linux on-prem",
+            "Sisense Cloud (managed)",
+            "Private cloud"
+        ],
+        "pricing": "Commercial (Proprietary). Pricing by seat and consumption.",
+        "cost": "$$$$$",
+        "visualization": "Two flavors merged: traditional dashboard builder (drag-drop charts, with advanced widget for custom UI via scripting) and a notebook-style interface (from acquired Periscope Data) for SQL/Python. Visualizations include a wide range of widgets and the special Sisense BloX for custom coded infographic-like blocks. Highly customizable via JavaScript (for those inclined).",
+        "uniqueDiffs": "Strong embedding and customization – you can integrate analytics into your product with full control (white-label). Now with modern DevOps support (Git, CI/CD) making it enterprise-friendly. − Can be complex to administrate; the full platform (with Elasticube manager, etc.) has a learning curve. Some legacy vs new UI inconsistencies after merging Periscope.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Yes: With Git integration, you can branch, test changes in isolation, then merge and deploy to prod. Sisense also provides an automated deployment tool for moving content between environments. Testing of dashboards still largely user-driven, but data models can be tested with SQL.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Sisense can work in live mode (direct queries on DB for real-time data) or cached mode (using its in-chip database). Dashboards support interactive filters and drill downs. Real-time streaming visuals possible by pushing data into Elasticubes (in-memory) frequently, or using live mode on real-time databases.",
+        "realTime": false,
+        "integrations": [
+            "SQL and cloud data warehouses",
+            "SaaS applications",
+            "JS embedding SDK"
+        ],
+        "easeOfDevOriginal": "3 (end-users have a decent UI; developers have powerful but complex options)",
+        "easeOfDev": 3,
+        "aiFeaturesOriginal": "Yes: Natural language querying (Simply Ask) to ask questions in plain English; AI-driven explanation narratives for charts (beta). Also leveraging AI in new 'Sense AI' features for generating formulas or suggesting visualizations.",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Depending on setup – Live mode: Sisense queries your DB on the fly (needs access); Elasticube mode: data is extracted into Sisense's proprietary in-memory cube (so queries don't hit source DB at runtime). Virtualization: Allows combining multiple sources in one view via its cubes (not exactly virtualization, more like federation into a single cache). Push: In Elasticube mode, data is essentially pushed into Sisense's storage on a refresh schedule. Other: Robust security – single sign-on, row-level security in Elasticubes, and extensive admin controls.",
+        "website": "sisense.com",
+        "urlSlug": "sisense"
+    },
+    "Qlik Sense": {
+        "targetUsers": [
+            "Enterprise BI users",
+            "Data analysts",
+            "Governed self-service users"
+        ],
+        "deploymentModel": [
+            "Client-managed (Windows)",
+            "Client-managed (Kubernetes)",
+            "Qlik Cloud (SaaS)"
+        ],
+        "pricing": "Commercial. Qlik Sense Enterprise is subscription (by user or capacity). Qlik Sense Desktop free for personal use.",
+        "cost": "$$$$",
+        "visualization": "Powerful interactive visuals with unique associative filtering: all charts update with each selection, and show gray 'excluded' values to encourage discovery. Chart types cover most needs, and extension mechanism allows custom charts. Good formatting control but primarily via UI (no raw HTML/CSS editing).",
+        "uniqueDiffs": "The Associative Engine is Qlik's hallmark – users can freely explore data without query limitations (no SQL needed when using the app). Great for uncovering relationships in data. − Requires data to be loaded into memory for full power, which can be heavy. Learning Qlik's script and the \"set analysis\" syntax for expressions has a learning curve.",
+        "gitIntegration": false,
+        "ciCdOriginal": "Partial: Qlik's deployment involves exporting/importing apps between environments (automatable via API). No built-in test framework; rely on data correctness tests outside Qlik.",
+        "ciCd": false,
+        "realTimeOriginal": "Yes: Qlik's in-memory engine means once data is loaded, analysis is instantaneous. Very interactive – selections in any field filter all objects associatively. For true real-time, Qlik can use DirectQuery (Direct Access) mode on some sources or frequently reload data.",
+        "realTime": false,
+        "integrations": [
+            "Multiple data sources via connectors",
+            "Python/R Server Side Extensions",
+            "Web APIs and databases"
+        ],
+        "easeOfDevOriginal": "4 (once data model is ready, creating visuals is drag-drop; but data prep script is 2)",
+        "easeOfDev": 4,
+        "aiFeaturesOriginal": "Yes: Insight Advisor in Qlik Sense uses AI to suggest charts and insights based on your data and even allows NL queries ('Insight Advisor Chat').",
+        "aiFeatures": false,
+        "visualToCodeOriginal": "No",
+        "visualToCode": false,
+        "dagBasedOriginal": "No",
+        "dagBased": false,
+        "security": "DB Access: Typically Qlik imports data into its engine (so not needed at runtime). The new Direct Query option (in Qlik Cloud) allows leaving data in DB and querying on interaction for huge data sets. Virtualization: Qlik's standard method is not virtualization but in-memory copies. However, with Direct Query it behaves virtually. Push: Data is pushed into Qlik via load scripts (you schedule reloads). Other: Strong security – Section Access to implement row-level security inside Qlik apps, and robust user access control on the server.",
+        "website": "qlik.com",
+        "urlSlug": "qlik-sense"
+    },
+    "Visivo": {
+        "targetUsers": [
+            "Analytics Engineers",
+            "Data teams",
+            "Business users",
+            "Engineers"
+        ],
+        "deploymentModel": [
+            "Open-source",
+            "Cloud Service",
+            "Self-hosted"
+        ],
+        "pricing": "Open source (GPL-3.0)",
+        "cost": "$",
+        "visualization": "Highly custom UI with easy defaults",
+        "uniqueDiffs": "BI-as-code approach enables version control, collaboration, and CI/CD workflows. DAG-based architecture provides powerful data transformation capabilities and dependency management. Seamless visual-to-code workflow allows both technical and non-technical users to build dashboards effectively. − Requires understanding of data concepts; not a pure drag-and-drop tool like Tableau. Initial setup requires technical knowledge for optimal configuration.",
+        "gitIntegration": true,
+        "ciCdOriginal": "Yes, deep support for CI/CD",
+        "ciCd": true,
+        "realTimeOriginal": "No: In-memory engine & pre-computed interactivity. Benefit is that the data is as up to date as your batch jobs and the dashboards are very fast.",
+        "realTime": false,
+        "integrations": [
+            "dbt core",
+            "All major databases",
+            "Custom connector framework",
+            "Slack for alerts",
+            "Github"
+        ],
+        "easeOfDevOriginal": "5 (multiple approachs to build for technical and non-technical people)",
+        "easeOfDev": 5,
+        "aiFeaturesOriginal": "Yes: Very easy to generate code with AI",
+        "aiFeatures": true,
+        "visualToCodeOriginal": "Yes",
+        "visualToCode": true,
+        "dagBasedOriginal": "Yes",
+        "dagBased": true,
+        "security": "No db access required. Very strong security features due to the DAG-based access controls and the push based deployment model.",
+        "website": "visivo.io",
+        "urlSlug": "visivo"
+    }
+}

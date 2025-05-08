@@ -44,6 +44,18 @@ const BlogSection = () => {
       date: "Sept 25, 2023",
       readTime: "6 min",
       external_link: "https://medium.com/dev-genius/visualizing-pytest-results-with-the-modern-data-stack-29daeab99b66"
+    },
+    {
+      title: "The World Still Runs on Spreadsheets",
+      description: "Why spreadsheets remain so popular, the hidden costs of constantly importing CSVs, and how we can make dashboards “first-class citizens” through BI-as-code",
+      tag: "Community",
+      imgSrc: "/images/spreadsheet-world-domination.png",
+      imgAlt: "Spreadsheet World Domination",
+      authorName: "Kristian Sigston",
+      authorImg: "/images/kristian.jpeg",
+      date: "Feb 6, 2025",
+      readTime: "5 min",
+      external_link: "https://kristiansigston.medium.com/why-the-world-is-still-happily-running-on-spreadsheets-6ee1b86ff67f"
     }
   ];
   

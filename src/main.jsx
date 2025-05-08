@@ -9,10 +9,14 @@ import Examples from "./Examples.jsx";
 import BlogSection from "./BlogSection.jsx";
 import BusinessIntelligence from "./solutions/BusinessIntelligence.jsx";
 import SoftwareEngineering from "./solutions/SoftwareEngineering.jsx";
+import Embedding from "./solutions/Embedding.jsx";
 import BlogPost from "./components/BlogPost.jsx";
 import NotFound from "./NotFound.jsx";
 import "./index.css";
+import ComparisonPage from "./Comparison.jsx";
+import vendorData from "./vendor-data.json";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ComparisonsList from "./ComparisonsList.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -28,6 +32,21 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="blog/:slug" element={<BlogPost />} /> {/* Dynamic blog post route */}
           <Route path="solutions/software-engineering" element={<SoftwareEngineering />} />
           <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} />
+          <Route path="solutions/embedding" element={<Embedding />} />
+          <Route path="comparison-list" element={<ComparisonsList />} />
+          {Object.keys(vendorData)
+            .filter(vendor => vendor !== 'Visivo')
+            .flatMap((vendor1, _, vendors) => 
+              vendors
+                .filter(vendor2 => vendor2 !== vendor1)
+                .map(vendor2 => (
+                  <Route 
+                    key={`${vendor1}-${vendor2}`}
+                    path={`comparisons/${vendorData[vendor1].urlSlug}-${vendorData[vendor2].urlSlug}`} 
+                    element={<ComparisonPage competitorKeys={[vendor1, vendor2]}/>} 
+                  />
+                ))
+            )}
           <Route path="*" element={<NotFound />} /> {/* 404 catch-all route */}
         </Route>
       </Routes>
