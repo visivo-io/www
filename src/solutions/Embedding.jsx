@@ -80,12 +80,12 @@ export default function Embedding() {
         {/* Challenge Section */}
         <div className="mt-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
+            <div className="order-2 lg:order-2">
               <div className="relative">
                 <div className="absolute -top-10 -left-10 w-20 h-20 bg-primary-100 rounded-full dark:bg-primary-900 opacity-50"></div>
                 <SectionTitle>The Challenge</SectionTitle>
                 <SectionText large>
-                  Modern applications demand real-time analytics that seamlessly blend with their existing user interface.
+                  Modern applications demand accurate and tested analytics that seamlessly blend with their existing user interface.
                 </SectionText>
                 <ul className="space-y-4">
                   <li className="flex items-start">
@@ -109,10 +109,10 @@ export default function Embedding() {
                 </ul>
               </div>
             </div>
-            <div className="order-1 lg:order-2">
+            <div className="order-1 lg:order-1">
               <div className="relative rounded-lg bg-gray-50 dark:bg-gray-800 p-6 shadow-lg">
                 <img 
-                  src="/images/analytics-challenge.svg" 
+                  src="/images/embedding.png" 
                   alt="Analytics Challenge Illustration"
                   className="w-full h-auto"
                 />
@@ -189,6 +189,9 @@ export default function Embedding() {
         {/* Results Section */}
         <div className="mt-16">
           <SectionTitle>The Impact</SectionTitle>
+          <SectionText large>
+            Embbed with confidence knowing that your charts are accurate, tested, and up to date with the rest of your analytics and application.
+          </SectionText>
           <div className="grid gap-8 lg:grid-cols-3">
             <div className="rounded-lg border border-gray-200 p-6 text-center dark:border-gray-700">
               <h3 className="mb-2 text-3xl font-bold text-primary-600">90%</h3>
