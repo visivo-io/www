@@ -1,15 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactFlow, { Handle, MarkerType } from 'react-flow-renderer';
 // Import icons from react-icons
-import { HiOutlineServer, HiOutlineDatabase, HiOutlineCalculator, HiOutlineChartBar, HiOutlineViewGrid } from 'react-icons/hi';
+import { HiOutlineServer, HiOutlineDatabase, HiOutlineCalculator, HiOutlineChartBar, HiOutlineViewGrid, HiOutlineTable } from 'react-icons/hi';
 import { MdScatterPlot } from 'react-icons/md';
+import dagre from 'dagre';
 
 // Custom pill-style node component
 const PillNode = ({ data }) => {
-  const { label, Icon, bgClass, textClass, borderClass } = data;
+  const { label, Icon, bgClass, textClass, borderClass, selected } = data;
   return (
     <div
-      className={`flex items-center p-2 shadow-md rounded-2xl border cursor-pointer hover:opacity-80 hover:shadow-lg transition ${bgClass} ${borderClass}`}
+      className={`flex items-center p-2 shadow-md rounded-2xl border cursor-pointer hover:opacity-80 hover:shadow-lg transition ${bgClass} ${borderClass} ${selected ? 'pulse-glow-green z-10' : ''}`}
       style={{ minWidth: 100, maxWidth: 300 }}
     >
       <Handle type="target" position="left" style={{ top: '50%' }} />
@@ -29,25 +30,9 @@ const NODE_STYLES = {
   metrics:    { bgClass: 'bg-cyan-100',   textClass: 'text-cyan-800',   borderClass: 'border-cyan-200',   Icon: HiOutlineCalculator },
   traces:     { bgClass: 'bg-orange-100', textClass: 'text-orange-800', borderClass: 'border-orange-200', Icon: MdScatterPlot },
   charts:     { bgClass: 'bg-blue-100',   textClass: 'text-blue-800',   borderClass: 'border-blue-200',   Icon: HiOutlineChartBar },
-  dashboards: { bgClass: 'bg-purple-100', textClass: 'text-purple-800', borderClass: 'border-purple-200', Icon: HiOutlineViewGrid }
+  dashboards: { bgClass: 'bg-purple-100', textClass: 'text-purple-800', borderClass: 'border-purple-200', Icon: HiOutlineViewGrid },
+  tables:     { bgClass: 'bg-red-100',    textClass: 'text-red-800',    borderClass: 'border-red-200',    Icon: HiOutlineTable }
 };
-
-// Static graph data
-const nodes = [
-  { id: 'sources',    position: { x: 0,   y: 0 }, data: { label: 'Sources',    ...NODE_STYLES.sources },    type: 'pill' },
-  { id: 'models',     position: { x: 200, y: 0 }, data: { label: 'Models',     ...NODE_STYLES.models },     type: 'pill' },
-  { id: 'metrics',    position: { x: 400, y: 0 }, data: { label: 'Metrics',    ...NODE_STYLES.metrics },    type: 'pill' },
-  { id: 'traces',     position: { x: 600, y: 0 }, data: { label: 'Traces',     ...NODE_STYLES.traces },     type: 'pill' },
-  { id: 'charts',     position: { x: 800, y: 0 }, data: { label: 'Charts',     ...NODE_STYLES.charts },     type: 'pill' },
-  { id: 'dashboards', position: { x: 1000,y: 0 }, data: { label: 'Dashboards', ...NODE_STYLES.dashboards }, type: 'pill' }
-];
-const edges = [
-  { id: 'e1', source: 'sources',    target: 'models',     markerEnd: { type: MarkerType.ArrowClosed } },
-  { id: 'e2', source: 'models',     target: 'metrics',    markerEnd: { type: MarkerType.ArrowClosed } },
-  { id: 'e3', source: 'metrics',    target: 'traces',     markerEnd: { type: MarkerType.ArrowClosed } },
-  { id: 'e4', source: 'traces',     target: 'charts',     markerEnd: { type: MarkerType.ArrowClosed } },
-  { id: 'e5', source: 'charts',     target: 'dashboards', markerEnd: { type: MarkerType.ArrowClosed } }
-];
 
 // Info details for each node
 const INFO = {
@@ -83,30 +68,42 @@ const INFO = {
   },
   metrics: {
     title: 'Metrics',
-    description: 'Key business measures defined once and reused across visuals (single source of truth).',
-    yaml: `traces:
-  - name: weekly_orders
-    model: \${ ref(orders) }
-    columns:
-      week: date_trunc('week', order_date)
-      order_count: count(*)
-    props:
-      type: bar
-      x: column(week)
-      y: column(order_count)`,
-    note: 'Defines a bar metric for weekly order counts.',
+    description: 'Key aggregations defined once and reused across all traces & explorations (semantic layer).',
+    yaml: [
+      { text: "models:", highlight: false },
+      { text: "  - name: widget_sales", highlight: false },
+      { text: "    sql: select * from widget_sales", highlight: false },
+      { text: "    metrics:", highlight: true },
+      { text: "      - name: widget_sales_count", highlight: true },
+      { text: "        sql: count(*)", highlight: true },
+      { text: "      - name: widget_sales_revenue", highlight: true },
+      { text: "        sql: sum(amount)", highlight: true }
+    ],
+    note: 'Enables reuse of the widget sales aggregation across multiple traces.',
     points: [
       'Define metrics as traces for reuse consistency.',
+      <>
+        Automatically validates that metrics are aggregate functions via{' '}
+        <a
+          href="https://sqlglot.com/sqlglot.html"
+          className="text-primary hover:text-primary-600 underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          sqlglot
+        </a>
+        .
+      </>,
       'Ensure testable, centralized metric logic.',
       'Reuse metrics in multiple charts without duplicating query code.'
     ]
   },
   traces: {
     title: 'Traces',
-    description: 'Bind a model/metric to a visual encoding (chart type, axes, cohorts) via Plotly.',
+    description: 'Bind a model\'s metrics and dimensions to a visual encoding (style, type, axes, cohorts) via Plotly.',
     yaml: `traces:
   - name: revenue_by_product
-    model: \${ ref(orders) }
+    model: \${ ref(widget_sales) }
     cohort_on: product_category
     columns:
       week: date_trunc('week', order_date)
@@ -117,7 +114,7 @@ const INFO = {
       y: column(revenue)`,
     note: 'Line trace splitting revenue by product category.',
     points: [
-      'Choose from 15+ Plotly trace types (line, bar, scatter, pie).',
+      'Choose from 25+ Plotly.js trace types (line, bar, scatter, pie).',
       'Use `cohort_on` to split data series by dimension.',
       'Configure axes, tooltips, and interactivity per trace.'
     ]
@@ -139,7 +136,8 @@ const INFO = {
     points: [
       'Overlay multiple metrics in one chart for correlation.',
       'Customizable legends, titles, and selectors.',
-      'Interactive filtering and toggles supported.'
+      'Interactive filtering and toggles supported.',
+      'Automatic mapping of different axes grains from the traces.'
     ]
   },
   dashboards: {
@@ -155,39 +153,123 @@ const INFO = {
     points: [
       'Grid layout with rows and items for responsive design.',
       'Mix charts, tables, and filters in one view.',
-      'Adjust row heights and column spans per item.'
+      'Adjust row heights and column spans per item.', 
+      'Enable interactivity with selectors.'
+    ]
+  },
+  tables: {
+    title: 'Tables',
+    description: 'Powerful tables generated from your models or traces. Connect tables directly to your metadata and lineage.',
+    yaml: `tables:
+  - name: widget_sales_table
+    traces: 
+      - \${ ref(revenue_by_product) }`,
+    
+    note: 'Table representing the revenue by product trace.',
+    points: [
+      'Metadata and lineage for all tables.',
+      'Filter, sort and pivot data in the table view.',
+      'Export data to CSV or JSON.'
     ]
   }
+};
+
+// Helper for dagre layout
+const dagreGraph = new dagre.graphlib.Graph();
+dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+const getLayoutedElements = (nodes, edges, direction = 'LR') => {
+  const isHorizontal = direction === 'LR';
+  dagreGraph.setGraph({ rankdir: direction });
+
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, { 
+      width: isHorizontal ? 180 : 80, 
+      height: isHorizontal ? 40 : 90 
+    });
+  });
+
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+
+  dagre.layout(dagreGraph);
+
+  return {
+    nodes: nodes.map((node) => {
+      const nodeWithPosition = dagreGraph.node(node.id);
+      node.position = {
+        x: nodeWithPosition.x - 90, // center node
+        y: nodeWithPosition.y - 24,
+      };
+      return node;
+    }),
+    edges,
+  };
 };
 
 export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
   const [selected, setSelected] = useState('sources');
   const nodeTypes = { pill: PillNode };
-  const reactFlowWrapper = useRef(null);
   const reactFlowInstanceRef = useRef(null);
 
-  const isSide = infoLayout === 'side';
-  const containerClass = 'flex flex-row md:flex-col h-[32rem] md:h-[32rem] w-full';
-  const graphClass = 'w-1/3 h-full md:w-full md:h-1/6 min-w-[120px] min-h-[120px]';
-  const infoClass = 'w-2/3 h-full md:w-full md:h-5/6';
+  // Responsive layout direction
+  const [layoutDirection, setLayoutDirection] = useState('LR'); // 'LR' = left-right, 'TB' = top-bottom
 
-  // Resize handler to fit view
+  // Responsive: switch to vertical on mobile
   useEffect(() => {
-    function handleResize() {
+    const handleResize = () => {
+      setLayoutDirection(window.innerWidth < 768 ? 'TB' : 'LR');
       if (reactFlowInstanceRef.current) {
         reactFlowInstanceRef.current.fitView();
       }
-    }
+    };
     window.addEventListener('resize', handleResize);
+    handleResize(); // initial
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Remove manual positions from nodes
+  const baseNodes = [
+    { id: 'sources',    data: { label: 'Sources',    ...NODE_STYLES.sources },    type: 'pill' },
+    { id: 'models',     data: { label: 'Models',     ...NODE_STYLES.models },     type: 'pill' },
+    { id: 'metrics',    data: { label: 'Metrics',    ...NODE_STYLES.metrics },    type: 'pill' },
+    { id: 'traces',     data: { label: 'Traces',     ...NODE_STYLES.traces },     type: 'pill' },
+    { id: 'charts',     data: { label: 'Charts',     ...NODE_STYLES.charts },     type: 'pill' },
+    { id: 'dashboards', data: { label: 'Dashboards', ...NODE_STYLES.dashboards }, type: 'pill' },
+    { id: 'tables',     data: { label: 'Tables',     ...NODE_STYLES.tables },     type: 'pill' }
+  ];
+  const baseEdges = [
+    { id: 'e1', source: 'sources',    target: 'models',     markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e2', source: 'models',     target: 'metrics',    markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e3', source: 'metrics',    target: 'traces',     markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e4', source: 'traces',     target: 'charts',     markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e4', source: 'traces',     target: 'tables',     markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e5', source: 'charts',     target: 'dashboards', markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e6', source: 'models',     target: 'tables',     markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e7', source: 'tables',     target: 'dashboards', markerEnd: { type: MarkerType.ArrowClosed } }
+    
+  ];
+
+  const { nodes, edges } = getLayoutedElements(
+    baseNodes.map(node => ({
+      ...node,
+      data: { ...node.data, selected: node.id === selected }
+    })),
+    baseEdges,
+    layoutDirection
+  );
+
+  const containerClass = 'flex flex-row md:flex-col h-[45rem] md:h-[38rem] w-full';
+  const graphClass = 'w-1/3 h-full md:w-full md:h-1/4 min-w-[200px] min-h-[80px]';
+  const infoClass = 'w-2/3 h-full md:w-full md:h-3/4';
 
   return (
     <section className="py-8 bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-screen-xl px-4">
-        <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">How Visivo Connects Your Data</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center text-gray-900 dark:text-white mt-4">Extend your Lineage from Transformation to Insight</h2>
         <div className={containerClass}>
-          <div className={graphClass} ref={reactFlowWrapper}>
+          <div className={graphClass}>
             <div className="h-full w-full md:h-40 md:w-full">
               <ReactFlow
                 nodes={nodes}
@@ -212,7 +294,16 @@ export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{INFO[selected].title}</h3>
               <p className="mb-4 text-gray-800 dark:text-gray-300">{INFO[selected].description}</p>
               <pre className="mb-2 whitespace-pre-wrap bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs text-gray-800 dark:text-gray-200">
-                {INFO[selected].yaml}
+                {Array.isArray(INFO[selected].yaml)
+                  ? INFO[selected].yaml.map((line, idx) =>
+                      <div
+                        key={idx}
+                        className={line.highlight ? "bg-primary-100 dark:bg-primary-900 rounded px-1" : ""}
+                      >
+                        {line.text}
+                      </div>
+                    )
+                  : INFO[selected].yaml}
               </pre>
               <p className="mb-4 text-gray-500 italic">{INFO[selected].note}</p>
               <ul className="list-disc pl-5 text-gray-800 dark:text-gray-300">
