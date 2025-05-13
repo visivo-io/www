@@ -1,17 +1,83 @@
 import GifToVideo from "./GifToVideo";
+import { FiCode, FiTrendingUp, FiUsers } from 'react-icons/fi';
+import { Carousel } from 'flowbite-react';
+
+const cardData = [
+  {
+    icon: <FiCode className="h-6 w-6" />, 
+    title: "Open Source BI-As-Code",
+    desc: "We're commited to OSS. BI-as-code made easy. Extend your lineage into BI."
+  },
+  {
+    icon: <FiTrendingUp className="h-6 w-6" />, 
+    title: "Leverage Insights Faster",
+    desc: "10x your data team's productivity. Fast UI and zero noise for stakeholders."
+  },
+  {
+    icon: <FiUsers className="h-6 w-6" />, 
+    title: "Data Centric Collaboration",
+    desc: "Unlock data centric collaboration across your organization."
+  }
+];
 
 export default function Hero() {
   return (
     <section className="w-full bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-screen-xl px-4 py-8 pt-4 sm:py-16 sm:pt-16 lg:py-24 lg:pt-24">
+      <div className="mx-auto max-w-screen-xl px-4 py-4 pt-4 sm:py-4 sm:pt-16 lg:py-24">
         <div className="text-center">
           <h1
-            className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-            The better way to build visualizations
+            className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl pb-2 lg:text-6xl dark:text-white">
+            BI for The Modern Data Stack
           </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-gray-500 md:text-lg lg:text-xl dark:text-gray-400">
-          Visivo is the open source BI-As-Code framework. Enable your data team to ship meaningful insights faster. Unlock data centric collaboration across your organization.
+          <p className="text-gray-500 dark:text-gray-400">
+            Visivo is the open source BI-as-code framework that allows you to build, deploy, and leverage beautiful data insights.
           </p>
+        </div>
+
+        {/* Carousel for mobile/tablet */}
+        <div className="block md:hidden mt-1 h-48">
+          <Carousel indicators={false} pauseOnHover>
+            {cardData.map((card, idx) => (
+              <div key={idx} className="flex justify-center">
+                <div className="block rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800 w-full max-w-md mx-auto">
+                  <div className="flex items-start gap-4">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary-100 text-primary-500 dark:bg-primary-900 dark:text-primary-300 mt-1">
+                      {card.icon}
+                    </div>
+                    <div>
+                      <h5 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
+                        {card.title}
+                      </h5>
+                      <p className="text-base text-gray-700 dark:text-gray-400">
+                        {card.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Carousel>
+        </div>
+
+        {/* Grid for desktop */}
+        <div className="mt-8 hidden md:grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {cardData.map((card, idx) => (
+            <div key={idx} className="block rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+              <div className="flex items-start gap-4">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary-100 text-primary-500 dark:bg-primary-900 dark:text-primary-300 mt-1">
+                  {card.icon}
+                </div>
+                <div>
+                  <h5 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
+                    {card.title}
+                  </h5>
+                  <p className="text-base text-gray-700 dark:text-gray-400">
+                    {card.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
