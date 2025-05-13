@@ -76,10 +76,12 @@ function App() {
               <Footer.Link href="/about-us">About</Footer.Link>
               <Footer.Link href="/privacy">Privacy Policy</Footer.Link>
               <Footer.Link href="https://github.com/visivo-io">GitHub</Footer.Link>
+              <Footer.Link href="https://docs.visivo.io">Docs</Footer.Link>
+              <Footer.Link href="/comparison-list">Comparison List</Footer.Link>
             </Footer.LinkGroup>
           </div>
           <Footer.Divider />
-          <Footer.Copyright href="#" by="Visivo™" year={2024} />
+          <Footer.Copyright href="#" by="Visivo™" year={2025} />
         </div>
         <chatlio-widget widgetid="9b6c297a-87af-43b4-4a16-fa838c02755c"></chatlio-widget>
       </Footer>
