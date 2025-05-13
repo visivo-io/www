@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactFlow, { Handle, MarkerType } from 'react-flow-renderer';
 // Import icons from react-icons
 import { HiOutlineServer, HiOutlineDatabase, HiOutlineCalculator, HiOutlineChartBar, HiOutlineViewGrid } from 'react-icons/hi';
@@ -86,7 +86,7 @@ const INFO = {
     description: 'Key business measures defined once and reused across visuals (single source of truth).',
     yaml: `traces:
   - name: weekly_orders
-    model: ref('orders')
+    model: \${ ref(orders) }
     columns:
       week: date_trunc('week', order_date)
       order_count: count(*)
@@ -106,7 +106,7 @@ const INFO = {
     description: 'Bind a model/metric to a visual encoding (chart type, axes, cohorts) via Plotly.',
     yaml: `traces:
   - name: revenue_by_product
-    model: ref('orders')
+    model: \${ ref(orders) }
     cohort_on: product_category
     columns:
       week: date_trunc('week', order_date)
@@ -128,8 +128,8 @@ const INFO = {
     yaml: `charts:
   - name: sales_over_time
     traces:
-      - ref('weekly_orders')
-      - ref('weekly_revenue')
+      - \${ ref(weekly_orders) }
+      - \${ ref(weekly_revenue) }
     layout:
       title:
         text: "Orders and Revenue Per Week"
@@ -149,8 +149,8 @@ const INFO = {
   - name: sales_dashboard
     rows:
       - items:
-          - chart: ref('sales_over_time')
-          - chart: ref('top_products')`,
+          - chart: \${ ref(sales_over_time) }
+          - chart: \${ ref(top_products) }`,
     note: 'Dashboard showing two charts side by side.',
     points: [
       'Grid layout with rows and items for responsive design.',
@@ -160,31 +160,55 @@ const INFO = {
   }
 };
 
-export default function VisivoDataFlow({ infoLayout = 'side' }) {
+export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
   const [selected, setSelected] = useState('sources');
   const nodeTypes = { pill: PillNode };
+  const reactFlowWrapper = useRef(null);
+  const reactFlowInstanceRef = useRef(null);
 
   const isSide = infoLayout === 'side';
-  const containerClass = isSide ? 'flex lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8' : 'flex flex-col space-y-6';
-  const graphClass = isSide ? 'lg:w-2/3 h-80' : 'w-full h-80';
-  const infoClass = isSide ? 'lg:w-1/3' : 'w-full';
+  const containerClass = 'flex flex-row md:flex-col h-[32rem] md:h-[32rem] w-full';
+  const graphClass = 'w-1/3 h-full md:w-full md:h-1/6 min-w-[120px] min-h-[120px]';
+  const infoClass = 'w-2/3 h-full md:w-full md:h-5/6';
+
+  // Resize handler to fit view
+  useEffect(() => {
+    function handleResize() {
+      if (reactFlowInstanceRef.current) {
+        reactFlowInstanceRef.current.fitView();
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section className="py-8 bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-screen-xl px-4">
         <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">How Visivo Connects Your Data</h2>
-        <div className={`${containerClass}`}>  
-          <div className={`${graphClass}`}>            
-            <ReactFlow
-              nodes={nodes}
-              edges={edges}
-              nodeTypes={nodeTypes}
-              onNodeClick={(_, node) => setSelected(node.id)}
-              fitView
-            />
+        <div className={containerClass}>
+          <div className={graphClass} ref={reactFlowWrapper}>
+            <div className="h-full w-full md:h-40 md:w-full">
+              <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                nodeTypes={nodeTypes}
+                onNodeClick={(_, node) => setSelected(node.id)}
+                fitView
+                onInit={instance => {
+                  reactFlowInstanceRef.current = instance;
+                  instance.fitView();
+                }}
+                panOnScroll={false}
+                panOnDrag={false}
+                zoomOnScroll={false}
+                zoomOnPinch={false}
+                zoomOnDoubleClick={false}
+              />
+            </div>
           </div>
-          <div className={`${infoClass}`}>            
-            <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-sm">
+          <div className={infoClass}>
+            <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-sm h-full">
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{INFO[selected].title}</h3>
               <p className="mb-4 text-gray-800 dark:text-gray-300">{INFO[selected].description}</p>
               <pre className="mb-2 whitespace-pre-wrap bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs text-gray-800 dark:text-gray-200">
