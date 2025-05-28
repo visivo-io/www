@@ -20,10 +20,11 @@ const GifToVideo = () => {
           muted
           loop
           autoPlay
+          currentTime={2}
         />
       ) : (
         <video
-          src="/videos/visivo-demo.mov"
+          src="/videos/visivo-demo.mp4"
           controls
           autoPlay
           style={{ width: '100%' }}
@@ -34,7 +35,7 @@ const GifToVideo = () => {
           onClick={handleButtonClick}
         >
           <Icon icon={faPlay} />
-          Watch 150-<br />Second Demo
+          Watch 86<br />Second Demo
         </Button>
       )}
     </Container>
