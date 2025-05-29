@@ -1,5 +1,6 @@
 import { DarkThemeToggle, Navbar, Button, Flowbite, Footer, Dropdown } from "flowbite-react";
 import { Outlet } from "react-router-dom";
+import { useAnalytics } from "./analytics/segment";
 
 const customTheme = {
   button: {
@@ -10,6 +11,8 @@ const customTheme = {
 };
 
 function App() {
+  useAnalytics();
+
   return (
     <Flowbite theme={{ theme: customTheme }}>
       <Navbar fluid={true} className="sticky top-0 z-50 w-full bg-gray-100">
