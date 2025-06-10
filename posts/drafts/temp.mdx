@@ -1,0 +1,622 @@
+export const frontmatter = {
+  title: "Deploying Plotly Charts with Visivo",
+  date: "May 13, 2025",
+  description: "A step-by-step guide to building and deploying interactive Plotly charts using Visivo's BI-as-code framework.",
+  author: "Jared Jesionek",
+  tag: "Tutorial",
+  imgSrc: "./images/plotly-charts.webp",
+  imgAlt: "Plotly chart deployment example",
+  readTime: "8 min"
+};
+
+<!-- Header image prompt: A futuristic data chart display on a laptop screen, showing a vibrant Plotly graph being built via code -->
+
+# Deploying Plotly Charts with Visivo
+
+#### A step-by-step guide to building and deploying interactive Plotly charts using Visivo's BI-as-code framework.
+
+## Introduction
+
+Plotly is a popular open-source library for creating interactive data visualizations. Visivo leverages Plotly under the hood to allow developers and analysts to create a wide variety of charts through simple configuration. With over 20+ trace types and thousands of styling options available, Visivo makes it easy to **deploy Plotly charts** as shareable dashboards. In this guide, we'll walk through how to build a Plotly chart in Visivo from scratch and deploy it for your team to use.
+
+Visivo treats **data visualizations as code**, meaning you define your data sources and charts in YAML files that can be version-controlled. This approach combines Plotly's rich visualization capabilities with Visivo's robust development workflow. Let's get started with an example.
+#### A step-by-step guide to building and deploying interactive Plotly charts using Visivo’s BI-as-code framework.
+## Step 1: Initialize a Visivo Project
+
+To begin, ensure you have Python 3.10+ installed. Install the Visivo CLI via pip:
+Plotly is a popular open-source library for creating interactive data visualizations. Visivo leverages Plotly under the hood to allow developers and analysts to create a wide variety of charts through simple configuration. With over 20+ trace types and thousands of styling options available, Visivo makes it easy to **deploy Plotly charts** as shareable dashboards. In this guide, we’ll walk through how to build a Plotly chart in Visivo from scratch and deploy it for your team to use.
+```bash
+Visivo treats **data visualizations as code**, meaning you define your data sources and charts in YAML files that can be version-controlled. This approach combines Plotly’s rich visualization capabilities with Visivo’s robust development workflow. Let’s get started with an example.
+```
+
+Next, initialize a new Visivo project by running:
+
+```bash
+visivo init
+```
+
+This interactive command will create a project directory with a `project.visivo.yml` configuration and prompt you for settings (like project name and data source). For a quick start, you can choose a built-in SQLite example when prompted. Visivo will set up a skeleton project with default files.
+
+**Tip:** If you plan to deploy to Visivo's cloud, go ahead and obtain an API key from your account (as described in the docs) and enter it during `visivo init`. This will configure your project for easy deployment later.
+
+## Step 2: Add Your Data Source and Model
+
+With the project initialized, you need data for your chart. Visivo supports connecting to databases (PostgreSQL, Snowflake, etc.) or using static files/URLs as sources. In your `project.visivo.yml`, you'll have a `sources:` section where you define connections (the `visivo init` process may have already set one up for you).
+
+Next, define a **model**, essentially a query or dataset that will feed the chart. You can add a model that pulls data from your source. For example, suppose we want to plot monthly sales from a database. We could add:
+**Tip:** If you plan to deploy to Visivo’s cloud, go ahead and obtain an API key from your account (as described in the docs) and enter it during `visivo init`. This will configure your project for easy deployment later.
+```yaml
+models:
+  - name: Monthly Sales
+With the project initialized, you need data for your chart. Visivo supports connecting to databases (PostgreSQL, Snowflake, etc.) or using static files/URLs as sources. In your `project.visivo.yml`, you’ll have a `sources:` section where you define connections (the `visivo init` process may have already set one up for you).
+    query: |
+      SELECT DATE_TRUNC('month', order_date) AS month, SUM(amount) AS total_sales
+      FROM orders
+      GROUP BY 1
+      ORDER BY 1;
+```
+
+In this YAML snippet:
+
+* **Source:** The `SqlModel` will run the SQL query against the default source (set in your profile). It aggregates sales by month.
+* **Model name:** "Monthly Sales" becomes a reference we can use later for traces.
+
+Visivo will include this model in the project's Directed Acyclic Graph (DAG) of data dependencies. The model is automatically kept up-to-date and will run as part of the dashboard build process.
+
+## Step 3: Configure the Plotly Trace and Chart
+
+Now that we have data, the next step is to configure a **trace** — a visual element of a Plotly chart. In Visivo, you define traces in YAML, mapping data columns to visual properties (x-axis, y-axis, chart type, etc.). You then combine one or more traces into a chart with a layout.
+* **Model name:** “Monthly Sales” becomes a reference we can use later for traces.
+For our sales example, let's add a trace and chart definition:
+Visivo will include this model in the project’s Directed Acyclic Graph (DAG) of data dependencies. The model is automatically kept up-to-date and will run as part of the dashboard build process.
+```yaml
+traces:
+  - name: Sales by Month Trace
+    model: ref(Monthly Sales)
+    props:
+      type: bar         # Use a bar chart trace (Plotly bar chart)
+      x: ?{ month }     # Use the month from our model as the x-axis
+      y: ?{ total_sales }  # Plot the total sales as the y-axis
+    # (Optional: add filters, styling, etc.)
+charts:
+  - name: Monthly Sales Chart
+    traces:
+      - ref(Sales by Month Trace)
+    layout:
+      title:
+        text: "Monthly Sales" 
+      xaxis:
+        title: "Month"
+      yaxis:
+        title: "Total Sales"
+```
+
+Breaking this down:
+
+* We created a trace called **Sales by Month Trace** that uses the `Monthly Sales` model. The `props` define it as a bar chart (`type: bar`). We set `x` to the month field and `y` to the total\_sales field using Visivo's expression syntax (`?{ ... }`).
+* We then define a **chart** named **Monthly Sales Chart** that includes our trace. The chart's layout specifies titles for the chart and axes, just like you would in a Plotly configuration.
+
+Visivo utilizes Plotly.js behind the scenes, so any Plotly trace type and property can be used in the `props` section. This means you have access to the full power of Plotly (tooltips, colors, modes, etc.) via simple YAML. You can add multiple traces to one chart as well, for example, a line trace overlaid on a bar chart, to create composite visuals.
+
+![Placeholder: Example of a bar chart showing monthly sales, as it would appear in a Visivo dashboard]()
+
+* We created a trace called **Sales by Month Trace** that uses the `Monthly Sales` model. The `props` define it as a bar chart (`type: bar`). We set `x` to the month field and `y` to the total\_sales field using Visivo’s expression syntax (`?{ ... }`).
+* We then define a **chart** named **Monthly Sales Chart** that includes our trace. The chart’s layout specifies titles for the chart and axes, just like you would in a Plotly configuration.
+## Step 4: Preview the Dashboard Locally
+
+During development, Visivo's local server is your friend. Run:
+
+```bash
+visivo serve
+```
+
+This will build your project and start a local web server (by default at `http://localhost:8000`). Open that link in your browser to see your dashboard. You should see the **Monthly Sales Chart** rendered as an interactive Plotly chart. Hover to see tooltips, and if you had multiple traces or interactive filters (selectors), you could toggle them — all without writing any frontend code.
+During development, Visivo’s local server is your friend. Run:
+Take a moment to verify the chart looks correct. If you need to adjust labels or styles, simply edit the YAML and the local server will live-reload the changes. This fast feedback loop lets you tweak the Plotly settings (marker colors, chart type, etc.) until the visualization meets your needs.
+
+## Step 5: Deploy the Plotly Chart with Visivo
+
+After confirming everything works locally, you can deploy your Visivo project so others can access the dashboard. Visivo offers multiple deployment options:
+
+* **Visivo Cloud:** The easiest route, run `visivo deploy`. This pushes your project to Visivo's cloud service. Since we set up the API key earlier, the deployment is just one command. For example, `visivo deploy -s monthly-sales` will build and upload your project (with the given slug name) to the cloud, making it accessible to your team.
+* **Static Site:** Alternatively, you can generate a static web app with `visivo dist` and host it on a platform like Netlify or GitHub Pages. The static output includes all the charts and dashboards ready to serve as a website.
+
+Visivo's deployment process integrates with your version control and CI/CD pipeline, so deploying a Plotly chart becomes as streamlined as deploying any web application. Every chart is reproducible and trackable in git, ensuring that you know exactly what code and data produced the visualization.
+
+After deployment, your Plotly-based chart will be live for stakeholders to explore. They can interact with it (zoom, filter, etc.) and trust that it's backed by version-controlled data logic. And because Visivo does not re-query the database on every interaction, your Plotly charts remain snappy and responsive for end users (more on that in our article on interactive dashboards).
+
+* **Visivo Cloud:** The easiest route, run `visivo deploy`. This pushes your project to Visivo’s cloud service. Since we set up the API key earlier, the deployment is just one command. For example, `visivo deploy -s monthly-sales` will build and upload your project (with the given slug name) to the cloud, making it accessible to your team.
+
+In this guide, we demonstrated how to go from **data to deployed Plotly chart** using Visivo. We initialized a project, defined a data model, configured a Plotly trace and chart in YAML, and served it locally before deploying to the cloud. Along the way, we saw how Visivo's BI-as-code approach complements Plotly: you get the flexibility of Plotly visuals with the robustness of software development practices.
+Visivo’s deployment process integrates with your version control and CI/CD pipeline, so deploying a Plotly chart becomes as streamlined as deploying any web application. Every chart is reproducible and trackable in git, ensuring that you know exactly what code and data produced the visualization.
+By using Visivo to deploy Plotly charts, you gain:
+After deployment, your Plotly-based chart will be live for stakeholders to explore. They can interact with it (zoom, filter, etc.) and trust that it’s backed by version-controlled data logic. And because Visivo does not re-query the database on every interaction, your Plotly charts remain snappy and responsive for end users (more on that in our article on interactive dashboards).
+* **Speed and Consistency:** Write once, deploy anywhere. Charts render the same locally and in production.
+* **Collaboration:** Store chart definitions in git, so team members can review changes and contribute.
+* **Interactivity and Performance:** Visivo pre-computes data for interactions, ensuring your Plotly charts are highly responsive for users.
+In this guide, we demonstrated how to go from **data to deployed Plotly chart** using Visivo. We initialized a project, defined a data model, configured a Plotly trace and chart in YAML, and served it locally before deploying to the cloud. Along the way, we saw how Visivo’s BI-as-code approach complements Plotly: you get the flexibility of Plotly visuals with the robustness of software development practices.
+
+Now that you've deployed a simple chart, you can continue to build out full dashboards in Visivo. Try adding more traces or charts, or incorporate filters to allow viewers to toggle data series (see our article on [Interactive Dashboards, Zero Wait](/blog/interactive-dashboards-zero-wait) for tips). With Visivo, deploying rich Plotly charts is just the beginning of delivering data insights faster and more reliably.
+
+export const frontmatter = {
+  title: "Visivo + dbt: Full Lineage and Transparent Transformations",
+  date: "May 13, 2025",
+  description: "How Visivo's native dbt integration provides end-to-end data lineage and transformation transparency, benefiting both analysts and developers.",
+  author: "Jared Jesionek",
+  tag: "Integration",
+  imgSrc: "./images/dbt-lineage.webp",
+  imgAlt: "Data pipeline diagram showing dbt integration",
+  readTime: "10 min"
+};
+
+<!-- Header image prompt: A data pipeline diagram flowing from databases through dbt transformations into dashboards, in a futuristic neon style -->
+
+# Visivo + dbt: Full Lineage and Transparent Transformations
+
+#### How Visivo's native dbt integration provides end-to-end data lineage and transformation transparency, benefiting both analysts and developers.
+
+## Introduction
+
+Modern data teams rely on [dbt (Data Build Tool)](https://www.getdbt.com/) to transform raw data into analytics-ready tables. Visivo amplifies the power of dbt by integrating it directly into your business intelligence workflow. With Visivo + dbt, you get **full data lineage** from source to dashboard and complete transparency into every transformation step. This means analysts can trust the numbers they see, and developers can maintain one source of truth for all data logic.
+
+In this in-depth look, we'll explore how Visivo's dbt integration works and why it matters. We'll cover how Visivo automatically pulls in dbt models, how it visualizes lineage, and the key benefits this brings to different stakeholders. By the end, you'll see how Visivo and dbt together make your analytics stack more **transparent, auditable, and collaborative**.
+#### How Visivo’s native dbt integration provides end-to-end data lineage and transformation transparency, benefiting both analysts and developers.
+## Seamless Integration of dbt Models
+
+Visivo projects can directly integrate with an existing dbt project with minimal setup. In your Visivo configuration, you simply enable the dbt integration and point to your dbt project files. For example, in `project.visivo.yml`:
+
+```yaml
+In this in-depth look, we’ll explore how Visivo’s dbt integration works and why it matters. We’ll cover how Visivo automatically pulls in dbt models, how it visualizes lineage, and the key benefits this brings to different stakeholders. By the end, you’ll see how Visivo and dbt together make your analytics stack more **transparent, auditable, and collaborative**.
+  enabled: true
+  dbt_project_yml_location: dbt/
+  profiles_yml_location: dbt/
+```
+
+With this enabled, Visivo will automatically detect your dbt models and sources when building the project. Here's what happens under the hood:
+
+* **Sources from dbt:** Visivo reads your `profiles.yml` and creates Visivo **Sources** for each environment target defined. For instance, if your dbt profile has a development and production target, Visivo will create corresponding source connections (with appropriate credentials) named after those targets.
+* **Models from dbt:** Every dbt model in your project is converted into a **Visivo model**. These models are auto-generated and use the SQL logic defined in dbt. Visivo names them after your dbt models (with an optional prefix if you specify one). Essentially, Visivo is **pulling in the transformed tables** that dbt produces and making them first-class data models in the Visivo environment.
+* All this happens on build, you don't have to manually duplicate any SQL. Visivo and dbt stay in sync: update a dbt model, and Visivo will incorporate the change on the next project build.
+
+**The result** is a single unified DAG (Directed Acyclic Graph) that includes both your data transformations and your visualizations. Visivo's backend builds a DAG that starts from raw data sources, goes through dbt models, then through any additional Visivo models or calculations, and finally into traces and charts. This gives **complete lineage visibility** for every metric on a dashboard.
+With this enabled, Visivo will automatically detect your dbt models and sources when building the project. Here’s what happens under the hood:
+![Placeholder: Screenshot of a lineage DAG showing sources -> dbt models -> Visivo chart]()
+
+## Full Lineage at Your Fingertips
+* All this happens on build, you don’t have to manually duplicate any SQL. Visivo and dbt stay in sync: update a dbt model, and Visivo will incorporate the change on the next project build.
+One of the biggest advantages of this integration is **full data lineage**. In Visivo, you can trace any dashboard element backwards to see where the data comes from. For example, consider a KPI chart on a Visivo dashboard showing "Revenue This Month." With dbt integration enabled, you could determine:
+**The result** is a single unified DAG (Directed Acyclic Graph) that includes both your data transformations and your visualizations. Visivo’s backend builds a DAG that starts from raw data sources, goes through dbt models, then through any additional Visivo models or calculations, and finally into traces and charts. This gives **complete lineage visibility** for every metric on a dashboard.
+* Which Visivo **trace** and **chart** is displaying "Revenue This Month".
+* Which **Visivo model** (auto-imported from dbt) provides the revenue data for that trace.
+* Which **dbt model** that corresponds to, such as a model that calculates revenue or perhaps an aggregate table.
+* What **source tables** feed into that dbt model, e.g., the raw orders table in your database, maybe via intermediate staging models.
+
+One of the biggest advantages of this integration is **full data lineage**. In Visivo, you can trace any dashboard element backwards to see where the data comes from. For example, consider a KPI chart on a Visivo dashboard showing “Revenue This Month.” With dbt integration enabled, you could determine:
+
+* Which Visivo **trace** and **chart** is displaying “Revenue This Month”.
+* If a number looks off, you can inspect the exact SQL from the dbt model that produced it, directly in the context of the dashboard (no more guessing which part of the pipeline might have an issue).
+* New team members can understand the data flow by exploring the Visivo project structure, which clearly delineates sources, models (including those from dbt), and charts.
+
+In traditional BI tools, the path from a dashboard number back to raw data is often opaque or buried in many layers. With Visivo + dbt, that path is **clear and transparent** by design. This improves trust: stakeholders know that each dashboard is backed by a well-defined, version-controlled transformation pipeline.
+This end-to-end lineage means an analyst or developer can answer questions like “Where is this number coming from?” instantly, without digging through separate tools. Every transformation is documented and accessible:
+## Transformation Transparency for Analysts
+
+From an analyst or business user's perspective, having transformation transparency is empowering. How so?
+
+* **Trust through Visibility:** Analysts can verify how a metric is calculated. For instance, if the definition of "Active Users" changes, they can see exactly when and how the dbt model was updated (since Visivo pulls the latest logic). This builds confidence that the dashboard isn't a black box, it's showing agreed-upon logic.
+* **Self-Service Insights:** Curious about a detail? Analysts can drill into the lineage. They might find that "Active Users" are filtered by certain criteria in the dbt model. Such insights into business logic are readily accessible, bridging the typical gap between data engineers and analysts.
+* **Collaboration:** Because everything is code, analysts who are comfortable with SQL can even propose changes by editing or suggesting edits to the dbt models, knowing Visivo will pick those up. The conversation around metrics moves into version control and merge requests, fostering collaboration between analytics engineers and consumers of the data.
+
+Importantly, all this happens without analysts needing to directly run dbt themselves or write code in Visivo. Once the integration is set up, **Visivo handles pulling in the latest transformations automatically**. Analysts simply use the Visivo app to explore and trust that the numbers reflect the latest dbt project state.
+From an analyst or business user’s perspective, having transformation transparency is empowering. How so?
+## Less Duplication, Less Maintenance for Developers
+* **Trust through Visibility:** Analysts can verify how a metric is calculated. For instance, if the definition of “Active Users” changes, they can see exactly when and how the dbt model was updated (since Visivo pulls the latest logic). This builds confidence that the dashboard isn’t a black box, it’s showing agreed-upon logic.
+* **Self-Service Insights:** Curious about a detail? Analysts can drill into the lineage. They might find that “Active Users” are filtered by certain criteria in the dbt model. Such insights into business logic are readily accessible, bridging the typical gap between data engineers and analysts.
+
+* **Single Source of Truth:** Write a SQL transformation once in a dbt model, and use it everywhere. Visivo will use that single source of truth for the dashboard. If business logic needs updating, you update the dbt project, Visivo will mirror it. This ensures consistency across analyses.
+* **Easier Debugging:** If something goes wrong or a number is off, you have one place to look for the logic (the dbt model), rather than checking both the BI tool calculation and the ETL. The unified lineage speeds up troubleshooting because you can pinpoint issues in the data pipeline quickly.
+* **Full Control in Code:** All transformations are code-reviewed and tested in the dbt layer. Visivo simply consumes the results. This encourages proper software engineering practices for analytics. Developers can write tests in dbt (or in Visivo) to ensure data quality at each stage, leading to more reliable dashboards (see our article on [Ensuring Data Quality with Testing](/blog/goodbye-broken-dashboards) for more on this topic).
+* **Performance:** dbt often materializes models (as tables or views). Visivo can query these pre-computed tables directly, which means dashboards load quickly even with complex transformations upstream. You're leveraging the warehouse's power to do heavy lifting once, rather than on every dashboard load.
+
+For data engineers or developers, Visivo’s dbt integration eliminates the tedious work of duplicating logic in your BI tool. You no longer have to redefine metrics or transformations in two places (ETL pipeline and BI layer). Key benefits include:
+
+## Benefits Across the Organization
+
+Visivo's integration with dbt brings tangible benefits to different roles:
+* **Performance:** dbt often materializes models (as tables or views). Visivo can query these pre-computed tables directly, which means dashboards load quickly even with complex transformations upstream. You’re leveraging the warehouse’s power to do heavy lifting once, rather than on every dashboard load.
+* **Data Engineers:** Enjoy a cleaner architecture with decoupled concerns. They focus on ETL/ELT and data modeling in dbt. Visivo takes care of visualization, but honors the models they've built. Deployment of dashboards becomes part of the CI/CD process that includes dbt runs, ensuring everything stays in sync.
+In short, Visivo’s approach avoids the **“two sources of truth” problem**. Your dbt project remains the brains of your data transformation, while Visivo acts as the presentation layer that knows how to read those brains. This tightens the feedback loop between data modeling and visualization.
+* **Analysts/Business Users:** Gain confidence in dashboards. They can ask deeper questions knowing they have a way to get answers. For example, if a marketing manager wonders why a metric spiked, the analyst can inspect the underlying data via Visivo's lineage and see perhaps that a new data source was added to the dbt model at that time, explaining the change.
+* **Stakeholders:** Ultimately see more reliable, documented dashboards. When every number's origin can be traced and audited, data governance improves. Stakeholders trust the insights and are more likely to adopt the BI tool's outputs for decision-making.
+
+Visivo’s integration with dbt brings tangible benefits to different roles:
+
+* **Data Engineers:** Enjoy a cleaner architecture with decoupled concerns. They focus on ETL/ELT and data modeling in dbt. Visivo takes care of visualization, but honors the models they’ve built. Deployment of dashboards becomes part of the CI/CD process that includes dbt runs, ensuring everything stays in sync.
+
+* **Analysts/Business Users:** Gain confidence in dashboards. They can ask deeper questions knowing they have a way to get answers. For example, if a marketing manager wonders why a metric spiked, the analyst can inspect the underlying data via Visivo’s lineage and see perhaps that a new data source was added to the dbt model at that time, explaining the change.
+* **Stakeholders:** Ultimately see more reliable, documented dashboards. When every number’s origin can be traced and audited, data governance improves. Stakeholders trust the insights and are more likely to adopt the BI tool’s outputs for decision-making.
+* **End-to-End Lineage:** Every dashboard element can be traced back to source data and transformation logic, increasing trust.
+* **Transformation Transparency:** No more black-box metrics, anyone can see how the data was shaped, which fosters a data-driven culture.
+* **Streamlined Workflow:** One place to maintain transformations (in dbt). Visivo consumes those, reducing errors and inconsistencies.
+Visivo’s native dbt integration is a game-changer for organizations seeking **transparency and efficiency** in their analytics stack. By unifying transformation logic (dbt) with visualization (Visivo), you achieve a true end-to-end view of your data pipeline, what we call **full lineage**. Both technical and non-technical team members benefit: developers have less redundancy and more control through code, and analysts have greater trust and understanding of the data they work with.
+
+By emphasizing lineage and transparency, Visivo helps break down silos between data transformation and visualization. Analysts and stakeholders are no longer in the dark about how data is processed, and developers can ensure that **what's in production is exactly what was defined in code**. This synergy unleashes more reliable analytics with less effort.
+
+Ready to maximize the value of your dbt project? Visivo provides the canvas to showcase it. As you continue building with Visivo, consider also implementing automated tests on your data models and dashboards (check out [Goodbye Broken Dashboards](/blog/goodbye-broken-dashboards) to learn about testing and alerts) to further boost confidence in your data. With Visivo and dbt together, you're on the path to a truly **transparent and accountable** analytics workflow.
+
+export const frontmatter = {
+  title: "Interactive Dashboards, Zero Wait: Visivo's Instant Insights",
+  date: "May 13, 2025",
+  description: "How Visivo enables rich interactivity without slow load times, delivering a fast and engaging dashboard experience for stakeholders.",
+  author: "Jared Jesionek",
+  tag: "Feature",
+  imgSrc: "./images/interactive-dashboards.webp",
+  imgAlt: "Interactive dashboard example",
+  readTime: "7 min"
+};
+
+# Interactive Dashboards, Zero Wait: Visivo's Instant Insights
+
+
+#### How Visivo enables rich interactivity without slow load times, delivering a fast and engaging dashboard experience for stakeholders.
+
+## The Need for Speed in BI
+
+In today's fast-paced business environment, waiting for a dashboard to refresh or a filter to apply isn't just frustrating, it can hinder decision-making. Traditional BI tools often re-query the database every time you click a filter or change a parameter, leading to spinning wheels and impatient users. Visivo takes a different approach to **interactive dashboards**. It was designed so that users experience **zero wait time** when slicing and dicing data on a dashboard.
+# Interactive Dashboards, Zero Wait: Visivo’s Instant Insights
+**Interactivity without the lag** means stakeholders can explore data freely, drilling down into details, toggling metrics, adjusting date ranges, all while maintaining a smooth, app-like experience. Let's explore Visivo's secret sauce for interactivity and how you can leverage it to create responsive, engaging dashboards.
+
+## Visivo's Push-Based Architecture
+
+Visivo employs a push-based architecture for dashboards. Instead of the front-end pulling data on demand, the heavy lifting is done upfront during the build/deploy phase. In practical terms, this means:
+In today’s fast-paced business environment, waiting for a dashboard to refresh or a filter to apply isn’t just frustrating, it can hinder decision-making. Traditional BI tools often re-query the database every time you click a filter or change a parameter, leading to spinning wheels and impatient users. Visivo takes a different approach to **interactive dashboards**. It was designed so that users experience **zero wait time** when slicing and dicing data on a dashboard.
+* **Data Preloading:** When you build a Visivo project (either locally or in CI), all queries to your data sources are executed then. The resulting data for each chart is stored such that when a user opens the dashboard, the data is ready to go.
+**Interactivity without the lag** means stakeholders can explore data freely, drilling down into details, toggling metrics, adjusting date ranges, all while maintaining a smooth, app-like experience. Let’s explore Visivo’s secret sauce for interactivity and how you can leverage it to create responsive, engaging dashboards.
+* **Deterministic Outputs:** Because interactions are based on precomputed data, the dashboard is entirely deterministic. Every possible view or state of the dashboard is derived from a known set of data that was vetted during the build. This also means you can test those states before deploying (no surprises in production).
+## Visivo’s Push-Based Architecture
+The result? **Lightning-fast interactivity.** When a stakeholder clicks a button to change from "Monthly" to "Weekly" view, the chart updates immediately, because Visivo has both monthly and weekly data ready and simply toggles the view. This creates an experience where exploration is fluid, keeping users in the analytical flow.
+
+## Selectors: Powering User Interaction
+
+How does one configure interactivity in a Visivo dashboard? The key feature is Visivo's **selector** component. A selector acts as a UI control (like a dropdown or toggle) that lets users choose between different "cohorts" of a trace or chart. For example, you might have a selector for time granularity (daily vs monthly) or for categories (product lines, regions, etc.).
+
+To use a selector, you define multiple trace variants in your Visivo config and assign them a cohort label. Then you attach a selector to your chart. Here's a conceptual example:
+The result? **Lightning-fast interactivity.** When a stakeholder clicks a button to change from “Monthly” to “Weekly” view, the chart updates immediately, because Visivo has both monthly and weekly data ready and simply toggles the view. This creates an experience where exploration is fluid, keeping users in the analytical flow.
+* We have a metric "Issues Created" and we want to let users view it by day, week, or month.
+* In Visivo, you can create three traces (day, week, month) for the same metric, each trace labeled (cohort) accordingly.
+* Add a selector of type single-select to the chart. The selector will allow the user to pick which cohort's trace to display.
+How does one configure interactivity in a Visivo dashboard? The key feature is Visivo’s **selector** component. A selector acts as a UI control (like a dropdown or toggle) that lets users choose between different “cohorts” of a trace or chart. For example, you might have a selector for time granularity (daily vs monthly) or for categories (product lines, regions, etc.).
+Under the hood, Visivo's build process will fetch data for all three traces (day, week, month). On the dashboard, the selector simply switches which trace is visible. This happens instantly, no new query needed, since all data is already present. The docs note that this gives you dynamic drill-down and filtering while retaining deterministic builds that can be tested.
+To use a selector, you define multiple trace variants in your Visivo config and assign them a cohort label. Then you attach a selector to your chart. Here’s a conceptual example:
+For example, a YAML snippet for the above might look like:
+* We have a metric “Issues Created” and we want to let users view it by day, week, or month.
+```yaml
+* Add a selector of type single-select to the chart. The selector will allow the user to pick which cohort’s trace to display.
+  - name: issues_by_day
+Under the hood, Visivo’s build process will fetch data for all three traces (day, week, month). On the dashboard, the selector simply switches which trace is visible. This happens instantly, no new query needed, since all data is already present. The docs note that this gives you dynamic drill-down and filtering while retaining deterministic builds that can be tested.
+    cohort_on: "'day'"
+    props: ... (daily aggregation SQL)
+  - name: issues_by_week
+    model: ref(Issues)
+    cohort_on: "'week'"
+    props: ... (weekly aggregation SQL)
+  - name: issues_by_month
+    model: ref(Issues)
+    cohort_on: "'month'"
+    props: ... (monthly aggregation SQL)
+charts:
+  - name: Issues Created Over Time
+    selector:
+      name: issue_time_grain
+      type: single  # user can select one option at a time
+    traces:
+      - ref(issues_by_day)
+      - ref(issues_by_week)
+      - ref(issues_by_month)
+    layout: { title: { text: "Issues Created" } }
+```
+
+In this setup, the **selector** `issue_time_grain` will automatically have options for "day", "week", "month" based on the `cohort_on` values of the traces. The user's choice determines which trace's data is shown on the chart.
+
+This is just one pattern. Selectors can also do multi-select (e.g., allow choosing multiple categories to compare) and can be reused across multiple charts for a **global filter** effect. For instance, a selector for "Region" could control all charts on a dashboard to show a specific region's data.
+
+## Interactive Use Cases Enabled by Visivo
+
+By leveraging selectors and precomputed data, Visivo opens up a range of interactive experiences that remain fast:
+In this setup, the **selector** `issue_time_grain` will automatically have options for “day”, “week”, “month” based on the `cohort_on` values of the traces. The user’s choice determines which trace’s data is shown on the chart.
+* **Drill Downs:** Instead of clicking and waiting for a drill-down query, Visivo can precompute common drill paths. A chart could have a selector or clickable legend that swaps in a more detailed view (such as changing a high-level summary chart to a detailed breakdown).
+This is just one pattern. Selectors can also do multi-select (e.g., allow choosing multiple categories to compare) and can be reused across multiple charts for a **global filter** effect. For instance, a selector for “Region” could control all charts on a dashboard to show a specific region’s data.
+* **Comparisons:** Want to let users compare this year vs last year? You can precompute both series and use a multi-select selector (e.g., checkboxes) to let them turn one or both on. The chart updates immediately with whichever series are selected.
+* **What-if Scenarios:** In some cases, you might precompute scenarios or segments. For example, an e-commerce dashboard could preload data for each product category. A selector could then act as a filter to view one category at a time without additional queries.
+
+All these interactions happen client-side within the user's browser almost instantaneously. The heavy computation (SQL queries, aggregations) happened during the build on the server side, not while the user is clicking around.
+
+## Balancing Data Volume and Performance
+
+You might wonder: *If we preload all possible data for interactions, could that be too much data?* It's a good consideration. Visivo's model works best when the data for precomputed scenarios is reasonably bounded. For example, if you allow filtering by a dimension that has 1,000 unique values, precomputing all 1,000 could be heavy (both in build time and browser payload).
+
+Best practices to ensure interactive dashboards remain efficient:
+All these interactions happen client-side within the user’s browser almost instantaneously. The heavy computation (SQL queries, aggregations) happened during the build on the server side, not while the user is clicking around.
+* **Use selectors for low-cardinality options:** e.g., a few specific options like categories, regions, time grains, on/off toggles. For high-cardinality filters (like customer name), a traditional on-demand filter might be more appropriate. Visivo's paradigm shines for predefined, common pivots of the data.
+* **Leverage Aggregations:** Precompute aggregated data rather than raw detail whenever possible. Visivo is great at slicing summary data quickly. If fine-grained detail is needed on click (e.g., viewing individual records for a point on a graph), Visivo can link out to an external detail page or a separate query interface, rather than attempt to preload thousands of rows.
+* **Pagination for Large Sets:** If you want interactivity on something like a table that could have many rows, consider using paginated views (each page as a cohort) or a default top N and allow switching to another subset.
+You might wonder: *If we preload all possible data for interactions, could that be too much data?* It’s a good consideration. Visivo’s model works best when the data for precomputed scenarios is reasonably bounded. For example, if you allow filtering by a dimension that has 1,000 unique values, precomputing all 1,000 could be heavy (both in build time and browser payload).
+In practice, many interactive needs are covered by relatively small sets of precomputed variations (such as a handful of time granularities or scenario comparisons). For those, Visivo's approach provides an enormous user experience win.
+
+## Impact on User Experience and Engagement
+* **Use selectors for low-cardinality options:** e.g., a few specific options like categories, regions, time grains, on/off toggles. For high-cardinality filters (like customer name), a traditional on-demand filter might be more appropriate. Visivo’s paradigm shines for predefined, common pivots of the data.
+The difference an interactive, zero-wait dashboard makes is palpable:
+
+* **Increased Engagement:** Users are more likely to interact with the data when the interface responds instantly. They'll drill deeper, try different filters, and uncover insights that might have been missed if every click was a slowdown.
+In practice, many interactive needs are covered by relatively small sets of precomputed variations (such as a handful of time granularities or scenario comparisons). For those, Visivo’s approach provides an enormous user experience win.
+* **Mobile-Friendly Performance:** Visivo's dashboards are also optimized for mobile viewing. The lack of continuous querying means even on a mobile device or slower connection, the interactivity remains smooth. (Visivo's responsive design ensures dashboards adapt to smaller screens, so executives can get insights on the go, meeting them where they are.)
+* **Consistency:** Since interactions don't depend on external factors (like database load or network latency for new queries), the performance is consistent. Whether it's the first click of the day or the hundredth, the dashboard responds the same way.
+
+One of our guiding principles in building Visivo was to **unblock creativity** for dashboard designers and viewers alike. By removing the technical lag, Visivo lets you focus on crafting a rich interactive experience. Want to add five different breakdown options to a chart? Go for it, you're not constrained by performance concerns as long as you can precompute those five scenarios. This freedom lets developers create more innovative and user-friendly dashboards.
+
+* **Increased Engagement:** Users are more likely to interact with the data when the interface responds instantly. They’ll drill deeper, try different filters, and uncover insights that might have been missed if every click was a slowdown.
+
+* **Mobile-Friendly Performance:** Visivo’s dashboards are also optimized for mobile viewing. The lack of continuous querying means even on a mobile device or slower connection, the interactivity remains smooth. (Visivo’s responsive design ensures dashboards adapt to smaller screens, so executives can get insights on the go, meeting them where they are.)
+* **Consistency:** Since interactions don’t depend on external factors (like database load or network latency for new queries), the performance is consistent. Whether it’s the first click of the day or the hundredth, the dashboard responds the same way.
+* **Cross-filtering:** Because Visivo knows the relationships (DAG) between components, you can set up interactions where clicking on one chart filters another. For example, clicking a bar in Chart A (say, selecting "East Region") could trigger a selector value in Chart B to switch to East Region as well. By reusing a selector across charts (with `ref(selector_name)`), you can link their behavior. The change is instantaneous for the same reasons discussed, the data for all regions in Chart B was ready, and you simply told Chart B to display the East subset.
+One of our guiding principles in building Visivo was to **unblock creativity** for dashboard designers and viewers alike. By removing the technical lag, Visivo lets you focus on crafting a rich interactive experience. Want to add five different breakdown options to a chart? Go for it, you’re not constrained by performance concerns as long as you can precompute those five scenarios. This freedom lets developers create more innovative and user-friendly dashboards.
+* **Dynamic Text/Indicators:** Not just charts, but even text indicators can be tied to selectors. Visivo dashboards can have KPI cards whose values change when a filter is applied (by referencing different traces or models). This means your headline metrics and your charts stay in sync as the user interacts.
+
+All these combine to create an interactive analytics application experience, rather than static reports. And it's all done with **zero wait** and zero manual JavaScript coding, just declarative config.
+Visivo’s capabilities also extend to more advanced interactive patterns, often found in cutting-edge BI tools:
+## Conclusion
+* **Cross-filtering:** Because Visivo knows the relationships (DAG) between components, you can set up interactions where clicking on one chart filters another. For example, clicking a bar in Chart A (say, selecting “East Region”) could trigger a selector value in Chart B to switch to East Region as well. By reusing a selector across charts (with `ref(selector_name)`), you can link their behavior. The change is instantaneous for the same reasons discussed, the data for all regions in Chart B was ready, and you simply told Chart B to display the East subset.
+* **Play Controls / Animations:** You could create a selector that cycles through values (like a year slider). While Visivo doesn’t animate charts out-of-the-box, a quick toggle of a selector via a script can mimic an animation (e.g., showing each year’s data in sequence). Since each year’s data is precomputed, the effect is a smooth transition from one to the next.
+
+To recap, Visivo delivers **instant insights** through:
+All these combine to create an interactive analytics application experience, rather than static reports. And it’s all done with **zero wait** and zero manual JavaScript coding, just declarative config.
+* **Precomputed Data & Push Architecture:** Dashboards come pre-loaded with the data needed for common interactions, avoiding round-trips on each click.
+* **Selectors for User Input:** A powerful yet simple way to build interactive controls like filters, toggles, and drill-downs into your dashboard configuration.
+* **Smooth User Experience:** Zero wait times mean users can explore freely, and consistent performance builds trust in the tool.
+Interactive, responsive dashboards are more than a luxury — they’re becoming a necessity for data-driven teams. Visivo’s approach to interactivity ensures that your users get answers as fast as they can ask questions, fostering a more engaging and productive analytics experience.
+
+By designing your Visivo projects with interactivity in mind, you can deliver dashboards that feel instantaneous and intuitive. Stakeholders will appreciate the ability to get answers on the fly, whether they're in a meeting, on a mobile device, or diving into analysis at their desk.
+
+Interactive dashboards that *don't* frustrate the user — that's the Visivo difference. As you build out your next dashboard, consider what filters or views your users might want and pre-build them using selectors. The effort to set up cohorts and selectors is small, but the payoff in user satisfaction is huge.
+
+Finally, remember that interactivity goes hand in hand with reliability. Since Visivo computes everything upfront, you have the opportunity to validate and test those interactive states before users see them. Check out our post on [Goodbye Broken Dashboards](/blog/goodbye-broken-dashboards) to learn how you can test your Visivo project (including all those precomputed scenarios) to ensure quality. With Visivo, you truly get the best of both worlds: **blazing-fast interactivity** and **confidence** in your results.
+* **Advanced Interactivity Patterns:** Cross-filtering and dynamic content are achievable without custom coding, all within Visivo’s framework.
+
+
+export const frontmatter = {
+  title: "Goodbye Broken Dashboards: Ensuring Data Quality with Visivo",
+  date: "May 13, 2025",
+  description: "How Visivo's testing and alerting features keep your dashboards reliable, catching issues before they reach stakeholders.",
+  author: "Jared Jesionek",
+  tag: "Quality",
+  imgSrc: "./images/data-quality.webp",
+  imgAlt: "Data quality monitoring dashboard",
+  readTime: "9 min"
+};
+
+<!-- Header image prompt: A shield icon overlaying a dashboard, symbolizing protection and quality assurance in data visuals -->
+
+# Goodbye Broken Dashboards: Ensuring Data Quality with Visivo
+
+#### How Visivo's testing and alerting features keep your dashboards reliable, catching issues before they reach stakeholders.
+
+## Introduction
+
+Nothing erodes trust in data faster than a broken dashboard or inaccurate number. If a chart fails to load or a KPI shows an impossible value, stakeholders quickly lose confidence in the BI tool and the data team. Visivo was built with a focus on **data quality and reliability** to prevent these scenarios. From built-in testing capabilities to alerting on issues, Visivo helps you say "goodbye" to broken dashboards and ensure that your insights are always accurate and up-to-date.
+
+In this article, we'll explore the features and best practices for maintaining **dashboard quality** in Visivo. We'll discuss how to write tests for your data and charts, how Visivo integrates testing into the development workflow, and how to get notified proactively if something goes wrong. With these tools in hand, you can deliver dashboards that stakeholders trust—day in and day out.
+#### How Visivo’s testing and alerting features keep your dashboards reliable, catching issues before they reach stakeholders.
+## Testing Dashboards as Code
+
+Since Visivo treats dashboards as code (YAML configurations), it unlocks the ability to test your dashboards in an automated way. Just as software engineers write unit tests for their code, analytics engineers can write tests for their data models and visualizations.
+Nothing erodes trust in data faster than a broken dashboard or inaccurate number. If a chart fails to load or a KPI shows an impossible value, stakeholders quickly lose confidence in the BI tool and the data team. Visivo was built with a focus on **data quality and reliability** to prevent these scenarios. From built-in testing capabilities to alerting on issues, Visivo helps you say “goodbye” to broken dashboards and ensure that your insights are always accurate and up-to-date.
+Visivo provides a **Test** configuration object that you can use to define assertions about your data. These tests run when you build or refresh your project, ensuring that data meets certain expectations *before* it's delivered to users.
+In this article, we’ll explore the features and best practices for maintaining **dashboard quality** in Visivo. We’ll discuss how to write tests for your data and charts, how Visivo integrates testing into the development workflow, and how to get notified proactively if something goes wrong. With these tools in hand, you can deliver dashboards that stakeholders trust—day in and day out.
+Here are a few examples of what you might test:
+
+* **Data Completeness:** Assert that a model returned rows (e.g., "Total sales model should not be empty"). If your source data failed to load or a join eliminated all rows, the test would catch it.
+* **Value Ranges:** Assert that a metric is within a reasonable range. For instance, "Conversion rate should be between 0 and 100%" or "Daily active users cannot be negative." These sanity checks catch data pipeline issues or coding bugs that produce out-of-bounds values.
+* **Data Completeness:** Assert that a model returned rows (e.g., “Total sales model should not be empty”). If your source data failed to load or a join eliminated all rows, the test would catch it.
+Visivo provides a **Test** configuration object that you can use to define assertions about your data. These tests run when you build or refresh your project, ensuring that data meets certain expectations *before* it’s delivered to users.
+* **Thresholds and Anomalies:** For critical KPIs, you might set up a test like “If revenue drops by more than 50% compared to the same day last week, flag it.” This isn’t exactly a failure in the dashboard, but it’s a business alert that something might be wrong upstream (or in the business). Visivo tests can incorporate such logic to serve as early warning systems.
+* **Schema Changes:** Ensure that expected columns exist. If someone changes a dbt model or source and a field the dashboard relies on disappears or is renamed, a test can check for that field’s presence and fail the build if it’s missing, rather than letting the dashboard quietly break.
+
+```yaml
+tests:
+  - name: sales_not_null
+    query: SELECT COUNT(*) FROM {{ ref('Monthly Sales') }} WHERE total_sales IS NULL
+    assertions:
+      - ?{ count == 0 }
+    on_failure: error
+```
+
+In this pseudo-example, we named a test `sales_not_null` which runs a query on the Monthly Sales model to count how many null values are in `total_sales`. The assertion expects that count to equal 0 (no nulls). If the assertion fails, we treat it as an error (which would stop deployment). This way, if our data has any missing sales values, the test will catch it and prevent the dashboard from going live with incomplete data.
+
+Visivo’s testing uses the same data models and sources as your charts, so tests are always running on the **exact data that will feed the dashboard**. This gives you confidence that if the tests pass, the dashboards will too.
+
+## Visivo’s Testing Workflow
+
+By incorporating tests into your Visivo project, quality checks become a natural part of your development and deployment process. Here’s how the workflow typically goes:
+
+1. **Local Testing:** When you run `visivo serve` or build your project locally, tests are executed. During development, you might purposefully trigger tests to ensure your new model behaves as expected. For instance, after adding a new metric, you write a test for its sum or range and see it pass locally.
+2. **Continuous Integration (CI):** If you use a CI/CD pipeline (and you should, as Visivo encourages with its CI/CD friendly design), the CI job will run `visivo build` or similar. This will run all tests in a clean environment. If any test fails, the pipeline can be set to fail, stopping the promotion of that build. This is powerful: it means bad data or broken charts never make it to production because the pipeline will catch them. Visivo’s own team leverages a DAG-based CI tool (as we discussed in [our CI/CD article](/blog/rwx-mint)) to run extensive test suites quickly, so we know changes are safe before deploying.
+3. **Deployment gating:** Visivo tests can be configured with `on_failure: exit` or `on_failure: warn`. “Exit” will stop the build/deploy on failure, while “warn” will let it continue but mark a warning. For production dashboards, you’ll likely choose exit for critical tests, preventing deployment if something’s wrong. For less critical checks, a warning might suffice (so the dashboard goes out but you know to investigate an oddity).
+4. **Version Control Integration:** Because everything is code, test definitions themselves are version-controlled. Team members can review test logic just like they review dashboard changes. Over time, you build a library of tests that encode important business rules and data quality assurances.
+
+By the time your Visivo dashboard is live, it has effectively passed a suite of quality gates. This continuous testing approach drastically reduces the chances of stakeholders encountering broken visuals or incorrect data.
+
+## Alerts and Monitoring
+
+Despite our best efforts, things can still go wrong in production, perhaps due to upstream data outages or unexpected anomalies. Visivo addresses this with an **alerting system**. You can configure alerts to notify you (or your team) if certain events occur, such as a test failure on a scheduled refresh or a data source not updating.
+
+Alerts in Visivo can be sent to various destinations (Slack, Email, etc.) via simple configurations. A basic example:
+
+```yaml
+alerts:
+  - name: Sales Dashboard Alert
+    tests:
+      - ref(sales_not_null)
+      - ref(revenue_threshold)
+    destinations:
+      - type: SlackDestination
+        webhook_url: <your Slack webhook URL>
+```
+
+In this snippet, we set up an alert that monitors two tests (perhaps the ones we defined for sales not null and a revenue drop threshold). If either test fails during a run (say, a daily scheduled run or a manual refresh), Visivo will send a message to a Slack channel via the provided webhook. The message could include which test failed and a link to the dashboard or logs for further investigation.
+
+You can imagine similar setups: email alerts for critical dashboards, or different channels for different severities of issues.
+
+Visivo’s alerting ensures that **if something breaks, you’ll know immediately**. This flips the script from reactive to proactive. Instead of a VP messaging the data team saying “the dashboard looks off,” the data team gets a Slack alert at 2 AM that a test failed on the nightly build, and they can address it before business hours. Stakeholders might never even see a broken dashboard, because you’ll either fix it or revert to a last known good state (thanks to version control) by the time they log in.
+
+## Look-Back Windows and Historical Validation
+
+Data quality isn’t just about the present — it’s also about the past. Trends and changes over time are often where issues surface. Visivo’s testing framework, combined with its version-controlled nature, allows for what we might call **historical validation** or implementing “look-back windows” in tests.
+
+For example:
+
+* You might maintain a reference of yesterday’s data or last week’s results (Visivo could output results to a file or you could query a history table) and write a test comparing today vs yesterday. This catches scenarios where a pipeline may have inadvertently dropped a segment of data or an ETL job failed to load a subset.
+* Visivo’s code versioning means you can roll back to a previous version of your project if a new change caused problems. It’s akin to a time machine for your dashboards. This “time-travel” capability is extremely useful when investigating when a dashboard might have broken. By looking at git history, you can identify the exact commit that introduced a failing test or broken chart, making debugging much faster.
+* If you have **look-back windows** for metrics (like a 30-day moving average), you can test that logic by simulating inputs or by comparing the dashboard’s output to an independent calculation. Because Visivo dashboards are deterministic, the same input data will always produce the same output. This determinism helps in validating metrics across time, if the calculation method changes, you’ll see it in the tests.
+
+One could say Visivo enables a form of **analytic regression testing**, ensuring that new changes do not break or significantly alter existing metrics unless intentionally. This is crucial for maintaining long-term trust: today’s KPI should mean the same as yesterday’s KPI (unless you intentionally redefined it, in which case that change is tracked and communicated).
+
+## Best Practices for Quality in Visivo
+
+To truly bulletproof your dashboards, consider these best practices:
+
+* **Adopt Test-Driven Development (where feasible):** When adding a new metric or chart, think about how you would validate it. Write the test for it as you build the metric. For example, if you create a “Top 10 products” chart, you might write a test that asserts there are 10 items and they sum up to the company total correctly. Developing this way ensures you consider edge cases early.
+* **Leverage Both dbt and Visivo Tests:** If you’re using dbt (as many do), you might already test your transformations in dbt. Continue doing that (test at the raw data and intermediate layer), and use Visivo tests to focus on the presentation layer (final aggregates, combinations, and critical outputs). There’s no such thing as too much testing when it comes to critical business data.
+* **Fail Fast in CI:** Configure important tests with `on_failure: exit` so that your CI pipeline fails the build when a test fails. It’s much easier to fix issues in a development or staging environment than after deployment. Failing fast prevents bad data from ever going live.
+* **Use Alerts Thoughtfully:** Route alerts where they will be seen and acted on. For example, integrate with your team’s Slack channel for data monitoring. And prioritize alerts, you might have some that are informational and others that are critical. Too much noise can lead to alert fatigue, so tune your tests and alert triggers to what really matters.
+* **Document Your Tests:** Tests essentially encode business logic and assumptions (e.g., “we expect at least 100 users every day” or “no single order can exceed \$1M”). Document why a test exists so future team members understand its purpose. This can be done in comments in the YAML or in your team’s knowledge base.
+* **Regularly Review Failures:** If you do encounter test failures, treat them as learning opportunities. Was it a data issue upstream? A new scenario not accounted for? Use that to improve your pipeline or adjust the test if needed. The goal is to continuously improve data resilience.
+
+## Conclusion
+
+Delivering a reliable dashboard is just as important as delivering a fast or fancy one. Visivo provides the toolkit to ensure **data quality** is baked into your development process. By writing tests and configuring alerts, you catch problems early and often, long before stakeholders see them. This proactive approach leads to dashboards that maintain trust over time.
+
+Key takeaways for keeping your Visivo dashboards rock-solid:
+
+* **Automated Testing:** Define tests for your data and metrics. Visivo will run them during builds, preventing broken or empty visuals from slipping through.
+* **Continuous Integration:** Integrate Visivo tests into your CI/CD pipeline to enforce quality gates on every change. This pairs nicely with Visivo’s support for code-based workflows and even third-party CI tools (like the RWX Mint example, which sped up our own CI by 10x).
+* **Alerting & Monitoring:** Set up alerts to be notified of issues in real-time (e.g., via Slack or email). Don’t rely on manual checks, let Visivo watch your dashboards for you.
+* **Version Control & Rollback:** Use git to track changes. If a bad change does slip in, you can quickly revert to a last known good state. The history of changes can also help pinpoint when a calculation changed, aiding in debugging and communication with stakeholders.
+
+With these measures, you can confidently say “goodbye” to the era of broken dashboards. Instead of firefighting issues, your team can spend more time delivering new insights and value, knowing that Visivo has your back on the quality front. Stakeholders will come to **trust the data** implicitly, which is the ultimate goal of any analytics initiative.
+
+A trustworthy, tested, and timely dashboard means better decisions and fewer headaches. Visivo’s commitment to quality assurance features is one more way it stands out as the modern BI-as-code platform for data-driven organizations. So go ahead, build amazing, complex, interactive dashboards, and rest easy knowing that you have the tools to keep them **accurate and reliable** every day.
+
+export const frontmatter = {
+  title: "DevOps Meets BI: Visivo's Local Development and AI-Powered Builder",
+  date: "May 13, 2025",
+  description: "How Visivo brings software development best practices (and even AI assistance) into the world of business intelligence, enabling faster, more reliable dashboard development.",
+  author: "Jared Jesionek",
+  tag: "Development",
+  imgSrc: "./images/devops-bi.webp",
+  imgAlt: "Developer coding with AI assistant",
+  readTime: "12 min"
+};
+
+<!-- Header image prompt: A developer coding a data dashboard with an AI assistant hologram by their side, representing AI-powered development in analytics -->
+
+# DevOps Meets BI: Visivo’s Local Development and AI-Powered Builder
+
+#### How Visivo brings software development best practices (and even AI assistance) into the world of business intelligence, enabling faster, more reliable dashboard development.
+
+## Introduction
+
+Business intelligence is undergoing a transformation. The traditional model — manual dashboard tweaks in a GUI, isolated from the software development lifecycle — is giving way to a new paradigm: **Analytics as code**. Visivo is at the forefront of this change, marrying the principles of DevOps with BI. By treating dashboards as code, Visivo allows data teams to apply the same rigor and agility of modern software development to analytics. And it doesn’t stop there. Visivo is also pioneering the use of AI to accelerate BI development, making it easier than ever to go from question to insight.
+
+In this article, we’ll explore how Visivo enables a true DevOps workflow for BI, from local development to CI/CD deployments. We’ll then dive into the exciting possibilities of Visivo’s **AI Builder**, an emerging feature that uses artificial intelligence to assist in creating and refining dashboards. Whether you’re a data engineer, analyst, or a stakeholder interested in the process behind the dashboards, you’ll see how Visivo is redefining how analytics projects are built and maintained.
+
+## Local Development: Dashboards in Your IDE
+
+One of the pillars of DevOps is the idea that development should be done in an environment that’s isolated, reproducible, and friendly to iteration. Visivo embraces this by allowing you to develop your entire BI project locally, using the tools you love:
+
+* **Code Editor Integration:** Your Visivo project (YAML files, SQL models, etc.) can be opened in any code editor (VS Code, PyCharm, etc.). Visivo even provides a VS Code extension with linting and auto-complete for its YAML syntax. This means as you type configuration, you get instant feedback and suggestions, speeding up development and reducing errors.
+* **Version Control:** Since everything is plain text (configuration files, SQL, Python scripts if any), you put your Visivo project in Git (or any VCS). This is transformative — every change to a dashboard is tracked. You can create branches for new features or bug fixes, peer review changes via pull requests, and maintain a history of how your analytics evolved. No more mysterious changes or “dashboard final\_v2” files; it’s all documented.
+* **Local Data Sources:** During development, you might not want to hit production databases. Visivo lets you configure local or sample data sources in your profile for testing. You can, for example, point to a local SQLite database with anonymized data while building, then switch to Snowflake in production.
+* **Isolated Environment:** Use virtual environments or containers to encapsulate the Visivo runtime. This ensures that the environment in which you develop can be the same as the one in CI or production. If it works on your machine in that container, it will work on the server — eliminating the “it works on my machine” problem.
+
+The local development workflow looks like this: You pull the latest code from git, make changes to the Visivo config or models using your IDE (with guidance from linting), run `visivo serve` to see the results in real time, run tests (`visivo test` or as part of serve) to verify quality, and iterate. When satisfied, you commit and push your changes.
+
+By developing locally with proper tooling, building a Visivo dashboard feels like building a software application. This is a huge leap from the clicky, manual setup of traditional BI dashboards, and it enables everything that comes next.
+
+## CI/CD for Dashboards
+
+Continuous integration and continuous deployment (CI/CD) are cornerstones of DevOps. They ensure that changes are automatically tested and deployed in a consistent manner. Visivo was designed to fit into CI/CD pipelines naturally:
+
+* **Continuous Integration:** You can set up a CI pipeline (using tools like GitHub Actions, Jenkins, GitLab CI, or RWX Mint as we use internally) that triggers on every push or pull request. This pipeline can install Visivo in a fresh environment, build the project, and run all tests (as described in our quality article). Because Visivo can run headless (no manual steps needed), the CI can validate that the dashboard builds successfully and meets all quality checks. If something fails (e.g., a test or a broken reference), the CI pipeline fails, and the team is notified to fix it. This automated check acts as a safety net.
+* **Review and Collaboration:** In a pull request, colleagues can see not only the code changes but also the CI results. They might even preview the dashboard changes if you publish artifacts or use a feature branch deployment. This brings a collaborative, engineering-oriented process to BI development — far different from one person making a change directly in a BI tool with no oversight.
+* **Continuous Deployment:** Once changes are merged to main, you can have CD jobs that deploy the updated Visivo project to various environments. For example, automatically deploy to a staging environment where power users can give final sign-off, then deploy to production. Deployments are as simple as running `visivo deploy` with the appropriate settings or pushing the static build if using that approach.
+* **Mirroring Your Software Workflow:** If your organization already has a DevOps workflow for software, Visivo can plug right in. It mirrors the idea of having development, staging, and production environments, automated tests, and one-click deployments. Visivo projects can live alongside application code in a mono-repo or in their own repo, whichever fits your workflow. The key is that analytics deliverables (dashboards) are now part of the codebase, not an afterthought.
+* **Rollback Capabilities:** Because each deployment is tied to a git commit (you deploy a specific version of the Visivo project), rolling back is as easy as redeploying a previous commit if an issue is found. This is far more controlled than trying to undo changes in a BI tool manually. It also aligns with the principle of **incremental, reversible changes** in DevOps.
+
+We’ve experienced the benefits of this firsthand. In a recent improvement, we integrated RWX Mint (a DAG-based CI/CD runner) and saw 10x faster pipeline runs for our Visivo projects, as we detailed in [our blog post on CI/CD](/blog/rwx-mint). Faster pipelines mean we get feedback on our Visivo changes quickly, enabling rapid iteration while still guarding quality.
+
+## Infrastructure as Code for BI
+
+Another aspect of bringing DevOps to BI is treating the deployment infrastructure as code. With Visivo, your **infrastructure needs for BI are minimal and declarative**:
+
+* **Deployment Config as Code:** In Visivo’s config, you specify your deployment target and any resource configuration (like whether to use Visivo Cloud or generate a static site). There’s also a `profiles.yml` for connection info. These can be parameterized or configured via environment variables, meaning your CI can inject production secrets at deploy time without them living in code.
+* **Scaling and Performance:** If self-hosting, your static output can be served on scalable infrastructure (like behind a CDN). If using Visivo Cloud, the scaling is handled for you. The point is, you define what you need and it’s deployed repeatably. No manual server tweaking specifically for the BI tool.
+* **Monitoring Deployment:** You can integrate logs from Visivo builds or use tools to monitor uptime of the published dashboards as you would any web service. Because a Visivo dashboard is essentially a web app, existing monitoring and logging practices apply.
+
+All these mean your analytics stack becomes part of the unified tech stack, managed with the same discipline as your core applications. This is a big win for reliability and for breaking down silos between data teams and engineering teams.
+
+## Enter the AI Builder: AI-Assisted Dashboard Development
+
+So far, we’ve discussed how Visivo applies tried-and-true DevOps practices to BI. Now let’s look at something more cutting-edge, the incorporation of AI into the development process.
+
+Visivo’s **AI Builder** is an emerging capability that leverages artificial intelligence (think GPT-style large language models) to assist in creating and refining dashboards. The idea is simple but powerful: *what if an AI agent could help you write your Visivo config or suggest improvements based on best practices?*
+
+Here’s what the AI Builder can do (or is aiming to do):
+
+* **Natural Language to Dashboard Components:** Imagine telling the AI, *“I need a bar chart of total sales by region over the last quarter.”* The AI Builder could generate the necessary YAML snippet: the model (SQL query for sales by region), the trace (bar chart with region on x and sales on y), and the chart layout. It might even suggest adding a selector for switching to a different time range. This jumpstarts development, handling boilerplate and letting you refine specifics.
+* **Insightful Suggestions:** The AI, having seen many dashboards, might suggest, *“Your chart has a lot of data points, consider using a log scale,”* or *“You can improve clarity by sorting the bars in descending order. Shall I apply that?”* It’s like having an expert advisor pair-programming with you on analytics.
+* **Automation of Repetitive Tasks:** Need to create 10 similar charts for 10 different metrics? The AI can loop through and generate those quickly, following the pattern you demonstrate. It could also write tests for each metric by copying a template and adjusting the field names.
+* **Interpreting Errors and Logs:** If a Visivo build fails or a test fails, the AI Builder could analyze the error and immediately point out the likely cause, even fixing a small typo in a SQL query or suggesting what data might be missing. This reduces debug time.
+* **Assisting Non-Coders:** For less technical users who know what they want but not how to write YAML or SQL, the AI Builder can serve as an interface. They describe their needs in plain language, and the AI produces a draft dashboard. A developer can then review the generated code (since it’s all visible) before deploying. This bridges the gap between stakeholders and the code-based system, making Visivo more accessible without sacrificing the benefits of code.
+
+All of this is possible because Visivo’s configurations are standardized and structured, which is an environment where AI can be very effective. It’s much easier for AI to generate a YAML and SQL for a chart than to directly manipulate a visual GUI reliably.
+
+The AI Builder is like having a junior data engineer on the team who works at superhuman speed and has read every documentation page. It won’t replace the critical thinking and context-specific decisions of your analytics experts, but it can handle the grunt work and even spark ideas that you might not have considered.
+
+## How AI Builder Fits into the Workflow
+
+Integrating an AI assistant into a DevOps workflow might sound tricky, but here’s how it can work smoothly with Visivo:
+
+* **In your IDE:** The AI Builder could be available as a command or extension in VS Code. Highlight a section and ask the AI to explain or complete it. Or open a chat panel to request a new component. This keeps you in control, you review and edit AI contributions just like you would review a teammate’s pull request.
+* **As a Chatbot in the Web App:** Perhaps Visivo’s web interface (or docs site) provides a chatbot where you can ask “How do I add a rolling average to my chart?” and it gives you code examples. This lowers the learning curve and also speeds up skilled users.
+* **Code Generation with Guardrails:** AI suggestions can come with references to documentation (like “I set `type: bar` based on Visivo docs”). This helps you trust but verify the AI’s output. Ultimately, since everything is code, you run it through the same CI/tests. If the AI made a mistake, your tests will catch it, and you can refine. Over time, the AI also learns from these corrections.
+* **Continuous Learning:** The more you use the AI Builder, the more it can learn your project’s context (the schema of your data, your naming conventions, etc.). It might start to auto-suggest consistent names or recall that “total\_sales” is the field you use for revenue in various models. This project-specific learning makes it even more effective as you scale.
+
+We envision scenarios where a small team, empowered by the AI Builder, can build out a complex analytics platform in a fraction of the time it used to take. The heavy lifting of writing repetitive config or figuring out syntax is handled, letting the team focus on logic and interpretation.
+
+## Benefits of Marrying DevOps and AI in Visivo
+
+By now, it’s clear that Visivo isn’t just a static tool, it’s a platform that grows with modern development practices. The combination of DevOps and AI yields several compelling benefits:
+
+* **Faster Development Cycles:** DevOps automation + AI assistance = idea to production in record time. You reduce human error and hand-offs, and you iterate quickly based on immediate feedback.
+* **Higher Quality Outputs:** Automated tests and CI catch mistakes, and AI suggestions (plus linting) reduce the chance of misconfigurations. Even junior team members can contribute confidently with these safety nets.
+* **Empowered Teams:** Data analysts become more like software developers in their workflow, which empowers them to take ownership of the analytics product. At the same time, business users can be more involved (via natural language requests to the AI). This fosters a culture of collaboration and continuous improvement.
+* **Scalability:** As your organization’s data needs grow, you can handle more dashboards and changes without proportional increases in manual effort. The pipeline and bots handle a lot of the scaling, so the team can maintain a lean operation.
+* **Innovative Solutions:** With AI in the mix, you might discover new ways to visualize or analyze data that you hadn’t thought of. The AI might introduce a novel chart type or calculation based on patterns it knows, sparking innovation.
+
+## Conclusion
+
+Visivo is leading the charge in bringing DevOps principles and AI power into the realm of business intelligence. The phrase “DevOps for dashboards” is no longer an oxymoron — it’s the reality that Visivo delivers. By treating dashboards as code, enabling local development, integrating with CI/CD, and soon by providing AI-assisted building, Visivo dramatically accelerates the BI development lifecycle.
+
+To recap:
+
+* **Local Development:** Design and build dashboards in your own environment with your preferred tools, all while leveraging version control and editor enhancements.
+* **CI/CD Integration:** Automate testing and deployment of dashboards just like any software project, ensuring reliability and consistency from development to production.
+* **AI Builder:** Leverage the power of AI to draft and improve dashboard code, making analytics development more accessible and efficient than ever.
+* **Software Best Practices in BI:** Embrace code review, incremental changes, rollback, and monitoring for your analytics projects, resulting in higher quality and maintainability.
+* **Collaboration and Agility:** Break down walls between data teams and engineering by using common processes and enabling even non-coders to contribute via AI guidance.
+
+In essence, Visivo is not just a tool to make pretty charts — it’s a framework to **engineer** your analytics, with all the benefits that modern engineering entails. Whether you’re adopting Visivo to replace a legacy BI system or starting fresh, you’re also adopting a forward-looking approach that will pay dividends in speed, trust, and capability.
+
+As you embark on this journey, don’t forget to utilize all aspects of the platform. If you enjoyed how AI can speed up coding, also consider how Visivo’s testing and lineage (from our other posts) will give you confidence in the output. The convergence of these features is where the magic truly happens. A dashboard built with Visivo can be trusted not only because it was tested (quality), but also because it was built in a controlled, collaborative way (DevOps), and perhaps even because it was optimized with some AI inspiration.
+
+The future of BI is here: it’s agile, it’s automated, and it’s intelligent. With Visivo, you’re not just keeping up with the future — you’re helping create it.
