@@ -56,6 +56,18 @@ const BlogSection = () => {
       date: "Feb 6, 2025",
       readTime: "5 min",
       external_link: "https://kristiansigston.medium.com/why-the-world-is-still-happily-running-on-spreadsheets-6ee1b86ff67f"
+    },
+    {
+      title: "dbt vs SQLMesh",
+      description: "A deep dive comparison of dbt and sqlmesh for analytics engineering",
+      tag: "Tool Comparison",
+      imgSrc: "null",
+      imgAlt: "dbt vs sqlmesh",
+      authorName: "Jared Jesionek",
+      authorImg: "/images/Jared.webp",
+      date: "May 29, 2025",
+      readTime: "8 min",
+      external_link: "https://medium.com/@jared_86317/dbt-vs-sqlmesh-a-deep-dive-comparison-for-analytics-engineering-f3a022bdc705"
     }
   ];
   
