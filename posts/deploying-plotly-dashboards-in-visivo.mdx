@@ -1,0 +1,138 @@
+export const frontmatter = {
+  title: "Deploying Plotly Charts with Visivo",
+  date: "May 13, 2025",
+  description: "A step-by-step guide to building and deploying interactive Plotly charts using Visivo's BI-as-code framework.",
+  author: "Jared Jesionek",
+  tag: "Tutorial",
+  imgSrc: "./images/plotly-charts.webp",
+  imgAlt: "Plotly chart deployment example",
+  readTime: "8 min"
+};
+
+
+# Deploying Plotly Charts with Visivo
+
+#### A step-by-step guide to building and deploying interactive Plotly charts using Visivo's BI-as-code framework.
+
+## Introduction
+
+Plotly is a popular open-source library for creating interactive data visualizations. Visivo leverages Plotly under the hood to allow developers and analysts to create a wide variety of charts through simple configuration. With over 20+ trace types and thousands of styling options available, Visivo makes it easy to **deploy Plotly charts** as shareable dashboards. In this guide, we'll walk through how to build a Plotly chart in Visivo from scratch and deploy it for your team to use.
+
+Visivo treats **data visualizations as code**, meaning you define your data sources and charts in YAML files that can be version-controlled. This approach combines Plotly's rich visualization capabilities with Visivo's robust development workflow. Let's get started with an example.
+#### A step-by-step guide to building and deploying interactive Plotly charts using Visivo’s BI-as-code framework.
+## Step 1: Initialize a Visivo Project
+
+To begin, ensure you have Python 3.10+ installed. Install the Visivo CLI via pip:
+Plotly is a popular open-source library for creating interactive data visualizations. Visivo leverages Plotly under the hood to allow developers and analysts to create a wide variety of charts through simple configuration. With over 20+ trace types and thousands of styling options available, Visivo makes it easy to **deploy Plotly charts** as shareable dashboards. In this guide, we’ll walk through how to build a Plotly chart in Visivo from scratch and deploy it for your team to use.
+```bash
+Visivo treats **data visualizations as code**, meaning you define your data sources and charts in YAML files that can be version-controlled. This approach combines Plotly’s rich visualization capabilities with Visivo’s robust development workflow. Let’s get started with an example.
+```
+
+Next, initialize a new Visivo project by running:
+
+```bash
+visivo init
+```
+
+This interactive command will create a project directory with a `project.visivo.yml` configuration and prompt you for settings (like project name and data source). For a quick start, you can choose a built-in SQLite example when prompted. Visivo will set up a skeleton project with default files.
+
+**Tip:** If you plan to deploy to Visivo's cloud, go ahead and obtain an API key from your account (as described in the docs) and enter it during `visivo init`. This will configure your project for easy deployment later.
+
+## Step 2: Add Your Data Source and Model
+
+With the project initialized, you need data for your chart. Visivo supports connecting to databases (PostgreSQL, Snowflake, etc.) or using static files/URLs as sources. In your `project.visivo.yml`, you'll have a `sources:` section where you define connections (the `visivo init` process may have already set one up for you).
+
+Next, define a **model**, essentially a query or dataset that will feed the chart. You can add a model that pulls data from your source. For example, suppose we want to plot monthly sales from a database. We could add:
+**Tip:** If you plan to deploy to Visivo’s cloud, go ahead and obtain an API key from your account (as described in the docs) and enter it during `visivo init`. This will configure your project for easy deployment later.
+```yaml
+models:
+  - name: Monthly Sales
+With the project initialized, you need data for your chart. Visivo supports connecting to databases (PostgreSQL, Snowflake, etc.) or using static files/URLs as sources. In your `project.visivo.yml`, you’ll have a `sources:` section where you define connections (the `visivo init` process may have already set one up for you).
+    query: |
+      SELECT DATE_TRUNC('month', order_date) AS month, SUM(amount) AS total_sales
+      FROM orders
+      GROUP BY 1
+      ORDER BY 1;
+```
+
+In this YAML snippet:
+
+* **Source:** The `SqlModel` will run the SQL query against the default source (set in your profile). It aggregates sales by month.
+* **Model name:** "Monthly Sales" becomes a reference we can use later for traces.
+
+Visivo will include this model in the project's Directed Acyclic Graph (DAG) of data dependencies. The model is automatically kept up-to-date and will run as part of the dashboard build process.
+
+## Step 3: Configure the Plotly Trace and Chart
+
+Now that we have data, the next step is to configure a **trace** — a visual element of a Plotly chart. In Visivo, you define traces in YAML, mapping data columns to visual properties (x-axis, y-axis, chart type, etc.). You then combine one or more traces into a chart with a layout.
+* **Model name:** “Monthly Sales” becomes a reference we can use later for traces.
+For our sales example, let's add a trace and chart definition:
+Visivo will include this model in the project’s Directed Acyclic Graph (DAG) of data dependencies. The model is automatically kept up-to-date and will run as part of the dashboard build process.
+```yaml
+traces:
+  - name: Sales by Month Trace
+    model: ref(Monthly Sales)
+    props:
+      type: bar         # Use a bar chart trace (Plotly bar chart)
+      x: ?{ month }     # Use the month from our model as the x-axis
+      y: ?{ total_sales }  # Plot the total sales as the y-axis
+    # (Optional: add filters, styling, etc.)
+charts:
+  - name: Monthly Sales Chart
+    traces:
+      - ref(Sales by Month Trace)
+    layout:
+      title:
+        text: "Monthly Sales" 
+      xaxis:
+        title: "Month"
+      yaxis:
+        title: "Total Sales"
+```
+
+Breaking this down:
+
+* We created a trace called **Sales by Month Trace** that uses the `Monthly Sales` model. The `props` define it as a bar chart (`type: bar`). We set `x` to the month field and `y` to the total\_sales field using Visivo's expression syntax (`?{ ... }`).
+* We then define a **chart** named **Monthly Sales Chart** that includes our trace. The chart's layout specifies titles for the chart and axes, just like you would in a Plotly configuration.
+
+Visivo utilizes Plotly.js behind the scenes, so any Plotly trace type and property can be used in the `props` section. This means you have access to the full power of Plotly (tooltips, colors, modes, etc.) via simple YAML. You can add multiple traces to one chart as well, for example, a line trace overlaid on a bar chart, to create composite visuals.
+
+![Placeholder: Example of a bar chart showing monthly sales, as it would appear in a Visivo dashboard]()
+
+* We created a trace called **Sales by Month Trace** that uses the `Monthly Sales` model. The `props` define it as a bar chart (`type: bar`). We set `x` to the month field and `y` to the total\_sales field using Visivo’s expression syntax (`?{ ... }`).
+* We then define a **chart** named **Monthly Sales Chart** that includes our trace. The chart’s layout specifies titles for the chart and axes, just like you would in a Plotly configuration.
+## Step 4: Preview the Dashboard Locally
+
+During development, Visivo's local server is your friend. Run:
+
+```bash
+visivo serve
+```
+
+This will build your project and start a local web server (by default at `http://localhost:8000`). Open that link in your browser to see your dashboard. You should see the **Monthly Sales Chart** rendered as an interactive Plotly chart. Hover to see tooltips, and if you had multiple traces or interactive filters (selectors), you could toggle them — all without writing any frontend code.
+During development, Visivo’s local server is your friend. Run:
+Take a moment to verify the chart looks correct. If you need to adjust labels or styles, simply edit the YAML and the local server will live-reload the changes. This fast feedback loop lets you tweak the Plotly settings (marker colors, chart type, etc.) until the visualization meets your needs.
+
+## Step 5: Deploy the Plotly Chart with Visivo
+
+After confirming everything works locally, you can deploy your Visivo project so others can access the dashboard. Visivo offers multiple deployment options:
+
+* **Visivo Cloud:** The easiest route, run `visivo deploy`. This pushes your project to Visivo's cloud service. Since we set up the API key earlier, the deployment is just one command. For example, `visivo deploy -s monthly-sales` will build and upload your project (with the given slug name) to the cloud, making it accessible to your team.
+* **Static Site:** Alternatively, you can generate a static web app with `visivo dist` and host it on a platform like Netlify or GitHub Pages. The static output includes all the charts and dashboards ready to serve as a website.
+
+Visivo's deployment process integrates with your version control and CI/CD pipeline, so deploying a Plotly chart becomes as streamlined as deploying any web application. Every chart is reproducible and trackable in git, ensuring that you know exactly what code and data produced the visualization.
+
+After deployment, your Plotly-based chart will be live for stakeholders to explore. They can interact with it (zoom, filter, etc.) and trust that it's backed by version-controlled data logic. And because Visivo does not re-query the database on every interaction, your Plotly charts remain snappy and responsive for end users (more on that in our article on interactive dashboards).
+
+* **Visivo Cloud:** The easiest route, run `visivo deploy`. This pushes your project to Visivo’s cloud service. Since we set up the API key earlier, the deployment is just one command. For example, `visivo deploy -s monthly-sales` will build and upload your project (with the given slug name) to the cloud, making it accessible to your team.
+
+In this guide, we demonstrated how to go from **data to deployed Plotly chart** using Visivo. We initialized a project, defined a data model, configured a Plotly trace and chart in YAML, and served it locally before deploying to the cloud. Along the way, we saw how Visivo's BI-as-code approach complements Plotly: you get the flexibility of Plotly visuals with the robustness of software development practices.
+Visivo’s deployment process integrates with your version control and CI/CD pipeline, so deploying a Plotly chart becomes as streamlined as deploying any web application. Every chart is reproducible and trackable in git, ensuring that you know exactly what code and data produced the visualization.
+By using Visivo to deploy Plotly charts, you gain:
+After deployment, your Plotly-based chart will be live for stakeholders to explore. They can interact with it (zoom, filter, etc.) and trust that it’s backed by version-controlled data logic. And because Visivo does not re-query the database on every interaction, your Plotly charts remain snappy and responsive for end users (more on that in our article on interactive dashboards).
+* **Speed and Consistency:** Write once, deploy anywhere. Charts render the same locally and in production.
+* **Collaboration:** Store chart definitions in git, so team members can review changes and contribute.
+* **Interactivity and Performance:** Visivo pre-computes data for interactions, ensuring your Plotly charts are highly responsive for users.
+In this guide, we demonstrated how to go from **data to deployed Plotly chart** using Visivo. We initialized a project, defined a data model, configured a Plotly trace and chart in YAML, and served it locally before deploying to the cloud. Along the way, we saw how Visivo’s BI-as-code approach complements Plotly: you get the flexibility of Plotly visuals with the robustness of software development practices.
+
+Now that you've deployed a simple chart, you can continue to build out full dashboards in Visivo. Try adding more traces or charts, or incorporate filters to allow viewers to toggle data series (see our article on [Interactive Dashboards, Zero Wait](/blog/interactive-dashboards-zero-wait) for tips). With Visivo, deploying rich Plotly charts is just the beginning of delivering data insights faster and more reliably.

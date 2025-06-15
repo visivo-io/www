@@ -1,0 +1,120 @@
+export const frontmatter = {
+  title: "Goodbye Broken Dashboards: Ensuring Data Quality with Visivo",
+  date: "Feb 26, 2025",
+  description: "How Visivo's testing and alerting features keep your dashboards reliable, catching issues before they reach stakeholders.",
+  author: "Jared Jesionek",
+  tag: "Quality",
+  imgSrc: "./images/data-quality.webp",
+  imgAlt: "Data quality monitoring dashboard",
+  readTime: "9 min"
+};
+
+
+# Goodbye Broken Dashboards: Ensuring Data Quality with Visivo
+
+#### How Visivo's testing and alerting features keep your dashboards reliable, catching issues before they reach stakeholders.
+
+## Introduction
+
+Nothing erodes trust in data faster than a broken dashboard or inaccurate number. If a chart fails to load or a KPI shows an impossible value, stakeholders quickly lose confidence in the BI tool and the data team. Visivo was built with a focus on **data quality and reliability** to prevent these scenarios. From built-in testing capabilities to alerting on issues, Visivo helps you say "goodbye" to broken dashboards and ensure that your insights are always accurate and up-to-date.
+
+In this article, we'll explore the features and best practices for maintaining **dashboard quality** in Visivo. We'll discuss how to write tests for your data and charts, how Visivo integrates testing into the development workflow, and how to get notified proactively if something goes wrong. With these tools in hand, you can deliver dashboards that stakeholders trust—day in and day out.
+ ## Testing Dashboards as Code
+
+Since Visivo treats dashboards as code (YAML configurations), it unlocks the ability to test your dashboards in an automated way. Just as software engineers write unit tests for their code, analytics engineers can write tests for their data models and visualizations.
+Nothing erodes trust in data faster than a broken dashboard or inaccurate number. If a chart fails to load or a KPI shows an impossible value, stakeholders quickly lose confidence in the BI tool and the data team. Visivo was built with a focus on **data quality and reliability** to prevent these scenarios. From built-in testing capabilities to alerting on issues, Visivo helps you say “goodbye” to broken dashboards and ensure that your insights are always accurate and up-to-date.
+Visivo provides a **Test** configuration object that you can use to define assertions about your data. These tests run when you build or refresh your project, ensuring that data meets certain expectations *before* it's delivered to users.
+In this article, we’ll explore the features and best practices for maintaining **dashboard quality** in Visivo. We’ll discuss how to write tests for your data and charts, how Visivo integrates testing into the development workflow, and how to get notified proactively if something goes wrong. With these tools in hand, you can deliver dashboards that stakeholders trust—day in and day out.
+Here are a few examples of what you might test:
+
+* **Data Completeness:** Assert that a model returned rows (e.g., "Total sales model should not be empty"). If your source data failed to load or a join eliminated all rows, the test would catch it.
+* **Value Ranges:** Assert that a metric is within a reasonable range. For instance, "Conversion rate should be between 0 and 100%" or "Daily active users cannot be negative." These sanity checks catch data pipeline issues or coding bugs that produce out-of-bounds values.
+* **Data Completeness:** Assert that a model returned rows (e.g., “Total sales model should not be empty”). If your source data failed to load or a join eliminated all rows, the test would catch it.
+Visivo provides a **Test** configuration object that you can use to define assertions about your data. These tests run when you build or refresh your project, ensuring that data meets certain expectations *before* it’s delivered to users.
+* **Thresholds and Anomalies:** For critical KPIs, you might set up a test like “If revenue drops by more than 50% compared to the same day last week, flag it.” This isn’t exactly a failure in the dashboard, but it’s a business alert that something might be wrong upstream (or in the business). Visivo tests can incorporate such logic to serve as early warning systems.
+* **Schema Changes:** Ensure that expected columns exist. If someone changes a dbt model or source and a field the dashboard relies on disappears or is renamed, a test can check for that field’s presence and fail the build if it’s missing, rather than letting the dashboard quietly break.
+
+```yaml
+tests:
+  - name: sales_not_null
+    query: SELECT COUNT(*) FROM {{ ref('Monthly Sales') }} WHERE total_sales IS NULL
+    assertions:
+      - ?{ count == 0 }
+    on_failure: error
+```
+
+In this pseudo-example, we named a test `sales_not_null` which runs a query on the Monthly Sales model to count how many null values are in `total_sales`. The assertion expects that count to equal 0 (no nulls). If the assertion fails, we treat it as an error (which would stop deployment). This way, if our data has any missing sales values, the test will catch it and prevent the dashboard from going live with incomplete data.
+
+Visivo’s testing uses the same data models and sources as your charts, so tests are always running on the **exact data that will feed the dashboard**. This gives you confidence that if the tests pass, the dashboards will too.
+
+## Visivo’s Testing Workflow
+
+By incorporating tests into your Visivo project, quality checks become a natural part of your development and deployment process. Here’s how the workflow typically goes:
+
+1. **Local Testing:** When you run `visivo serve` or build your project locally, tests are executed. During development, you might purposefully trigger tests to ensure your new model behaves as expected. For instance, after adding a new metric, you write a test for its sum or range and see it pass locally.
+2. **Continuous Integration (CI):** If you use a CI/CD pipeline (and you should, as Visivo encourages with its CI/CD friendly design), the CI job will run `visivo build` or similar. This will run all tests in a clean environment. If any test fails, the pipeline can be set to fail, stopping the promotion of that build. This is powerful: it means bad data or broken charts never make it to production because the pipeline will catch them. Visivo’s own team leverages a DAG-based CI tool (as we discussed in [our CI/CD article](/blog/rwx-mint)) to run extensive test suites quickly, so we know changes are safe before deploying.
+3. **Deployment gating:** Visivo tests can be configured with `on_failure: exit` or `on_failure: warn`. “Exit” will stop the build/deploy on failure, while “warn” will let it continue but mark a warning. For production dashboards, you’ll likely choose exit for critical tests, preventing deployment if something’s wrong. For less critical checks, a warning might suffice (so the dashboard goes out but you know to investigate an oddity).
+4. **Version Control Integration:** Because everything is code, test definitions themselves are version-controlled. Team members can review test logic just like they review dashboard changes. Over time, you build a library of tests that encode important business rules and data quality assurances.
+
+By the time your Visivo dashboard is live, it has effectively passed a suite of quality gates. This continuous testing approach drastically reduces the chances of stakeholders encountering broken visuals or incorrect data.
+
+## Alerts and Monitoring
+
+Despite our best efforts, things can still go wrong in production, perhaps due to upstream data outages or unexpected anomalies. Visivo addresses this with an **alerting system**. You can configure alerts to notify you (or your team) if certain events occur, such as a test failure on a scheduled refresh or a data source not updating.
+
+Alerts in Visivo can be sent to various destinations (Slack, Email, etc.) via simple configurations. A basic example:
+
+```yaml
+alerts:
+  - name: Sales Dashboard Alert
+    tests:
+      - ref(sales_not_null)
+      - ref(revenue_threshold)
+    destinations:
+      - type: SlackDestination
+        webhook_url: <your Slack webhook URL>
+```
+
+In this snippet, we set up an alert that monitors two tests (perhaps the ones we defined for sales not null and a revenue drop threshold). If either test fails during a run (say, a daily scheduled run or a manual refresh), Visivo will send a message to a Slack channel via the provided webhook. The message could include which test failed and a link to the dashboard or logs for further investigation.
+
+You can imagine similar setups: email alerts for critical dashboards, or different channels for different severities of issues.
+
+Visivo’s alerting ensures that **if something breaks, you’ll know immediately**. This flips the script from reactive to proactive. Instead of a VP messaging the data team saying “the dashboard looks off,” the data team gets a Slack alert at 2 AM that a test failed on the nightly build, and they can address it before business hours. Stakeholders might never even see a broken dashboard, because you’ll either fix it or revert to a last known good state (thanks to version control) by the time they log in.
+
+## Look-Back Windows and Historical Validation
+
+Data quality isn’t just about the present — it’s also about the past. Trends and changes over time are often where issues surface. Visivo’s testing framework, combined with its version-controlled nature, allows for what we might call **historical validation** or implementing “look-back windows” in tests.
+
+For example:
+
+* You might maintain a reference of yesterday’s data or last week’s results (Visivo could output results to a file or you could query a history table) and write a test comparing today vs yesterday. This catches scenarios where a pipeline may have inadvertently dropped a segment of data or an ETL job failed to load a subset.
+* Visivo’s code versioning means you can roll back to a previous version of your project if a new change caused problems. It’s akin to a time machine for your dashboards. This “time-travel” capability is extremely useful when investigating when a dashboard might have broken. By looking at git history, you can identify the exact commit that introduced a failing test or broken chart, making debugging much faster.
+* If you have **look-back windows** for metrics (like a 30-day moving average), you can test that logic by simulating inputs or by comparing the dashboard’s output to an independent calculation. Because Visivo dashboards are deterministic, the same input data will always produce the same output. This determinism helps in validating metrics across time, if the calculation method changes, you’ll see it in the tests.
+
+One could say Visivo enables a form of **analytic regression testing**, ensuring that new changes do not break or significantly alter existing metrics unless intentionally. This is crucial for maintaining long-term trust: today’s KPI should mean the same as yesterday’s KPI (unless you intentionally redefined it, in which case that change is tracked and communicated).
+
+## Best Practices for Quality in Visivo
+
+To truly bulletproof your dashboards, consider these best practices:
+
+* **Adopt Test-Driven Development (where feasible):** When adding a new metric or chart, think about how you would validate it. Write the test for it as you build the metric. For example, if you create a “Top 10 products” chart, you might write a test that asserts there are 10 items and they sum up to the company total correctly. Developing this way ensures you consider edge cases early.
+* **Leverage Both dbt and Visivo Tests:** If you’re using dbt (as many do), you might already test your transformations in dbt. Continue doing that (test at the raw data and intermediate layer), and use Visivo tests to focus on the presentation layer (final aggregates, combinations, and critical outputs). There’s no such thing as too much testing when it comes to critical business data.
+* **Fail Fast in CI:** Configure important tests with `on_failure: exit` so that your CI pipeline fails the build when a test fails. It’s much easier to fix issues in a development or staging environment than after deployment. Failing fast prevents bad data from ever going live.
+* **Use Alerts Thoughtfully:** Route alerts where they will be seen and acted on. For example, integrate with your team’s Slack channel for data monitoring. And prioritize alerts, you might have some that are informational and others that are critical. Too much noise can lead to alert fatigue, so tune your tests and alert triggers to what really matters.
+* **Document Your Tests:** Tests essentially encode business logic and assumptions (e.g., “we expect at least 100 users every day” or “no single order can exceed \$1M”). Document why a test exists so future team members understand its purpose. This can be done in comments in the YAML or in your team’s knowledge base.
+* **Regularly Review Failures:** If you do encounter test failures, treat them as learning opportunities. Was it a data issue upstream? A new scenario not accounted for? Use that to improve your pipeline or adjust the test if needed. The goal is to continuously improve data resilience.
+
+## Conclusion
+
+Delivering a reliable dashboard is just as important as delivering a fast or fancy one. Visivo provides the toolkit to ensure **data quality** is baked into your development process. By writing tests and configuring alerts, you catch problems early and often, long before stakeholders see them. This proactive approach leads to dashboards that maintain trust over time.
+
+Key takeaways for keeping your Visivo dashboards rock-solid:
+
+* **Automated Testing:** Define tests for your data and metrics. Visivo will run them during builds, preventing broken or empty visuals from slipping through.
+* **Continuous Integration:** Integrate Visivo tests into your CI/CD pipeline to enforce quality gates on every change. This pairs nicely with Visivo’s support for code-based workflows and even third-party CI tools (like the RWX Mint example, which sped up our own CI by 10x).
+* **Alerting & Monitoring:** Set up alerts to be notified of issues in real-time (e.g., via Slack or email). Don’t rely on manual checks, let Visivo watch your dashboards for you.
+* **Version Control & Rollback:** Use git to track changes. If a bad change does slip in, you can quickly revert to a last known good state. The history of changes can also help pinpoint when a calculation changed, aiding in debugging and communication with stakeholders.
+
+With these measures, you can confidently say “goodbye” to the era of broken dashboards. Instead of firefighting issues, your team can spend more time delivering new insights and value, knowing that Visivo has your back on the quality front. Stakeholders will come to **trust the data** implicitly, which is the ultimate goal of any analytics initiative.
+
+A trustworthy, tested, and timely dashboard means better decisions and fewer headaches. Visivo’s commitment to quality assurance features is one more way it stands out as the modern BI-as-code platform for data-driven organizations. So go ahead, build amazing, complex, interactive dashboards, and rest easy knowing that you have the tools to keep them **accurate and reliable** every day.
