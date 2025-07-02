@@ -24,7 +24,7 @@ const InstallVisivoPrompt = () => {
         <div className="mt-6 text-sm text-gray-600 dark:text-gray-300">
           Or see other{' '}
           <a
-            href="https://docs.visivo.io/"
+            href="https://github.com/visivo-io/visivo?tab=readme-ov-file#install"
             className="font-semibold text-highlight-500 dark:text-highlight-400 hover:underline inline-flex items-center transition-colors"
           >
             install options
