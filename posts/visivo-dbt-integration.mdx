@@ -1,0 +1,105 @@
+
+export const frontmatter = {
+  title: "Visivo + dbt: Full Lineage and Transparent Transformations",
+  date: "May 13, 2025",
+  description: "How Visivo's native dbt integration provides end-to-end data lineage and transformation transparency, benefiting both analysts and developers.",
+  author: "Jared Jesionek",
+  tag: "Integration",
+  imgSrc: "./images/dbt-lineage.webp",
+  imgAlt: "Data pipeline diagram showing dbt integration",
+  readTime: "10 min"
+};
+
+
+# Visivo + dbt: Full Lineage and Transparent Transformations
+
+#### How Visivo's native dbt integration provides end-to-end data lineage and transformation transparency, benefiting both analysts and developers.
+
+## Introduction
+
+Modern data teams rely on [dbt (Data Build Tool)](https://www.getdbt.com/) to transform raw data into analytics-ready tables. Visivo amplifies the power of dbt by integrating it directly into your business intelligence workflow. With Visivo + dbt, you get **full data lineage** from source to dashboard and complete transparency into every transformation step. This means analysts can trust the numbers they see, and developers can maintain one source of truth for all data logic.
+
+In this in-depth look, we'll explore how Visivo's dbt integration works and why it matters. We'll cover how Visivo automatically pulls in dbt models, how it visualizes lineage, and the key benefits this brings to different stakeholders. By the end, you'll see how Visivo and dbt together make your analytics stack more **transparent, auditable, and collaborative**.
+#### How Visivo’s native dbt integration provides end-to-end data lineage and transformation transparency, benefiting both analysts and developers.
+## Seamless Integration of dbt Models
+
+Visivo projects can directly integrate with an existing dbt project with minimal setup. In your Visivo configuration, you simply enable the dbt integration and point to your dbt project files. For example, in `project.visivo.yml`:
+
+```yaml
+In this in-depth look, we’ll explore how Visivo’s dbt integration works and why it matters. We’ll cover how Visivo automatically pulls in dbt models, how it visualizes lineage, and the key benefits this brings to different stakeholders. By the end, you’ll see how Visivo and dbt together make your analytics stack more **transparent, auditable, and collaborative**.
+  enabled: true
+  dbt_project_yml_location: dbt/
+  profiles_yml_location: dbt/
+```
+
+With this enabled, Visivo will automatically detect your dbt models and sources when building the project. Here's what happens under the hood:
+
+* **Sources from dbt:** Visivo reads your `profiles.yml` and creates Visivo **Sources** for each environment target defined. For instance, if your dbt profile has a development and production target, Visivo will create corresponding source connections (with appropriate credentials) named after those targets.
+* **Models from dbt:** Every dbt model in your project is converted into a **Visivo model**. These models are auto-generated and use the SQL logic defined in dbt. Visivo names them after your dbt models (with an optional prefix if you specify one). Essentially, Visivo is **pulling in the transformed tables** that dbt produces and making them first-class data models in the Visivo environment.
+* All this happens on build, you don't have to manually duplicate any SQL. Visivo and dbt stay in sync: update a dbt model, and Visivo will incorporate the change on the next project build.
+
+**The result** is a single unified DAG (Directed Acyclic Graph) that includes both your data transformations and your visualizations. Visivo's backend builds a DAG that starts from raw data sources, goes through dbt models, then through any additional Visivo models or calculations, and finally into traces and charts. This gives **complete lineage visibility** for every metric on a dashboard.
+With this enabled, Visivo will automatically detect your dbt models and sources when building the project. Here’s what happens under the hood:
+![Placeholder: Screenshot of a lineage DAG showing sources -> dbt models -> Visivo chart]()
+
+## Full Lineage at Your Fingertips
+* All this happens on build, you don’t have to manually duplicate any SQL. Visivo and dbt stay in sync: update a dbt model, and Visivo will incorporate the change on the next project build.
+One of the biggest advantages of this integration is **full data lineage**. In Visivo, you can trace any dashboard element backwards to see where the data comes from. For example, consider a KPI chart on a Visivo dashboard showing "Revenue This Month." With dbt integration enabled, you could determine:
+**The result** is a single unified DAG (Directed Acyclic Graph) that includes both your data transformations and your visualizations. Visivo’s backend builds a DAG that starts from raw data sources, goes through dbt models, then through any additional Visivo models or calculations, and finally into traces and charts. This gives **complete lineage visibility** for every metric on a dashboard.
+* Which Visivo **trace** and **chart** is displaying "Revenue This Month".
+* Which **Visivo model** (auto-imported from dbt) provides the revenue data for that trace.
+* Which **dbt model** that corresponds to, such as a model that calculates revenue or perhaps an aggregate table.
+* What **source tables** feed into that dbt model, e.g., the raw orders table in your database, maybe via intermediate staging models.
+
+One of the biggest advantages of this integration is **full data lineage**. In Visivo, you can trace any dashboard element backwards to see where the data comes from. For example, consider a KPI chart on a Visivo dashboard showing “Revenue This Month.” With dbt integration enabled, you could determine:
+
+* Which Visivo **trace** and **chart** is displaying “Revenue This Month”.
+* If a number looks off, you can inspect the exact SQL from the dbt model that produced it, directly in the context of the dashboard (no more guessing which part of the pipeline might have an issue).
+* New team members can understand the data flow by exploring the Visivo project structure, which clearly delineates sources, models (including those from dbt), and charts.
+
+In traditional BI tools, the path from a dashboard number back to raw data is often opaque or buried in many layers. With Visivo + dbt, that path is **clear and transparent** by design. This improves trust: stakeholders know that each dashboard is backed by a well-defined, version-controlled transformation pipeline.
+This end-to-end lineage means an analyst or developer can answer questions like “Where is this number coming from?” instantly, without digging through separate tools. Every transformation is documented and accessible:
+## Transformation Transparency for Analysts
+
+From an analyst or business user's perspective, having transformation transparency is empowering. How so?
+
+* **Trust through Visibility:** Analysts can verify how a metric is calculated. For instance, if the definition of "Active Users" changes, they can see exactly when and how the dbt model was updated (since Visivo pulls the latest logic). This builds confidence that the dashboard isn't a black box, it's showing agreed-upon logic.
+* **Self-Service Insights:** Curious about a detail? Analysts can drill into the lineage. They might find that "Active Users" are filtered by certain criteria in the dbt model. Such insights into business logic are readily accessible, bridging the typical gap between data engineers and analysts.
+* **Collaboration:** Because everything is code, analysts who are comfortable with SQL can even propose changes by editing or suggesting edits to the dbt models, knowing Visivo will pick those up. The conversation around metrics moves into version control and merge requests, fostering collaboration between analytics engineers and consumers of the data.
+
+Importantly, all this happens without analysts needing to directly run dbt themselves or write code in Visivo. Once the integration is set up, **Visivo handles pulling in the latest transformations automatically**. Analysts simply use the Visivo app to explore and trust that the numbers reflect the latest dbt project state.
+From an analyst or business user’s perspective, having transformation transparency is empowering. How so?
+## Less Duplication, Less Maintenance for Developers
+* **Trust through Visibility:** Analysts can verify how a metric is calculated. For instance, if the definition of “Active Users” changes, they can see exactly when and how the dbt model was updated (since Visivo pulls the latest logic). This builds confidence that the dashboard isn’t a black box, it’s showing agreed-upon logic.
+* **Self-Service Insights:** Curious about a detail? Analysts can drill into the lineage. They might find that “Active Users” are filtered by certain criteria in the dbt model. Such insights into business logic are readily accessible, bridging the typical gap between data engineers and analysts.
+
+* **Single Source of Truth:** Write a SQL transformation once in a dbt model, and use it everywhere. Visivo will use that single source of truth for the dashboard. If business logic needs updating, you update the dbt project, Visivo will mirror it. This ensures consistency across analyses.
+* **Easier Debugging:** If something goes wrong or a number is off, you have one place to look for the logic (the dbt model), rather than checking both the BI tool calculation and the ETL. The unified lineage speeds up troubleshooting because you can pinpoint issues in the data pipeline quickly.
+* **Full Control in Code:** All transformations are code-reviewed and tested in the dbt layer. Visivo simply consumes the results. This encourages proper software engineering practices for analytics. Developers can write tests in dbt (or in Visivo) to ensure data quality at each stage, leading to more reliable dashboards (see our article on [Ensuring Data Quality with Testing](/blog/goodbye-broken-dashboards) for more on this topic).
+* **Performance:** dbt often materializes models (as tables or views). Visivo can query these pre-computed tables directly, which means dashboards load quickly even with complex transformations upstream. You're leveraging the warehouse's power to do heavy lifting once, rather than on every dashboard load.
+
+For data engineers or developers, Visivo’s dbt integration eliminates the tedious work of duplicating logic in your BI tool. You no longer have to redefine metrics or transformations in two places (ETL pipeline and BI layer). Key benefits include:
+
+## Benefits Across the Organization
+
+Visivo's integration with dbt brings tangible benefits to different roles:
+* **Performance:** dbt often materializes models (as tables or views). Visivo can query these pre-computed tables directly, which means dashboards load quickly even with complex transformations upstream. You’re leveraging the warehouse’s power to do heavy lifting once, rather than on every dashboard load.
+* **Data Engineers:** Enjoy a cleaner architecture with decoupled concerns. They focus on ETL/ELT and data modeling in dbt. Visivo takes care of visualization, but honors the models they've built. Deployment of dashboards becomes part of the CI/CD process that includes dbt runs, ensuring everything stays in sync.
+In short, Visivo’s approach avoids the **“two sources of truth” problem**. Your dbt project remains the brains of your data transformation, while Visivo acts as the presentation layer that knows how to read those brains. This tightens the feedback loop between data modeling and visualization.
+* **Analysts/Business Users:** Gain confidence in dashboards. They can ask deeper questions knowing they have a way to get answers. For example, if a marketing manager wonders why a metric spiked, the analyst can inspect the underlying data via Visivo's lineage and see perhaps that a new data source was added to the dbt model at that time, explaining the change.
+* **Stakeholders:** Ultimately see more reliable, documented dashboards. When every number's origin can be traced and audited, data governance improves. Stakeholders trust the insights and are more likely to adopt the BI tool's outputs for decision-making.
+
+Visivo’s integration with dbt brings tangible benefits to different roles:
+
+* **Data Engineers:** Enjoy a cleaner architecture with decoupled concerns. They focus on ETL/ELT and data modeling in dbt. Visivo takes care of visualization, but honors the models they’ve built. Deployment of dashboards becomes part of the CI/CD process that includes dbt runs, ensuring everything stays in sync.
+
+* **Analysts/Business Users:** Gain confidence in dashboards. They can ask deeper questions knowing they have a way to get answers. For example, if a marketing manager wonders why a metric spiked, the analyst can inspect the underlying data via Visivo’s lineage and see perhaps that a new data source was added to the dbt model at that time, explaining the change.
+* **Stakeholders:** Ultimately see more reliable, documented dashboards. When every number’s origin can be traced and audited, data governance improves. Stakeholders trust the insights and are more likely to adopt the BI tool’s outputs for decision-making.
+* **End-to-End Lineage:** Every dashboard element can be traced back to source data and transformation logic, increasing trust.
+* **Transformation Transparency:** No more black-box metrics, anyone can see how the data was shaped, which fosters a data-driven culture.
+* **Streamlined Workflow:** One place to maintain transformations (in dbt). Visivo consumes those, reducing errors and inconsistencies.
+Visivo’s native dbt integration is a game-changer for organizations seeking **transparency and efficiency** in their analytics stack. By unifying transformation logic (dbt) with visualization (Visivo), you achieve a true end-to-end view of your data pipeline, what we call **full lineage**. Both technical and non-technical team members benefit: developers have less redundancy and more control through code, and analysts have greater trust and understanding of the data they work with.
+
+By emphasizing lineage and transparency, Visivo helps break down silos between data transformation and visualization. Analysts and stakeholders are no longer in the dark about how data is processed, and developers can ensure that **what's in production is exactly what was defined in code**. This synergy unleashes more reliable analytics with less effort.
+
+Ready to maximize the value of your dbt project? Visivo provides the canvas to showcase it. As you continue building with Visivo, consider also implementing automated tests on your data models and dashboards (check out [Goodbye Broken Dashboards](/blog/goodbye-broken-dashboards) to learn about testing and alerts) to further boost confidence in your data. With Visivo and dbt together, you're on the path to a truly **transparent and accountable** analytics workflow.
