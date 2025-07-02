@@ -59,7 +59,7 @@ const Container = styled.div`
     margin: 0 auto;
     max-width: 120rem;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 35px;
     `
 
 const Button = styled.button`

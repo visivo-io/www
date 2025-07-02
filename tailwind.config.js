@@ -53,6 +53,9 @@ export default {
           800: "#54231c",
           900: "#29110d"
         },
+        'secondaryHighlight': {
+          DEFAULT: "#45baf9",
+        },
         'dark': "#191D33",
         'light': "#ECEFCB",
       },
