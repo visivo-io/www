@@ -1,5 +1,6 @@
 import GifToVideo from "./GifToVideo";
 import { FiCode, FiTrendingUp, FiUsers } from 'react-icons/fi';
+import InstallVisivoPrompt from './InstallVisivoPrompt';
 import { Carousel } from 'flowbite-react';
 
 const cardData = [
@@ -23,15 +24,25 @@ const cardData = [
 export default function Hero() {
   return (
     <section className="w-full bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-screen-xl px-4 py-4 pt-4 sm:py-4 sm:pt-16 lg:py-24">
+      <div className="mx-auto max-w-screen-xl px-4 py-4 pt-4 sm:py-4 sm:pt-16 lg:py-20">
         <div className="text-center">
           <h1
             className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl pb-2 lg:text-6xl dark:text-white">
             BI for The Modern Data Stack
           </h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            Visivo is the open source BI-as-code framework that allows you to build, deploy, and leverage beautiful data insights.
+          
+          {/* Mobile version - shorter text */}
+          <p className="block md:hidden text-gray-500 dark:text-gray-400">
+            Unlock data centric collaboration across your organization with developer tools & visual building that stakeholders love.
           </p>
+          
+          {/* Desktop version - longer, more detailed text */}
+          <p className="hidden md:block text-gray-500 dark:text-gray-400">
+            Create a semantic layer that is actually useful. Connect it to your tranformations in minutes. Enable data centric collaboration across your organization.
+          </p>
+        </div>
+        <div className="my-12 ">
+        <InstallVisivoPrompt />
         </div>
 
         {/* Carousel for mobile/tablet */}
@@ -80,7 +91,11 @@ export default function Hero() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
+
+        <div className="mt-4 sm:mt-8 lg:mt-16">
+          <GifToVideo />
+        </div>
+        <div className="mt-16 flex flex-col gap-4 sm:flex-row sm:justify-center">
           <a href="https://app.visivo.io/register"
             className="inline-flex items-center justify-center rounded-lg bg-primary-500 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-600 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-900">
             Get Started
@@ -92,10 +107,6 @@ export default function Hero() {
               <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
             </svg>
           </a>
-        </div>
-
-        <div className="mt-8 sm:mt-12 lg:mt-16">
-          <GifToVideo />
         </div>
       </div>
 

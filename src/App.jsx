@@ -1,6 +1,8 @@
 import { DarkThemeToggle, Navbar, Button, Flowbite, Footer, Dropdown } from "flowbite-react";
 import { Outlet } from "react-router-dom";
 import { useAnalytics } from "./analytics/segment";
+import { FaGithub } from "react-icons/fa";
+import { Tooltip } from "flowbite-react";
 
 const customTheme = {
   button: {
@@ -22,6 +24,17 @@ function App() {
         </Navbar.Brand>
 
         <div className="flex md:order-2">
+          <Tooltip content="⭐ Star us on GitHub ❤️" placement="bottom">
+            <a
+              href="https://github.com/visivo-io/visivo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center mr-2 rounded-lg p-2 transition-colors duration-200 text-primary-500 hover:bg-primary-100 hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300 dark:hover:bg-primary-600/20 dark:text-primary-200"
+              aria-label="Star us on GitHub"
+            >
+              <FaGithub className="w-6 h-6" />
+            </a>
+          </Tooltip>
           <DarkThemeToggle className="mr-2" />
           <a href="https://app.visivo.io">
             <Button color="primary">App</Button>
@@ -30,35 +43,36 @@ function App() {
         </div>
 
         <Navbar.Collapse>
-          <div className="flex items-center text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700">
+          <div className="flex items-center text-lg text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700">
             <Dropdown
               label="Solutions"
               inline={true}
+              className="text-lg"
             >
               <Dropdown.Item
                 href="/solutions/software-engineering"
-                className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
+                className="text-lg text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
               >
                 Software Engineering
               </Dropdown.Item>
               <Dropdown.Item
                 href="/solutions/business-intelligence"
-                className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
+                className="text-lg text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
               >
                 Business Intelligence
               </Dropdown.Item>
               <Dropdown.Item
                 href="/solutions/embedding"
-                className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
+                className="text-lg text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
               >
                 Embedding
               </Dropdown.Item>
             </Dropdown>
           </div>
-          <Navbar.Link href="/examples">Examples</Navbar.Link>
-          <Navbar.Link href="/pricing">Pricing</Navbar.Link>
-          <Navbar.Link href="https://docs.visivo.io">Docs</Navbar.Link>
-          <Navbar.Link href="/blog">Blog</Navbar.Link>
+          <Navbar.Link href="/examples" className="text-lg">Examples</Navbar.Link>
+          <Navbar.Link href="/pricing" className="text-lg">Pricing</Navbar.Link>
+          <Navbar.Link href="https://docs.visivo.io" className="text-lg">Docs</Navbar.Link>
+          <Navbar.Link href="/blog" className="text-lg">Blog</Navbar.Link>
         </Navbar.Collapse>
       </Navbar>
 
