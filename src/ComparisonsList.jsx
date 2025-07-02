@@ -3,18 +3,25 @@ import { Link } from 'react-router-dom';
 import vendorData from './vendor-data.json';
 
 const ComparisonsList = () => {
-  const comparisons = Object.keys(vendorData)
-    .filter(vendor => vendor !== 'Visivo')
-    .flatMap((vendor1, _, vendors) => 
-      vendors
-        .filter(vendor2 => vendor2 !== vendor1)
-        .map(vendor2 => ({
-          vendor1,
-          vendor2,
-          path: `/comparisons/${vendorData[vendor1].urlSlug}-${vendorData[vendor2].urlSlug}`,
-          title: `${vendor1} vs ${vendor2}`
-        }))
-    );
+  const vendors = Object.keys(vendorData).filter(v => v !== 'Visivo');
+  const comparisons = [
+    // single competitor vs Visivo
+    ...vendors.map(vendor => ({
+      vendor1: vendor,
+      vendor2: 'Visivo',
+      path: `/comparisons/${vendorData[vendor].urlSlug}-visivo`,
+      title: `${vendor} vs Visivo`
+    })),
+    // unique multi-competitor comparisons
+    ...vendors.flatMap((v1, i) =>
+      vendors.slice(i + 1).map(v2 => ({
+        vendor1: v1,
+        vendor2: v2,
+        path: `/comparisons/${vendorData[v1].urlSlug}-${vendorData[v2].urlSlug}`,
+        title: `${v1} vs ${v2} vs Visivo`
+      }))
+    )
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import vendorData from './vendor-data.json';
 import InstallCommand from './components/InstallCommand';
 
@@ -36,9 +36,20 @@ const ComparisonPage = ({ competitorKeys }) => {
   const toolNames = [...competitorKeys, 'Visivo'];
   const competitors = toolNames.map((name) => ({ name, ...vendorData[name] }));
 
-  // Generate the title based on the tools
-  const title = `Exploring ${competitorKeys.join(', ')} & Visivo`;
-  const SubTitle = `${toolNames.join(' Vs. ')}`;
+  // SEO title and description
+  const pageTitle = `${competitorKeys.join(' vs ')} vs Visivo – BI Tools Comparison`;
+  const metaDescription = `Compare ${toolNames.join(', ')} on pricing, deployment and key features.`;
+
+  useEffect(() => {
+    document.title = pageTitle;
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute('content', metaDescription);
+    }
+  }, [pageTitle, metaDescription]);
+
+  const title = pageTitle;
+  const SubTitle = `${toolNames.join(' vs ')}`;
 
   // Quick features to show in a summary table
   const quickRows = [
@@ -104,6 +115,14 @@ const ComparisonPage = ({ competitorKeys }) => {
           </tbody>
         </table>
       </section>
+      {/* Mid-page CTA */}
+      <section className="my-8 text-center">
+        <p className="font-semibold mb-4">Ready to try Visivo?</p>
+        <a href="https://app.visivo.io/register" className="inline-block px-6 py-3 text-white rounded font-semibold" style={{ backgroundColor: '#713B57' }}>
+          Sign Up Free
+        </a>
+      </section>
+
 
 
       {/* 4. Detailed Comparison Sections */}
@@ -269,7 +288,7 @@ const ComparisonPage = ({ competitorKeys }) => {
       
       <section className="text-center mb-12">
         <p className="text-gray-600 mb-6">
-          Ready to experience the power of modern BI? Try Visivo today and see how it compares to other tools in your stack.
+          Seen how Visivo stacks up? Experience it yourself. No credit card required.
         </p>
         <InstallCommand />
         <a
