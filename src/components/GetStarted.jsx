@@ -8,8 +8,8 @@ const GetStarted = () => {
       <section className="bg-white dark:bg-gray-900">
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:py-24">
           <div className="mx-auto max-w-screen-md text-center mb-8">
-            <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-              Get started with Visivo in minutes
+            <h1 className="mb-4 text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+              Get started with Visivo in <span className="text-highlight-500">minutes</span>
             </h1>
             <p className="text-gray-500 md:text-lg dark:text-gray-400">
               Transform your data into interactive dashboards that your team will love.
