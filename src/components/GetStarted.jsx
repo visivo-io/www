@@ -1,7 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InstallCommand from './InstallCommand';
 
 const GetStarted = () => {
+  const [form, setForm] = useState({
+    first_name: '',
+    last_name: '',
+    company: '',
+    email: '',
+    message: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(null);
+    setError(null);
+    try {
+      const res = await fetch('/.netlify/functions/send-to-slack', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setSuccess('Message sent! We will be in touch soon.');
+        setForm({ first_name: '', last_name: '', company: '', email: '', message: '' });
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
+    }
+    setLoading(false);
+  };
+
   return (
     <div>
       {/* Hero Section: Headline & Three-Step Callout */}
@@ -95,7 +133,7 @@ const GetStarted = () => {
             </a>{" "}
             right now!
           </p>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <div>
                 <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -108,6 +146,8 @@ const GetStarted = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                   placeholder="John" 
                   required 
+                  value={form.first_name}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -121,6 +161,8 @@ const GetStarted = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                   placeholder="Doe" 
                   required 
+                  value={form.last_name}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -134,6 +176,8 @@ const GetStarted = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                   placeholder="Acme Inc." 
                   required 
+                  value={form.company}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -147,6 +191,8 @@ const GetStarted = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                   placeholder="name@company.com" 
                   required 
+                  value={form.email}
+                  onChange={handleChange}
                 />
               </div>
               <div className="md:col-span-2">
@@ -160,14 +206,19 @@ const GetStarted = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                   placeholder="Leave a message..." 
                   required
+                  value={form.message}
+                  onChange={handleChange}
                 ></textarea>
               </div>
             </div>
+            {success && <div className="mb-4 text-green-600 dark:text-green-400 font-medium text-center">{success}</div>}
+            {error && <div className="mb-4 text-red-600 dark:text-red-400 font-medium text-center">{error}</div>}
             <button 
               type="submit" 
               className="inline-flex items-center justify-center rounded-lg bg-primary-500 px-5 py-3 text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              disabled={loading}
             >
-              Send Message
+              {loading ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>
