@@ -17,6 +17,7 @@ import ComparisonPage from "./Comparison.jsx";
 import vendorData from "./vendor-data.json";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ComparisonsList from "./ComparisonsList.jsx";
+import GetStarted from "./components/GetStarted.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="privacy" element={<Privacy />} />
           <Route path="about-us" element={<AboutUs />} />
           <Route path="examples" element={<Examples />} />
+          <Route path="get-started" element={<GetStarted />} />
           <Route path="blog" element={<BlogSection />} />
           <Route path="blog/:slug" element={<BlogPost />} /> {/* Dynamic blog post route */}
           <Route path="solutions/software-engineering" element={<SoftwareEngineering />} />
