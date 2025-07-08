@@ -77,14 +77,14 @@ const GetStarted = () => {
                 <div className="flex items-center space-x-4">
                   <div className="text-6xl font-extrabold text-primary-400">2</div>
                   <div>
-                    <div className="uppercase text-sm font-semibold text-primary-400">Model</div>
+                    <div className="uppercase text-sm font-semibold text-primary-400">Create</div>
                     <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                      Profile, transform, and visualize your data on your local machine.
+                      Model and visualize data on your local machine by running - <code>visivo serve</code>.
                     </p>
                   </div>
                 </div>
                 <img
-                  src="/images/model-screenshot.png"
+                  src="/images/editor.webp"
                   alt="Data modeling screenshot"
                   className="mt-6 rounded-lg border border-gray-200 dark:border-gray-700"
                 />
@@ -101,7 +101,7 @@ const GetStarted = () => {
                   </div>
                 </div>
                 <img
-                  src="/images/share-screenshot.png"
+                  src="/images/ci_cd.webp"
                   alt="Dashboard sharing screenshot"
                   className="mt-6 rounded-lg border border-gray-200 dark:border-gray-700"
                 />
