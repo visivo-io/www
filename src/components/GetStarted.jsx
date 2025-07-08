@@ -6,70 +6,74 @@ const GetStarted = () => {
     <div>
       {/* Hero Section: Headline & Three-Step Callout */}
       <section className="bg-white dark:bg-gray-900">
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:py-24">
+        <div className="mx-auto max-w-screen-xl px-4 pt-6 pb-12 sm:py-16 lg:py-24">
           <div className="mx-auto max-w-screen-md text-center mb-8">
-            <h1 className="mb-4 text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="mb-6 text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white">
               Get started with Visivo in <span className="text-highlight-500">minutes</span>
             </h1>
             <p className="text-gray-500 md:text-lg dark:text-gray-400">
-              Transform your data into interactive dashboards that your team will love.
+              Transform your data into interactive dashboards that your team will <span className="text-sky-500">love</span>.
             </p>
           </div>
-          <div className="grid gap-8 lg:grid-cols-3">
-            {/* Step 1 */}
-            <div className="flex flex-col items-start">
-              <div className="inline-flex items-center justify-center w-10 h-10 mb-2 rounded-full bg-primary-100 text-primary-500 dark:bg-primary-900 dark:text-primary-300">
-                1
+          {/* Centered Steps Section */}
+          <div className="flex flex-col items-center w-full">
+            {/* Step 1: Full width on all screens, centered */}
+            <div className="w-full max-w-3xl bg-white dark:bg-gray-800 p-10 rounded-2xl shadow-lg mb-8">
+              <div className="flex items-center space-x-4">
+                <div className="text-6xl font-extrabold text-primary-400">1</div>
+                <div>
+                  <div className="uppercase text-sm font-semibold text-primary-400">Install</div>
+                  <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white ">
+                    Install Visivo and ingest data directly from multiple sources.
+                  </p>
+                </div>
               </div>
-              <h3 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                Install Visivo
-              </h3>
-              <p className="mb-4 text-gray-600 dark:text-gray-300">
-                Install Visivo and ingest data directly from multiple sources.
-              </p>
-              {/* Installation command snippet with copy functionality */}
-              <InstallCommand />
+              <div className="mt-6">
+                <InstallCommand />
+              </div>
             </div>
-            {/* Step 2 */}
-            <div className="flex flex-col items-start">
-              <div className="inline-flex items-center justify-center w-10 h-10 mb-2 rounded-full bg-primary-100 text-primary-500 dark:bg-primary-900 dark:text-primary-300">
-                2
+            {/* Steps 2 & 3: Side by side on large screens, stacked on mobile, centered */}
+            <div className="flex flex-col lg:flex-row gap-8 w-full max-w-5xl justify-center">
+              {/* Step 2 */}
+              <div className="flex-1 bg-white dark:bg-gray-800 p-10 rounded-2xl shadow-lg flex flex-col items-center">
+                <div className="flex items-center space-x-4">
+                  <div className="text-6xl font-extrabold text-primary-400">2</div>
+                  <div>
+                    <div className="uppercase text-sm font-semibold text-primary-400">Model</div>
+                    <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
+                      Profile, model, and visualize your data on your local machine.
+                    </p>
+                  </div>
+                </div>
+                <img
+                  src="/images/model-screenshot.png"
+                  alt="Data modeling screenshot"
+                  className="mt-6 rounded-lg border border-gray-200 dark:border-gray-700"
+                />
               </div>
-              <h3 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                Model
-              </h3>
-              <p className="mb-4 text-gray-600 dark:text-gray-300">
-                Profile, model, and visualize your data on your local machine.
-              </p>
-              <img 
-                src="/images/model-screenshot.png" 
-                alt="Data modeling screenshot" 
-                className="rounded-lg shadow-lg w-full h-auto"
-              />
-            </div>
-            {/* Step 3 */}
-            <div className="flex flex-col items-start">
-              <div className="inline-flex items-center justify-center w-10 h-10 mb-2 rounded-full bg-primary-100 text-primary-500 dark:bg-primary-900 dark:text-primary-300">
-                3
+              {/* Step 3 */}
+              <div className="flex-1 bg-white dark:bg-gray-800 p-10 rounded-2xl shadow-lg flex flex-col items-center">
+                <div className="flex items-center space-x-4">
+                  <div className="text-6xl font-extrabold text-primary-400">3</div>
+                  <div>
+                    <div className="uppercase text-sm font-semibold text-primary-400">Share</div>
+                    <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
+                      Deploy to Visivo Cloud and start a free trial to share dashboards with your team.
+                    </p>
+                  </div>
+                </div>
+                <img
+                  src="/images/share-screenshot.png"
+                  alt="Dashboard sharing screenshot"
+                  className="mt-6 rounded-lg border border-gray-200 dark:border-gray-700"
+                />
+                <a
+                  href="https://app.visivo.io/register"
+                  className="mt-8 inline-block rounded-lg bg-primary-500 px-6 py-3 text-base font-semibold text-white hover:bg-primary-600"
+                >
+                  Start Free Trial
+                </a>
               </div>
-              <h3 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                Share
-              </h3>
-              <p className="mb-4 text-gray-600 dark:text-gray-300">
-                Deploy to Visivo Cloud and start a free trial to share dashboards with your team.
-              </p>
-              <img 
-                src="/images/share-screenshot.png" 
-                alt="Dashboard sharing screenshot" 
-                className="rounded-lg shadow-lg w-full h-auto"
-              />
-              {/* Call-to-action for free trial */}
-              <a 
-                href="https://app.visivo.io/register" 
-                className="mt-4 inline-flex items-center justify-center rounded-lg bg-primary-500 px-5 py-3 text-base font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Start Free Trial
-              </a>
             </div>
           </div>
         </div>
