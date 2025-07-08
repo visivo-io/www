@@ -6,19 +6,29 @@ import { MdScatterPlot } from 'react-icons/md';
 import dagre from 'dagre';
 
 // Custom pill-style node component
-const PillNode = ({ data }) => {
+const PillNode = ({ data, layoutDirection }) => {
   const { label, Icon, bgClass, textClass, borderClass, selected } = data;
+  // Determine handle positions based on layoutDirection
+  const isHorizontal = layoutDirection === 'LR';
   return (
     <div
       className={`flex items-center p-2 shadow-md rounded-2xl border cursor-pointer hover:opacity-80 hover:shadow-lg transition ${bgClass} ${borderClass} ${selected ? 'pulse-glow-green z-10' : ''}`}
       style={{ minWidth: 100, maxWidth: 300 }}
     >
-      <Handle type="target" position="left" style={{ top: '50%' }} />
+      {isHorizontal ? (
+        <Handle type="target" position="left" style={{ top: '50%' }} />
+      ) : (
+        <Handle type="target" position="top" style={{ left: '50%' }} />
+      )}
       <div className="flex items-center flex-1 min-w-0">
         <Icon className={`w-5 h-5 mr-2 ${textClass}`} />
         <span className={`text-sm font-medium ${textClass} truncate`}>{label}</span>
       </div>
-      <Handle type="source" position="right" style={{ top: '50%' }} />
+      {isHorizontal ? (
+        <Handle type="source" position="right" style={{ top: '50%' }} />
+      ) : (
+        <Handle type="source" position="bottom" style={{ left: '50%' }} />
+      )}
     </div>
   );
 };
@@ -210,7 +220,9 @@ const getLayoutedElements = (nodes, edges, direction = 'LR') => {
 
 export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
   const [selected, setSelected] = useState('sources');
-  const nodeTypes = { pill: PillNode };
+  const nodeTypes = {
+    pill: (props) => <PillNode {...props} layoutDirection={layoutDirection} />
+  };
   const reactFlowInstanceRef = useRef(null);
 
   // Responsive layout direction
@@ -244,10 +256,10 @@ export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
     { id: 'e2', source: 'models',     target: 'metrics',    markerEnd: { type: MarkerType.ArrowClosed } },
     { id: 'e3', source: 'metrics',    target: 'traces',     markerEnd: { type: MarkerType.ArrowClosed } },
     { id: 'e4', source: 'traces',     target: 'charts',     markerEnd: { type: MarkerType.ArrowClosed } },
-    { id: 'e4', source: 'traces',     target: 'tables',     markerEnd: { type: MarkerType.ArrowClosed } },
-    { id: 'e5', source: 'charts',     target: 'dashboards', markerEnd: { type: MarkerType.ArrowClosed } },
-    { id: 'e6', source: 'models',     target: 'tables',     markerEnd: { type: MarkerType.ArrowClosed } },
-    { id: 'e7', source: 'tables',     target: 'dashboards', markerEnd: { type: MarkerType.ArrowClosed } }
+    { id: 'e5', source: 'traces',     target: 'tables',     markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e6', source: 'charts',     target: 'dashboards', markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e7', source: 'models',     target: 'tables',     markerEnd: { type: MarkerType.ArrowClosed } },
+    { id: 'e8', source: 'tables',     target: 'dashboards', markerEnd: { type: MarkerType.ArrowClosed } }
     
   ];
 
@@ -260,9 +272,9 @@ export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
     layoutDirection
   );
 
-  const containerClass = 'flex flex-row md:flex-col h-[45rem] md:h-[38rem] w-full';
-  const graphClass = 'w-1/3 h-full md:w-full md:h-1/4 min-w-[200px] min-h-[80px]';
-  const infoClass = 'w-2/3 h-full md:w-full md:h-3/4';
+  const containerClass = 'flex flex-row md:flex-col h-[45rem] md:h-[45rem] w-full';
+  const graphClass = 'w-1/3 h-full md:w-full md:h-1/4 min-w-[150px] ';
+  const infoClass = 'w-2/3 h-full md:w-full overflow-y-auto';
 
   return (
     <section className="py-8 bg-white dark:bg-gray-900">
@@ -293,7 +305,7 @@ export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
             <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-sm h-full">
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{INFO[selected].title}</h3>
               <p className="mb-4 text-gray-800 dark:text-gray-300">{INFO[selected].description}</p>
-              <pre className="mb-2 whitespace-pre-wrap bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs text-gray-800 dark:text-gray-200">
+              <pre className="mb-2 whitespace-pre-wrap bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-sm md:text-xs text-gray-800 dark:text-gray-200 overflow-auto max-h-60">
                 {Array.isArray(INFO[selected].yaml)
                   ? INFO[selected].yaml.map((line, idx) =>
                       <div

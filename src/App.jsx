@@ -1,8 +1,9 @@
 import { DarkThemeToggle, Navbar, Button, Flowbite, Footer, Dropdown } from "flowbite-react";
 import { Outlet } from "react-router-dom";
 import { useAnalytics } from "./analytics/segment";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaSlack } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
+import { HiDotsVertical, HiSun, HiMoon, HiLogin } from "react-icons/hi";
 
 const customTheme = {
   button: {
@@ -24,6 +25,17 @@ function App() {
         </Navbar.Brand>
 
         <div className="flex md:order-2">
+          <Tooltip content="Join the community!" placement="bottom">
+            <a
+              href="https://join.slack.com/t/visivo-community/shared_invite/zt-38shh3jmq-1Vl3YkxHlGpD~GlalfiKsQ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center mr-2 rounded-lg p-2 transition-colors duration-200 text-primary-500 hover:bg-primary-100 hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300 dark:hover:bg-primary-600/20 dark:text-primary-200"
+              aria-label="Join the community on Slack"
+            >
+              <FaSlack className="w-6 h-6" />
+            </a>
+          </Tooltip>
           <Tooltip content="⭐ Star us on GitHub ❤️" placement="bottom">
             <a
               href="https://github.com/visivo-io/visivo"
@@ -35,10 +47,31 @@ function App() {
               <FaGithub className="w-6 h-6" />
             </a>
           </Tooltip>
-          <DarkThemeToggle className="mr-2" />
-          <a href="https://app.visivo.io">
-            <Button color="primary">App</Button>
+          <a href="/get-started" className="mr-2">
+            <Button color="primary">Get Started</Button>
           </a>
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <HiDotsVertical className="w-5 h-5 text-gray-600 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-200" />
+            }
+            className="ml-2"
+          >
+            <Dropdown.Item
+              icon={HiLogin}
+              href="https://app.visivo.io/register"
+              className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              Login
+            </Dropdown.Item>
+            <Dropdown.Item
+              icon={HiSun}
+              className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              <DarkThemeToggle className="w-full" />
+            </Dropdown.Item>
+          </Dropdown>
           <Navbar.Toggle />
         </div>
 
