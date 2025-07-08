@@ -272,9 +272,9 @@ export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
     layoutDirection
   );
 
-  const containerClass = 'flex flex-row md:flex-col h-[45rem] md:h-[38rem] w-full';
-  const graphClass = 'w-1/3 h-full md:w-full md:h-1/4 min-w-[200px] min-h-[80px]';
-  const infoClass = 'w-2/3 h-full md:w-full md:h-3/4';
+  const containerClass = 'flex flex-row md:flex-col h-[45rem] md:h-[45rem] w-full';
+  const graphClass = 'w-1/3 h-full md:w-full md:h-1/4 min-w-[150px] ';
+  const infoClass = 'w-2/3 h-full md:w-full overflow-y-auto';
 
   return (
     <section className="py-8 bg-white dark:bg-gray-900">
@@ -305,7 +305,7 @@ export default function VisivoDataFlow({ infoLayout = 'bottom' }) {
             <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-sm h-full">
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{INFO[selected].title}</h3>
               <p className="mb-4 text-gray-800 dark:text-gray-300">{INFO[selected].description}</p>
-              <pre className="mb-2 whitespace-pre-wrap bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-xs text-gray-800 dark:text-gray-200">
+              <pre className="mb-2 whitespace-pre-wrap bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-sm md:text-xs text-gray-800 dark:text-gray-200 overflow-auto max-h-60">
                 {Array.isArray(INFO[selected].yaml)
                   ? INFO[selected].yaml.map((line, idx) =>
                       <div
