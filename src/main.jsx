@@ -36,19 +36,28 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} />
           <Route path="solutions/embedding" element={<Embedding />} />
           <Route path="comparison-list" element={<ComparisonsList />} />
-          {Object.keys(vendorData)
-            .filter(vendor => vendor !== 'Visivo')
-            .flatMap((vendor1, _, vendors) => 
-              vendors
-                .filter(vendor2 => vendor2 !== vendor1)
-                .map(vendor2 => (
-                  <Route 
-                    key={`${vendor1}-${vendor2}`}
-                    path={`comparisons/${vendorData[vendor1].urlSlug}-${vendorData[vendor2].urlSlug}`} 
-                    element={<ComparisonPage competitorKeys={[vendor1, vendor2]}/>} 
+            {(() => {
+              const vendors = Object.keys(vendorData).filter(v => v !== "Visivo");
+              return [
+                ...vendors.map(vendor => (
+                  <Route
+                    key={`${vendor}-visivo`}
+                    path={`comparisons/${vendorData[vendor].urlSlug}-visivo`}
+                    element={<ComparisonPage competitorKeys={[vendor]} />}
                   />
-                ))
-            )}
+                )),
+                ...vendors.flatMap((v1, i) =>
+                  vendors.slice(i + 1).map(v2 => (
+                    <Route
+                      key={`${v1}-${v2}`}
+                      path={`comparisons/${vendorData[v1].urlSlug}-${vendorData[v2].urlSlug}`}
+                      element={<ComparisonPage competitorKeys={[v1, v2]} />}
+                    />
+                  ))
+                ),
+              ];
+            })()}
+
           <Route path="*" element={<NotFound />} /> {/* 404 catch-all route */}
         </Route>
       </Routes>
