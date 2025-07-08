@@ -35,7 +35,7 @@ const GifToVideo = () => {
           onClick={handleButtonClick}
         >
           <Icon icon={faPlay} />
-          Watch 86<br />Second Demo
+          <ButtonText>Watch 86<br />Second Demo</ButtonText>
         </Button>
       )}
     </Container>
@@ -46,26 +46,40 @@ export default GifToVideo;
 
 
 const Icon = styled(FontAwesomeIcon)`
-    width: 2.5em;
-    height: 3em;
-    margin-right: 5px;
-    position: center;
-    color: white ;
+    width: 1.7em;
+    height: 1.7em;
+    margin-right: 0;
+    color: white;
+    z-index: 1;
+    @media (max-width: 768px) {
+        width: 1.7em;
+        height: 1.7em;
+    }
+`;
+
+const ButtonText = styled.span`
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const Container = styled.div`
-    width: 90%;
+    width: 95%;
     position: relative;
     margin: 0 auto;
     max-width: 120rem;
     overflow: hidden;
     border-radius: 35px;
+    @media (max-width: 768px) {
+      border-radius: 15px;
+    }
     `
 
 const Button = styled.button`
   position: absolute;
   display: flex;
   justify-content: center;
+  align-items: center;
   top: 50%;
   left: 50%;
   max-width: 20rem;
@@ -77,4 +91,16 @@ const Button = styled.button`
   color: white;
   border: none;
   border-radius: 5px;
+  
+  @media (max-width: 768px) {
+    padding: 0;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    max-width: none;
+    font-size: inherit; /* Don't set to 0, so icon remains visible */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
