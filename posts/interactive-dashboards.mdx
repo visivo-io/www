@@ -1,0 +1,137 @@
+export const frontmatter = {
+  title: "Interactive Dashboards, Zero Wait: Visivo's Instant Insights",
+  date: "Feb 15, 2025",
+  description: "How Visivo enables rich interactivity without slow load times, delivering a fast and engaging dashboard experience for stakeholders.",
+  author: "Jared Jesionek",
+  tag: "Feature",
+  imgSrc: "./images/interactive-dashboards.webp",
+  imgAlt: "Interactive dashboard example",
+  readTime: "7 min"
+};
+
+# Interactive Dashboards, Zero Wait: Visivo's Instant Insights
+
+
+#### How Visivo enables rich interactivity without slow load times, delivering a fast and engaging dashboard experience for stakeholders.
+
+## The Need for Speed in BI
+
+In today's fast-paced business environment, waiting for a dashboard to refresh or a filter to apply isn't just frustrating, it can hinder decision-making. Traditional BI tools often re-query the database every time you click a filter or change a parameter, leading to spinning wheels and impatient users. Visivo takes a different approach to **interactive dashboards**. It was designed so that users experience **zero wait time** when slicing and dicing data on a dashboard.
+# Interactive Dashboards, Zero Wait: Visivo’s Instant Insights
+**Interactivity without the lag** means stakeholders can explore data freely, drilling down into details, toggling metrics, adjusting date ranges, all while maintaining a smooth, app-like experience. Let's explore Visivo's secret sauce for interactivity and how you can leverage it to create responsive, engaging dashboards.
+
+## Visivo's Push-Based Architecture
+
+Visivo employs a push-based architecture for dashboards. Instead of the front-end pulling data on demand, the heavy lifting is done upfront during the build/deploy phase. In practical terms, this means:
+In today’s fast-paced business environment, waiting for a dashboard to refresh or a filter to apply isn’t just frustrating, it can hinder decision-making. Traditional BI tools often re-query the database every time you click a filter or change a parameter, leading to spinning wheels and impatient users. Visivo takes a different approach to **interactive dashboards**. It was designed so that users experience **zero wait time** when slicing and dicing data on a dashboard.
+* **Data Preloading:** When you build a Visivo project (either locally or in CI), all queries to your data sources are executed then. The resulting data for each chart is stored such that when a user opens the dashboard, the data is ready to go.
+**Interactivity without the lag** means stakeholders can explore data freely, drilling down into details, toggling metrics, adjusting date ranges, all while maintaining a smooth, app-like experience. Let’s explore Visivo’s secret sauce for interactivity and how you can leverage it to create responsive, engaging dashboards.
+* **Deterministic Outputs:** Because interactions are based on precomputed data, the dashboard is entirely deterministic. Every possible view or state of the dashboard is derived from a known set of data that was vetted during the build. This also means you can test those states before deploying (no surprises in production).
+## Visivo’s Push-Based Architecture
+The result? **Lightning-fast interactivity.** When a stakeholder clicks a button to change from "Monthly" to "Weekly" view, the chart updates immediately, because Visivo has both monthly and weekly data ready and simply toggles the view. This creates an experience where exploration is fluid, keeping users in the analytical flow.
+
+## Selectors: Powering User Interaction
+
+How does one configure interactivity in a Visivo dashboard? The key feature is Visivo's **selector** component. A selector acts as a UI control (like a dropdown or toggle) that lets users choose between different "cohorts" of a trace or chart. For example, you might have a selector for time granularity (daily vs monthly) or for categories (product lines, regions, etc.).
+
+To use a selector, you define multiple trace variants in your Visivo config and assign them a cohort label. Then you attach a selector to your chart. Here's a conceptual example:
+The result? **Lightning-fast interactivity.** When a stakeholder clicks a button to change from “Monthly” to “Weekly” view, the chart updates immediately, because Visivo has both monthly and weekly data ready and simply toggles the view. This creates an experience where exploration is fluid, keeping users in the analytical flow.
+* We have a metric "Issues Created" and we want to let users view it by day, week, or month.
+* In Visivo, you can create three traces (day, week, month) for the same metric, each trace labeled (cohort) accordingly.
+* Add a selector of type single-select to the chart. The selector will allow the user to pick which cohort's trace to display.
+How does one configure interactivity in a Visivo dashboard? The key feature is Visivo’s **selector** component. A selector acts as a UI control (like a dropdown or toggle) that lets users choose between different “cohorts” of a trace or chart. For example, you might have a selector for time granularity (daily vs monthly) or for categories (product lines, regions, etc.).
+Under the hood, Visivo's build process will fetch data for all three traces (day, week, month). On the dashboard, the selector simply switches which trace is visible. This happens instantly, no new query needed, since all data is already present. The docs note that this gives you dynamic drill-down and filtering while retaining deterministic builds that can be tested.
+To use a selector, you define multiple trace variants in your Visivo config and assign them a cohort label. Then you attach a selector to your chart. Here’s a conceptual example:
+For example, a YAML snippet for the above might look like:
+* We have a metric “Issues Created” and we want to let users view it by day, week, or month.
+```yaml
+* Add a selector of type single-select to the chart. The selector will allow the user to pick which cohort’s trace to display.
+  - name: issues_by_day
+Under the hood, Visivo’s build process will fetch data for all three traces (day, week, month). On the dashboard, the selector simply switches which trace is visible. This happens instantly, no new query needed, since all data is already present. The docs note that this gives you dynamic drill-down and filtering while retaining deterministic builds that can be tested.
+    cohort_on: "'day'"
+    props: ... (daily aggregation SQL)
+  - name: issues_by_week
+    model: ref(Issues)
+    cohort_on: "'week'"
+    props: ... (weekly aggregation SQL)
+  - name: issues_by_month
+    model: ref(Issues)
+    cohort_on: "'month'"
+    props: ... (monthly aggregation SQL)
+charts:
+  - name: Issues Created Over Time
+    selector:
+      name: issue_time_grain
+      type: single  # user can select one option at a time
+    traces:
+      - ref(issues_by_day)
+      - ref(issues_by_week)
+      - ref(issues_by_month)
+    layout: { title: { text: "Issues Created" } }
+```
+
+In this setup, the **selector** `issue_time_grain` will automatically have options for "day", "week", "month" based on the `cohort_on` values of the traces. The user's choice determines which trace's data is shown on the chart.
+
+This is just one pattern. Selectors can also do multi-select (e.g., allow choosing multiple categories to compare) and can be reused across multiple charts for a **global filter** effect. For instance, a selector for "Region" could control all charts on a dashboard to show a specific region's data.
+
+## Interactive Use Cases Enabled by Visivo
+
+By leveraging selectors and precomputed data, Visivo opens up a range of interactive experiences that remain fast:
+In this setup, the **selector** `issue_time_grain` will automatically have options for “day”, “week”, “month” based on the `cohort_on` values of the traces. The user’s choice determines which trace’s data is shown on the chart.
+* **Drill Downs:** Instead of clicking and waiting for a drill-down query, Visivo can precompute common drill paths. A chart could have a selector or clickable legend that swaps in a more detailed view (such as changing a high-level summary chart to a detailed breakdown).
+This is just one pattern. Selectors can also do multi-select (e.g., allow choosing multiple categories to compare) and can be reused across multiple charts for a **global filter** effect. For instance, a selector for “Region” could control all charts on a dashboard to show a specific region’s data.
+* **Comparisons:** Want to let users compare this year vs last year? You can precompute both series and use a multi-select selector (e.g., checkboxes) to let them turn one or both on. The chart updates immediately with whichever series are selected.
+* **What-if Scenarios:** In some cases, you might precompute scenarios or segments. For example, an e-commerce dashboard could preload data for each product category. A selector could then act as a filter to view one category at a time without additional queries.
+
+All these interactions happen client-side within the user's browser almost instantaneously. The heavy computation (SQL queries, aggregations) happened during the build on the server side, not while the user is clicking around.
+
+## Balancing Data Volume and Performance
+
+You might wonder: *If we preload all possible data for interactions, could that be too much data?* It's a good consideration. Visivo's model works best when the data for precomputed scenarios is reasonably bounded. For example, if you allow filtering by a dimension that has 1,000 unique values, precomputing all 1,000 could be heavy (both in build time and browser payload).
+
+Best practices to ensure interactive dashboards remain efficient:
+All these interactions happen client-side within the user’s browser almost instantaneously. The heavy computation (SQL queries, aggregations) happened during the build on the server side, not while the user is clicking around.
+* **Use selectors for low-cardinality options:** e.g., a few specific options like categories, regions, time grains, on/off toggles. For high-cardinality filters (like customer name), a traditional on-demand filter might be more appropriate. Visivo's paradigm shines for predefined, common pivots of the data.
+* **Leverage Aggregations:** Precompute aggregated data rather than raw detail whenever possible. Visivo is great at slicing summary data quickly. If fine-grained detail is needed on click (e.g., viewing individual records for a point on a graph), Visivo can link out to an external detail page or a separate query interface, rather than attempt to preload thousands of rows.
+* **Pagination for Large Sets:** If you want interactivity on something like a table that could have many rows, consider using paginated views (each page as a cohort) or a default top N and allow switching to another subset.
+You might wonder: *If we preload all possible data for interactions, could that be too much data?* It’s a good consideration. Visivo’s model works best when the data for precomputed scenarios is reasonably bounded. For example, if you allow filtering by a dimension that has 1,000 unique values, precomputing all 1,000 could be heavy (both in build time and browser payload).
+In practice, many interactive needs are covered by relatively small sets of precomputed variations (such as a handful of time granularities or scenario comparisons). For those, Visivo's approach provides an enormous user experience win.
+
+## Impact on User Experience and Engagement
+* **Use selectors for low-cardinality options:** e.g., a few specific options like categories, regions, time grains, on/off toggles. For high-cardinality filters (like customer name), a traditional on-demand filter might be more appropriate. Visivo’s paradigm shines for predefined, common pivots of the data.
+The difference an interactive, zero-wait dashboard makes is palpable:
+
+* **Increased Engagement:** Users are more likely to interact with the data when the interface responds instantly. They'll drill deeper, try different filters, and uncover insights that might have been missed if every click was a slowdown.
+In practice, many interactive needs are covered by relatively small sets of precomputed variations (such as a handful of time granularities or scenario comparisons). For those, Visivo’s approach provides an enormous user experience win.
+* **Mobile-Friendly Performance:** Visivo's dashboards are also optimized for mobile viewing. The lack of continuous querying means even on a mobile device or slower connection, the interactivity remains smooth. (Visivo's responsive design ensures dashboards adapt to smaller screens, so executives can get insights on the go, meeting them where they are.)
+* **Consistency:** Since interactions don't depend on external factors (like database load or network latency for new queries), the performance is consistent. Whether it's the first click of the day or the hundredth, the dashboard responds the same way.
+
+One of our guiding principles in building Visivo was to **unblock creativity** for dashboard designers and viewers alike. By removing the technical lag, Visivo lets you focus on crafting a rich interactive experience. Want to add five different breakdown options to a chart? Go for it, you're not constrained by performance concerns as long as you can precompute those five scenarios. This freedom lets developers create more innovative and user-friendly dashboards.
+
+* **Increased Engagement:** Users are more likely to interact with the data when the interface responds instantly. They’ll drill deeper, try different filters, and uncover insights that might have been missed if every click was a slowdown.
+
+* **Mobile-Friendly Performance:** Visivo’s dashboards are also optimized for mobile viewing. The lack of continuous querying means even on a mobile device or slower connection, the interactivity remains smooth. (Visivo’s responsive design ensures dashboards adapt to smaller screens, so executives can get insights on the go, meeting them where they are.)
+* **Consistency:** Since interactions don’t depend on external factors (like database load or network latency for new queries), the performance is consistent. Whether it’s the first click of the day or the hundredth, the dashboard responds the same way.
+* **Cross-filtering:** Because Visivo knows the relationships (DAG) between components, you can set up interactions where clicking on one chart filters another. For example, clicking a bar in Chart A (say, selecting "East Region") could trigger a selector value in Chart B to switch to East Region as well. By reusing a selector across charts (with `ref(selector_name)`), you can link their behavior. The change is instantaneous for the same reasons discussed, the data for all regions in Chart B was ready, and you simply told Chart B to display the East subset.
+One of our guiding principles in building Visivo was to **unblock creativity** for dashboard designers and viewers alike. By removing the technical lag, Visivo lets you focus on crafting a rich interactive experience. Want to add five different breakdown options to a chart? Go for it, you’re not constrained by performance concerns as long as you can precompute those five scenarios. This freedom lets developers create more innovative and user-friendly dashboards.
+* **Dynamic Text/Indicators:** Not just charts, but even text indicators can be tied to selectors. Visivo dashboards can have KPI cards whose values change when a filter is applied (by referencing different traces or models). This means your headline metrics and your charts stay in sync as the user interacts.
+
+All these combine to create an interactive analytics application experience, rather than static reports. And it's all done with **zero wait** and zero manual JavaScript coding, just declarative config.
+Visivo’s capabilities also extend to more advanced interactive patterns, often found in cutting-edge BI tools:
+## Conclusion
+* **Cross-filtering:** Because Visivo knows the relationships (DAG) between components, you can set up interactions where clicking on one chart filters another. For example, clicking a bar in Chart A (say, selecting “East Region”) could trigger a selector value in Chart B to switch to East Region as well. By reusing a selector across charts (with `ref(selector_name)`), you can link their behavior. The change is instantaneous for the same reasons discussed, the data for all regions in Chart B was ready, and you simply told Chart B to display the East subset.
+* **Play Controls / Animations:** You could create a selector that cycles through values (like a year slider). While Visivo doesn’t animate charts out-of-the-box, a quick toggle of a selector via a script can mimic an animation (e.g., showing each year’s data in sequence). Since each year’s data is precomputed, the effect is a smooth transition from one to the next.
+
+To recap, Visivo delivers **instant insights** through:
+All these combine to create an interactive analytics application experience, rather than static reports. And it’s all done with **zero wait** and zero manual JavaScript coding, just declarative config.
+* **Precomputed Data & Push Architecture:** Dashboards come pre-loaded with the data needed for common interactions, avoiding round-trips on each click.
+* **Selectors for User Input:** A powerful yet simple way to build interactive controls like filters, toggles, and drill-downs into your dashboard configuration.
+* **Smooth User Experience:** Zero wait times mean users can explore freely, and consistent performance builds trust in the tool.
+Interactive, responsive dashboards are more than a luxury — they’re becoming a necessity for data-driven teams. Visivo’s approach to interactivity ensures that your users get answers as fast as they can ask questions, fostering a more engaging and productive analytics experience.
+
+By designing your Visivo projects with interactivity in mind, you can deliver dashboards that feel instantaneous and intuitive. Stakeholders will appreciate the ability to get answers on the fly, whether they're in a meeting, on a mobile device, or diving into analysis at their desk.
+
+Interactive dashboards that *don't* frustrate the user — that's the Visivo difference. As you build out your next dashboard, consider what filters or views your users might want and pre-build them using selectors. The effort to set up cohorts and selectors is small, but the payoff in user satisfaction is huge.
+
+Finally, remember that interactivity goes hand in hand with reliability. Since Visivo computes everything upfront, you have the opportunity to validate and test those interactive states before users see them. Check out our post on [Goodbye Broken Dashboards](/blog/goodbye-broken-dashboards) to learn how you can test your Visivo project (including all those precomputed scenarios) to ensure quality. With Visivo, you truly get the best of both worlds: **blazing-fast interactivity** and **confidence** in your results.
+* **Advanced Interactivity Patterns:** Cross-filtering and dynamic content are achievable without custom coding, all within Visivo’s framework.
