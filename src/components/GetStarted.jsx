@@ -50,7 +50,7 @@ const GetStarted = () => {
               Get started with Visivo in <span className="text-highlight-500">minutes</span>
             </h1>
             <p className="text-gray-500 md:text-lg dark:text-gray-400">
-              Transform your data into interactive dashboards that your team will <span className="text-sky-500">love</span>.
+              Transform your data into powerful dashboards that your team will <span className="text-sky-500">love</span>.
             </p>
           </div>
           {/* Centered Steps Section */}
@@ -62,7 +62,7 @@ const GetStarted = () => {
                 <div>
                   <div className="uppercase text-sm font-semibold text-primary-400">Install</div>
                   <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white ">
-                    Install Visivo and ingest data directly from multiple sources.
+                    Install Visivo and pull data from various sources seamlessly.
                   </p>
                 </div>
               </div>
@@ -79,7 +79,7 @@ const GetStarted = () => {
                   <div>
                     <div className="uppercase text-sm font-semibold text-primary-400">Model</div>
                     <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                      Profile, model, and visualize your data on your local machine.
+                      Profile, transform, and visualize your data on your local machine.
                     </p>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ const GetStarted = () => {
                   <div>
                     <div className="uppercase text-sm font-semibold text-primary-400">Share</div>
                     <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                      Deploy to Visivo Cloud and start a free trial to share dashboards with your team.
+                      Deploy to Visivo Cloud and start a free trial to share insights with your team.
                     </p>
                   </div>
                 </div>

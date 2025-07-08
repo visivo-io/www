@@ -36,8 +36,8 @@ function App() {
             </a>
           </Tooltip>
           <DarkThemeToggle className="mr-2" />
-          <a href="https://app.visivo.io">
-            <Button color="primary">App</Button>
+          <a href="/get-started">
+            <Button color="primary">Get Started</Button>
           </a>
           <Navbar.Toggle />
         </div>
