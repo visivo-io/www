@@ -1,232 +1,377 @@
-import { Button } from 'flowbite-react';
+import React from 'react';
 import InstallCommand from '../components/InstallCommand';
+import { FiCode, FiLock, FiZap, FiArrowRight, FiCheckCircle, FiGrid, FiShield, FiPackage } from 'react-icons/fi';
+import { HiOutlineCubeTransparent, HiOutlineTemplate, HiOutlineViewGrid } from 'react-icons/hi';
+import { BiCustomize, BiPalette } from 'react-icons/bi';
 
-const BackgroundGraphic = () => (
-  <svg
-    className="absolute left-0 top-0 -z-10 opacity-10 dark:opacity-5"
-    width="400"
-    height="400"
-    viewBox="0 0 400 400"
-    fill="currentColor"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect x="100" y="100" width="200" height="200" strokeWidth="20" stroke="currentColor" fill="none" />
-    <rect x="150" y="150" width="100" height="100" strokeWidth="4" stroke="currentColor" fill="none" />
-    <path d="M50 200 L350 200 M200 50 L200 350" strokeWidth="4" stroke="currentColor" strokeDasharray="10,10" />
-  </svg>
-);
-
-const SectionTitle = ({ children, align = "left" }) => (
-  <h2 className={`mb-6 text-3xl font-bold text-gray-900 dark:text-white md:text-4xl ${align === "center" ? "text-center" : ""}`}>
-    {children}
-  </h2>
-);
-
-const SectionText = ({ children, large }) => (
-  <p className={`mb-8 ${large ? "text-xl" : "text-lg"} text-gray-600 dark:text-gray-400 leading-relaxed`}>
-    {children}
-  </p>
-);
-
-const FeatureCard = ({ title, description, icon }) => (
-  <div className="flex flex-col rounded-lg border border-gray-200 p-6 dark:border-gray-700">
-    <div className="mb-2 flex items-center">
+const FeatureCard = ({ icon, title, description, color }) => (
+  <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800">
+    <div className={`absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gradient-to-br ${color} opacity-10`}></div>
+    <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-white`}>
       {icon}
-      <h3 className="ml-2 text-xl font-bold dark:text-white">{title}</h3>
     </div>
-    <p className="text-gray-500 dark:text-gray-400">{description}</p>
+    <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
+    <p className="text-gray-600 dark:text-gray-400">{description}</p>
   </div>
 );
 
-const CodeSnippet = () => (
-  <div className="mb-8 rounded-lg bg-gray-900 p-6 shadow-lg">
-    <div className="flex items-center justify-between mb-4">
-      <div className="flex space-x-2">
-        <div className="w-3 h-3 rounded-full bg-red-500"></div>
-        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-        <div className="w-3 h-3 rounded-full bg-green-500"></div>
-      </div>
-      <span className="text-gray-400 text-sm">embed.jsx</span>
-    </div>
-    <pre className="text-sm text-gray-100">
-      <code>{`import { VisivoEmbed } from '@visivo/embed';
+const BenefitItem = ({ text }) => (
+  <div className="flex items-start space-x-3">
+    <FiCheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+    <p className="text-gray-700 dark:text-gray-300">{text}</p>
+  </div>
+);
 
-const Dashboard = () => (
-  <VisivoEmbed
-    dashboardId="your-dashboard-id"
-    token={process.env.VISIVO_TOKEN}
-    theme="light"
-  />
-);`}</code>
+const CodeExample = ({ title, code, language = "javascript" }) => (
+  <div className="rounded-xl bg-gray-900 p-6 shadow-lg">
+    <div className="mb-4 flex items-center justify-between">
+      <h4 className="text-lg font-semibold text-white">{title}</h4>
+      <span className="rounded-md bg-gray-800 px-3 py-1 text-sm text-gray-400">{language}</span>
+    </div>
+    <pre className="overflow-x-auto">
+      <code className="text-sm text-gray-300">{code}</code>
     </pre>
   </div>
 );
 
 export default function Embedding() {
+  const reactCode = `import { VisivoEmbed } from '@visivo/react';
+
+function App() {
+  return (
+    <VisivoEmbed
+      dashboardId="sales-overview"
+      token={userToken}
+      theme={{
+        primary: '#1e40af',
+        background: '#f9fafb'
+      }}
+      filters={{
+        region: 'north-america',
+        timeRange: 'last-30-days'
+      }}
+      onReady={(api) => {
+        console.log('Dashboard loaded');
+      }}
+    />
+  );
+}`;
+
+  const securityCode = `# Configure row-level security
+security:
+  - name: customer-data
+    filter: |
+      SELECT * FROM sales
+      WHERE customer_id = :user_customer_id
+    
+  - name: department-access
+    filter: |
+      SELECT * FROM metrics
+      WHERE department IN (:user_departments)
+      
+# Generate secure embed tokens
+from visivo import generate_embed_token
+
+token = generate_embed_token(
+    dashboard_id="sales-overview",
+    user_id="user_123",
+    permissions={
+        "customer_id": "cust_456",
+        "departments": ["sales", "marketing"]
+    },
+    expires_in=3600  # 1 hour
+)`;
+
+  const customizationCode = `// Customize every aspect of the embedded dashboard
+<VisivoEmbed
+  dashboardId="analytics"
+  config={{
+    // Hide specific UI elements
+    hideHeader: true,
+    hideSidebar: false,
+    hideFilters: false,
+    
+    // Custom branding
+    logo: "/your-logo.png",
+    favicon: "/your-favicon.ico",
+    
+    // Theme customization
+    theme: {
+      colors: {
+        primary: '#0066cc',
+        secondary: '#6b7280',
+        success: '#10b981',
+        background: '#ffffff',
+        text: '#111827'
+      },
+      fonts: {
+        body: 'Inter, sans-serif',
+        heading: 'Inter, sans-serif'
+      },
+      borderRadius: '8px'
+    },
+    
+    // Custom CSS
+    customCSS: \`
+      .dashboard-header {
+        background: linear-gradient(90deg, #0066cc, #004499);
+      }
+    \`
+  }}
+/>`;
+
   return (
     <section className="w-full bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <div className="relative mx-auto max-w-screen-xl px-4 py-8 pt-4 sm:py-16 sm:pt-16 lg:py-24 lg:pt-24">
-        <BackgroundGraphic />
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-            Embed Analytics Anywhere
-          </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-gray-500 md:text-lg lg:text-xl dark:text-gray-400">
-            Seamlessly integrate Visivo's powerful analytics into your applications with our flexible embedding solutions.
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-teal-50 dark:from-gray-900 dark:to-gray-800"></div>
+        <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:py-24 lg:py-32">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="mb-6 inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900 dark:text-green-300">
+              <HiOutlineCubeTransparent className="mr-2 h-4 w-4" />
+              Embeddable Analytics
+            </div>
+            <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
+              Analytics That Feel{' '}
+              <span className="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
+                Native to Your App
+              </span>
+            </h1>
+            <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl">
+              Embed beautiful, interactive dashboards directly into your application. 
+              White-label analytics that match your brand perfectly.
+            </p>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a
+                href="/get-started"
+                className="inline-flex items-center rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
+              >
+                Get Started
+                <FiArrowRight className="ml-2 h-5 w-5" />
+              </a>
+              <a
+                href="https://embed-demo.visivo.io"
+                className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-8 py-4 text-lg font-semibold text-gray-900 transition-all hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+              >
+                Live Demo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Core Features */}
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
+            Built for SaaS Applications
+          </h2>
+          <p className="mb-12 text-lg text-gray-600 dark:text-gray-400">
+            Give your customers powerful analytics without building it yourself.
           </p>
         </div>
 
-        {/* Challenge Section */}
-        <div className="mt-24">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-2">
-              <div className="relative">
-                <div className="absolute -top-10 -left-10 w-20 h-20 bg-primary-100 rounded-full dark:bg-primary-900 opacity-50"></div>
-                <SectionTitle>The Challenge</SectionTitle>
-                <SectionText large>
-                  Modern applications demand accurate and tested analytics that seamlessly blend with their existing user interface.
-                </SectionText>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    <p className="text-gray-600 dark:text-gray-400">Traditional solutions require context switching, disrupting user workflows</p>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    <p className="text-gray-600 dark:text-gray-400">Building analytics from scratch is time-consuming and resource-intensive</p>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    <p className="text-gray-600 dark:text-gray-400">Maintaining custom analytics becomes a burden on engineering teams</p>
-                  </li>
-                </ul>
+        <div className="grid gap-6 lg:grid-cols-3">
+          <FeatureCard
+            icon={<BiPalette className="h-6 w-6" />}
+            title="White-Label Ready"
+            description="Complete control over branding, colors, fonts, and styling to match your application."
+            color="from-green-500 to-green-600"
+          />
+          <FeatureCard
+            icon={<FiShield className="h-6 w-6" />}
+            title="Enterprise Security"
+            description="Row-level security, SSO integration, and encrypted embed tokens keep data safe."
+            color="from-teal-500 to-teal-600"
+          />
+          <FeatureCard
+            icon={<HiOutlineViewGrid className="h-6 w-6" />}
+            title="Multi-Tenant Ready"
+            description="Isolate data between customers with built-in multi-tenancy support."
+            color="from-blue-500 to-blue-600"
+          />
+          <FeatureCard
+            icon={<FiZap className="h-6 w-6" />}
+            title="Lightning Fast"
+            description="Optimized for embedded use with lazy loading and efficient data fetching."
+            color="from-yellow-500 to-yellow-600"
+          />
+          <FeatureCard
+            icon={<BiCustomize className="h-6 w-6" />}
+            title="Fully Customizable"
+            description="Hide elements, add custom CSS, inject JavaScript, and control every interaction."
+            color="from-purple-500 to-purple-600"
+          />
+          <FeatureCard
+            icon={<FiPackage className="h-6 w-6" />}
+            title="SDK & APIs"
+            description="React, Vue, Angular components plus REST APIs for any framework."
+            color="from-orange-500 to-orange-600"
+          />
+        </div>
+      </div>
+
+      {/* Integration Flow */}
+      <div className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+        <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+          <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+            Embed in Minutes
+          </h2>
+          
+          <div className="relative">
+            <div className="flex flex-col items-center space-y-8 lg:flex-row lg:items-start lg:justify-between lg:space-x-8 lg:space-y-0">
+              {/* Step 1 */}
+              <div className="relative flex flex-col items-center text-center lg:flex-1">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-2xl font-bold text-green-600 dark:bg-green-900 dark:text-green-300">
+                  1
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Install SDK</h3>
+                <p className="text-gray-600 dark:text-gray-400">Add our lightweight SDK to your application</p>
               </div>
-            </div>
-            <div className="order-1 lg:order-1">
-              <div className="relative rounded-lg bg-gray-50 dark:bg-gray-800 p-6 shadow-lg">
-                <img 
-                  src="/images/embedding.png" 
-                  alt="Analytics Challenge Illustration"
-                  className="w-full h-auto"
-                />
+
+              {/* Arrow */}
+              <div className="hidden lg:block">
+                <FiArrowRight className="h-8 w-8 text-gray-400" />
+              </div>
+
+              {/* Step 2 */}
+              <div className="relative flex flex-col items-center text-center lg:flex-1">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-teal-100 text-2xl font-bold text-teal-600 dark:bg-teal-900 dark:text-teal-300">
+                  2
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Generate Token</h3>
+                <p className="text-gray-600 dark:text-gray-400">Create secure tokens with user permissions</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden lg:block">
+                <FiArrowRight className="h-8 w-8 text-gray-400" />
+              </div>
+
+              {/* Step 3 */}
+              <div className="relative flex flex-col items-center text-center lg:flex-1">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-2xl font-bold text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                  3
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Embed Component</h3>
+                <p className="text-gray-600 dark:text-gray-400">Drop in the component and customize</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden lg:block">
+                <FiArrowRight className="h-8 w-8 text-gray-400" />
+              </div>
+
+              {/* Step 4 */}
+              <div className="relative flex flex-col items-center text-center lg:flex-1">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 text-2xl font-bold text-purple-600 dark:bg-purple-900 dark:text-purple-300">
+                  4
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Ship to Users</h3>
+                <p className="text-gray-600 dark:text-gray-400">Your customers get powerful analytics instantly</p>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Solution Section */}
-        <div className="mt-32">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="relative">
-                <div className="absolute -top-10 -left-10 w-20 h-20 bg-green-100 rounded-full dark:bg-green-900 opacity-50"></div>
-                <SectionTitle>Our Solution</SectionTitle>
-                <SectionText large>
-                  Visivo's embedding solution provides a flexible, secure, and easy-to-implement way to integrate analytics 
-                  directly into your application.
-                </SectionText>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-600 dark:text-gray-400">Seamless integration with your existing UI</p>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-600 dark:text-gray-400">Simple implementation with just a few lines of code</p>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p className="text-gray-600 dark:text-gray-400">Zero maintenance overhead for your team</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div>
-              <CodeSnippet />
-            </div>
+      {/* Code Examples */}
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+        <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+          Developer-Friendly Integration
+        </h2>
+        
+        <div className="space-y-8">
+          <CodeExample title="Simple React Integration" code={reactCode} />
+          <div className="grid gap-8 lg:grid-cols-2">
+            <CodeExample title="Secure Multi-Tenancy" code={securityCode} language="python" />
+            <CodeExample title="Complete Customization" code={customizationCode} />
           </div>
+        </div>
+      </div>
 
-          <div className="mt-16 grid gap-8 lg:grid-cols-3">
-            <FeatureCard
-              title="Modular Integration"
-              description="Embed individual charts, complete dashboards, or custom analytics components with just a few lines of code."
-              icon={<svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-              </svg>}
-            />
+      {/* Use Cases */}
+      <div className="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+        <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+              Perfect for Every Use Case
+            </h2>
             
-            <FeatureCard
-              title="Secure & Customizable"
-              description="Control access with token-based authentication and customize the look and feel to match your brand."
-              icon={<svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>}
-            />
-            
-            <FeatureCard
-              title="CI/CD Ready"
-              description="Deploy embedded analytics with confidence using our automated testing and deployment workflows."
-              icon={<svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>}
-            />
+            <div className="grid gap-12 lg:grid-cols-2">
+              <div>
+                <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+                  <HiOutlineTemplate className="mb-2 inline h-6 w-6 text-green-600" /> SaaS Platforms
+                </h3>
+                <div className="space-y-4">
+                  <BenefitItem text="Give each customer their own analytics portal" />
+                  <BenefitItem text="Charge premium for advanced analytics features" />
+                  <BenefitItem text="Reduce churn with sticky data insights" />
+                  <BenefitItem text="Scale to millions of users effortlessly" />
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+                  <FiGrid className="mb-2 inline h-6 w-6 text-green-600" /> Internal Tools
+                </h3>
+                <div className="space-y-4">
+                  <BenefitItem text="Embed dashboards in admin panels" />
+                  <BenefitItem text="Create customer success dashboards" />
+                  <BenefitItem text="Build executive reporting tools" />
+                  <BenefitItem text="Integrate with existing workflows" />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-900">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                <FiLock className="mb-2 inline h-6 w-6 text-green-600" /> Enterprise-Grade Security
+              </h3>
+              <div className="grid gap-4 lg:grid-cols-2">
+                <BenefitItem text="SOC 2 Type II certified infrastructure" />
+                <BenefitItem text="GDPR and CCPA compliant" />
+                <BenefitItem text="End-to-end encryption" />
+                <BenefitItem text="SSO/SAML integration" />
+                <BenefitItem text="Row-level security (RLS)" />
+                <BenefitItem text="Audit logs and compliance reports" />
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Results Section */}
-        <div className="mt-16">
-          <SectionTitle>The Impact</SectionTitle>
-          <SectionText large>
-            Embbed with confidence knowing that your charts are accurate, tested, and up to date with the rest of your analytics and application.
-          </SectionText>
-          <div className="grid gap-8 lg:grid-cols-3">
-            <div className="rounded-lg border border-gray-200 p-6 text-center dark:border-gray-700">
-              <h3 className="mb-2 text-3xl font-bold text-primary-600">90%</h3>
-              <p className="text-gray-500 dark:text-gray-400">Reduction in analytics integration time</p>
-            </div>
-            <div className="rounded-lg border border-gray-200 p-6 text-center dark:border-gray-700">
-              <h3 className="mb-2 text-3xl font-bold text-primary-600">100%</h3>
-              <p className="text-gray-500 dark:text-gray-400">Theme consistency with your app</p>
-            </div>
-            <div className="rounded-lg border border-gray-200 p-6 text-center dark:border-gray-700">
-              <h3 className="mb-2 text-3xl font-bold text-primary-600">Zero</h3>
-              <p className="text-gray-500 dark:text-gray-400">Context switching for your users</p>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <SectionTitle>Ready to Get Started?</SectionTitle>
-          <div className="mt-8 max-w-2xl mx-auto">
+      {/* CTA Section */}
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+        <div className="mx-auto max-w-3xl rounded-2xl bg-gradient-to-br from-green-50 to-teal-50 p-12 text-center shadow-xl dark:from-gray-800 dark:to-gray-700">
+          <h2 className="mb-6 text-4xl font-extrabold text-gray-900 dark:text-white">
+            Ready to Embed Analytics?
+          </h2>
+          <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
+            Join companies delivering analytics to millions of users with Visivo embedded dashboards.
+          </p>
+          
+          <div className="mb-8">
             <InstallCommand />
           </div>
-          <div className="mt-8">
-            <a 
-              href="/examples" 
-              className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 inline-flex items-center"
+          
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="https://docs.visivo.io/embedding/quickstart"
+              className="inline-flex items-center rounded-lg bg-green-600 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-green-700"
             >
-              View embedding examples
-              <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+              <FiCode className="mr-2 h-5 w-5" />
+              Integration Guide
+            </a>
+            <a
+              href="https://calendly.com/visivo-io/embedding-demo"
+              className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-900 transition-all hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+            >
+              Schedule Demo
             </a>
           </div>
         </div>
       </div>
     </section>
   );
-} 
+}

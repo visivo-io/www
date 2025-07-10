@@ -10,6 +10,7 @@ import BlogSection from "./BlogSection.jsx";
 import BusinessIntelligence from "./solutions/BusinessIntelligence.jsx";
 import SoftwareEngineering from "./solutions/SoftwareEngineering.jsx";
 import Embedding from "./solutions/Embedding.jsx";
+import DDDV from "./solutions/DDDV.jsx";
 import BlogPost from "./components/BlogPost.jsx";
 import NotFound from "./NotFound.jsx";
 import "./index.css";
@@ -35,6 +36,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="solutions/software-engineering" element={<SoftwareEngineering />} />
           <Route path="solutions/business-intelligence" element={<BusinessIntelligence />} />
           <Route path="solutions/embedding" element={<Embedding />} />
+          <Route path="solutions/dddv" element={<DDDV />} />
           <Route path="comparison-list" element={<ComparisonsList />} />
           {Object.keys(vendorData)
             .filter(vendor => vendor !== 'Visivo')
