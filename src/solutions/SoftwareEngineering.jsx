@@ -1,90 +1,340 @@
-import { Button } from 'flowbite-react';
+import React from 'react';
 import InstallCommand from '../components/InstallCommand';
+import { FiActivity, FiAlertCircle, FiTrendingUp, FiUsers, FiArrowRight, FiCheckCircle, FiCode, FiZap } from 'react-icons/fi';
+import { HiOutlineChartSquareBar, HiOutlineLightningBolt, HiOutlineSparkles } from 'react-icons/hi';
+import { BiLineChart, BiCodeBlock } from 'react-icons/bi';
 
-const BackgroundGraphic = () => (
-  <svg
-    className="absolute left-0 top-0 -z-10 opacity-10 dark:opacity-5"
-    width="400"
-    height="400"
-    viewBox="0 0 400 400"
-    fill="currentColor"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path d="M50 200 L350 200" strokeWidth="20" stroke="currentColor" />
-    <circle cx="150" cy="200" r="20" />
-    <circle cx="250" cy="200" r="20" />
-    <path d="M150 150 L150 250 M250 150 L250 250" strokeWidth="4" stroke="currentColor" />
-  </svg>
-);
-
-const FeatureCard = ({ title, description, icon }) => (
-  <div className="flex flex-col rounded-lg border border-gray-200 p-6 dark:border-gray-700">
-    <div className="mb-2 flex items-center">
+const FeatureCard = ({ icon, title, description, color }) => (
+  <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800">
+    <div className={`absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gradient-to-br ${color} opacity-10`}></div>
+    <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-white`}>
       {icon}
-      <h3 className="ml-2 text-xl font-bold dark:text-white">{title}</h3>
     </div>
-    <p className="text-gray-500 dark:text-gray-400">{description}</p>
+    <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
+    <p className="text-gray-600 dark:text-gray-400">{description}</p>
   </div>
 );
 
+const BenefitItem = ({ text }) => (
+  <div className="flex items-start space-x-3">
+    <FiCheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+    <p className="text-gray-700 dark:text-gray-300">{text}</p>
+  </div>
+);
+
+const CodeExample = ({ title, code, language = "python" }) => (
+  <div className="rounded-xl bg-gray-900 p-6 shadow-lg">
+    <div className="mb-4 flex items-center justify-between">
+      <h4 className="text-lg font-semibold text-white">{title}</h4>
+      <span className="rounded-md bg-gray-800 px-3 py-1 text-sm text-gray-400">{language}</span>
+    </div>
+    <pre className="overflow-x-auto">
+      <code className="text-sm text-gray-300">{code}</code>
+    </pre>
+  </div>
+);
 
 export default function SoftwareEngineering() {
+  const trackingCode = `# Track feature usage in your code
+from visivo import track
+
+@track.feature("new-checkout-flow")
+def process_checkout(cart_items):
+    # Your checkout logic here
+    total = calculate_total(cart_items)
+    
+    # Track conversion metrics
+    track.metric("checkout_value", total)
+    track.event("checkout_completed", {
+        "items": len(cart_items),
+        "value": total
+    })
+    
+    return process_payment(total)`;
+
+  const dashboardCode = `# feature-dashboard.yaml
+name: Feature Performance
+pages:
+  - name: New Checkout Flow
+    charts:
+      - name: adoption-rate
+        type: line
+        sql: |
+          SELECT 
+            date_trunc('day', timestamp) as day,
+            COUNT(DISTINCT user_id) as users
+          FROM feature_usage
+          WHERE feature_name = 'new-checkout-flow'
+          GROUP BY day
+          
+      - name: conversion-impact
+        type: metric
+        sql: |
+          SELECT 
+            AVG(CASE WHEN feature_enabled THEN conversion_rate END) -
+            AVG(CASE WHEN NOT feature_enabled THEN conversion_rate END) 
+            as lift
+          FROM checkout_metrics`;
+
+  const alertCode = `# alerts.yaml
+alerts:
+  - name: feature-error-spike
+    condition: |
+      SELECT COUNT(*) > 100
+      FROM error_logs
+      WHERE feature_name = 'new-checkout-flow'
+        AND timestamp > NOW() - INTERVAL '1 hour'
+    
+    notify:
+      - slack: "#engineering"
+      - email: "oncall@company.com"
+    
+  - name: performance-degradation
+    condition: |
+      SELECT AVG(response_time) > 500
+      FROM performance_metrics
+      WHERE feature_name = 'new-checkout-flow'
+        AND timestamp > NOW() - INTERVAL '5 minutes'`;
+
   return (
     <section className="w-full bg-white dark:bg-gray-900">
-      <div className="relative mx-auto max-w-screen-xl px-4 py-8 pt-4 sm:py-16 sm:pt-16 lg:py-24 lg:pt-24">
-        <BackgroundGraphic />
-        
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-            Ship Features with Confidence
-          </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-gray-500 md:text-lg lg:text-xl dark:text-gray-400">
-            Monitor your features from day one by integrating analytics directly into your development workflow.
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800"></div>
+        <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:py-24 lg:py-32">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="mb-6 inline-flex items-center rounded-full bg-purple-100 px-4 py-2 text-sm font-semibold text-purple-700 dark:bg-purple-900 dark:text-purple-300">
+              <HiOutlineLightningBolt className="mr-2 h-4 w-4" />
+              Ship Features with Confidence
+            </div>
+            <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
+              Feature Analytics for{' '}
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Engineering Teams
+              </span>
+            </h1>
+            <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl">
+              Monitor feature adoption, performance, and business impact from day one. 
+              Make data-driven decisions about your product development.
+            </p>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a
+                href="/get-started"
+                className="inline-flex items-center rounded-lg bg-purple-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300"
+              >
+                Get Started
+                <FiArrowRight className="ml-2 h-5 w-5" />
+              </a>
+              <a
+                href="https://docs.visivo.io/guides/feature-monitoring"
+                className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-8 py-4 text-lg font-semibold text-gray-900 transition-all hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+              >
+                View Documentation
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Core Features */}
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
+            Complete Feature Observability
+          </h2>
+          <p className="mb-12 text-lg text-gray-600 dark:text-gray-400">
+            Everything you need to understand how your features perform in production.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-3">
           <FeatureCard
-            title="Feature Monitoring"
-            description="Track feature adoption and performance metrics from the moment code is deployed."
-            icon={<svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>}
+            icon={<FiActivity className="h-6 w-6" />}
+            title="Real-Time Monitoring"
+            description="Track feature adoption, usage patterns, and performance metrics as they happen."
+            color="from-purple-500 to-purple-600"
           />
-          
           <FeatureCard
-            title="Git-Based Analytics"
-            description="Define metrics alongside your feature code, ensuring analytics evolve with your codebase."
-            icon={<svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>}
+            icon={<HiOutlineChartSquareBar className="h-6 w-6" />}
+            title="Business Impact"
+            description="Connect feature changes to business metrics like conversion, retention, and revenue."
+            color="from-pink-500 to-pink-600"
           />
-          
           <FeatureCard
-            title="CI/CD Integration"
-            description="Automatically validate and deploy analytics changes with your existing CI/CD pipeline."
-            icon={<svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>}
+            icon={<FiAlertCircle className="h-6 w-6" />}
+            title="Smart Alerts"
+            description="Get notified about performance regressions, error spikes, or unusual usage patterns."
+            color="from-orange-500 to-orange-600"
+          />
+          <FeatureCard
+            icon={<BiLineChart className="h-6 w-6" />}
+            title="A/B Testing Analytics"
+            description="Built-in support for experiment analysis with statistical significance testing."
+            color="from-green-500 to-green-600"
+          />
+          <FeatureCard
+            icon={<FiUsers className="h-6 w-6" />}
+            title="User Segmentation"
+            description="Understand how different user cohorts interact with your features."
+            color="from-blue-500 to-blue-600"
+          />
+          <FeatureCard
+            icon={<FiTrendingUp className="h-6 w-6" />}
+            title="Trend Analysis"
+            description="Spot patterns and predict future behavior with historical trend analysis."
+            color="from-indigo-500 to-indigo-600"
           />
         </div>
+      </div>
 
-        <div className="mt-8 max-w-2xl mx-auto">
-          <InstallCommand />
+      {/* Workflow Visualization */}
+      <div className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+        <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+          <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+            From Code to Insights
+          </h2>
+          
+          <div className="relative">
+            <div className="flex flex-col items-center space-y-8 lg:flex-row lg:items-start lg:justify-between lg:space-x-8 lg:space-y-0">
+              {/* Step 1 */}
+              <div className="relative flex flex-col items-center text-center lg:flex-1">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 text-2xl font-bold text-purple-600 dark:bg-purple-900 dark:text-purple-300">
+                  1
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Instrument</h3>
+                <p className="text-gray-600 dark:text-gray-400">Add tracking to your feature with a simple decorator or function call</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden lg:block">
+                <FiArrowRight className="h-8 w-8 text-gray-400" />
+              </div>
+
+              {/* Step 2 */}
+              <div className="relative flex flex-col items-center text-center lg:flex-1">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-pink-100 text-2xl font-bold text-pink-600 dark:bg-pink-900 dark:text-pink-300">
+                  2
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Deploy</h3>
+                <p className="text-gray-600 dark:text-gray-400">Ship your feature and start collecting real-world usage data</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden lg:block">
+                <FiArrowRight className="h-8 w-8 text-gray-400" />
+              </div>
+
+              {/* Step 3 */}
+              <div className="relative flex flex-col items-center text-center lg:flex-1">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-2xl font-bold text-orange-600 dark:bg-orange-900 dark:text-orange-300">
+                  3
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Monitor</h3>
+                <p className="text-gray-600 dark:text-gray-400">Watch real-time dashboards and get alerts on anomalies</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden lg:block">
+                <FiArrowRight className="h-8 w-8 text-gray-400" />
+              </div>
+
+              {/* Step 4 */}
+              <div className="relative flex flex-col items-center text-center lg:flex-1">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-2xl font-bold text-green-600 dark:bg-green-900 dark:text-green-300">
+                  4
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Iterate</h3>
+                <p className="text-gray-600 dark:text-gray-400">Make data-driven decisions about feature improvements</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div className="mt-4 text-center">
-          <a 
-            href="/examples" 
-            className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 inline-flex items-center"
-          >
-            View example dashboard 
-            <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+      {/* Code Examples */}
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+        <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+          Simple Integration, Powerful Insights
+        </h2>
+        
+        <div className="space-y-8">
+          <CodeExample title="Track Feature Usage" code={trackingCode} />
+          <div className="grid gap-8 lg:grid-cols-2">
+            <CodeExample title="Auto-Generated Dashboards" code={dashboardCode} language="yaml" />
+            <CodeExample title="Smart Alerting" code={alertCode} language="yaml" />
+          </div>
+        </div>
+      </div>
+
+      {/* Use Cases */}
+      <div className="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+        <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+              Built for Modern Engineering Teams
+            </h2>
+            
+            <div className="grid gap-12 lg:grid-cols-2">
+              <div>
+                <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+                  <BiCodeBlock className="mb-2 inline h-6 w-6 text-purple-600" /> Feature Flags & Rollouts
+                </h3>
+                <div className="space-y-4">
+                  <BenefitItem text="Monitor adoption rates during gradual rollouts" />
+                  <BenefitItem text="Compare performance between control and treatment groups" />
+                  <BenefitItem text="Automatically detect and alert on rollout issues" />
+                  <BenefitItem text="Make rollback decisions based on real data" />
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+                  <HiOutlineSparkles className="mb-2 inline h-6 w-6 text-purple-600" /> Product Development
+                </h3>
+                <div className="space-y-4">
+                  <BenefitItem text="Validate product hypotheses with real usage data" />
+                  <BenefitItem text="Identify which features drive engagement" />
+                  <BenefitItem text="Prioritize development based on impact" />
+                  <BenefitItem text="Share insights across product and engineering" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+        <div className="mx-auto max-w-3xl rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 p-12 text-center shadow-xl dark:from-gray-800 dark:to-gray-700">
+          <h2 className="mb-6 text-4xl font-extrabold text-gray-900 dark:text-white">
+            Start Shipping Features with Confidence
+          </h2>
+          <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
+            Join engineering teams who ship 2x faster with feature analytics built-in.
+          </p>
+          
+          <div className="mb-8">
+            <InstallCommand />
+          </div>
+          
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="https://docs.visivo.io/quickstart/engineering"
+              className="inline-flex items-center rounded-lg bg-purple-600 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-purple-700"
+            >
+              <FiZap className="mr-2 h-5 w-5" />
+              Quick Start for Engineers
+            </a>
+            <a
+              href="https://github.com/visivo-io/visivo/tree/main/examples/feature-monitoring"
+              className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-900 transition-all hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+            >
+              <FiCode className="mr-2 h-5 w-5" />
+              Example Code
+            </a>
+          </div>
         </div>
       </div>
     </section>
   );
-} 
+}
