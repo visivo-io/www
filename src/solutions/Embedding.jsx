@@ -35,7 +35,8 @@ const CodeExample = ({ title, code, language = "javascript" }) => (
 );
 
 export default function Embedding() {
-  const reactCode = `import { VisivoEmbed } from '@visivo/react';
+  const reactCode = `// Coming Soon!
+import { VisivoEmbed } from '@visivo/react';
 
 function App() {
   return (
@@ -57,7 +58,7 @@ function App() {
   );
 }`;
 
-  const securityCode = `# Configure row-level security
+  const securityCode = `# Coming Soon: Configure row-level security
 security:
   - name: customer-data
     filter: |
@@ -82,7 +83,7 @@ token = generate_embed_token(
     expires_in=3600  # 1 hour
 )`;
 
-  const customizationCode = `// Customize every aspect of the embedded dashboard
+  const customizationCode = `// Coming Soon: Customize every aspect of the embedded dashboard
 <VisivoEmbed
   dashboardId="analytics"
   config={{
@@ -126,10 +127,28 @@ token = generate_embed_token(
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-teal-50 dark:from-gray-900 dark:to-gray-800"></div>
         <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:py-24 lg:py-32">
+          {/* Beta Banner */}
+          <div className="mx-auto mb-8 max-w-3xl">
+            <div className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-900/20">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9.5H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                    <strong>Beta Feature:</strong> Embedding capabilities are coming soon. Join the waitlist to be the first to know when it's available!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-6 inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900 dark:text-green-300">
               <HiOutlineCubeTransparent className="mr-2 h-4 w-4" />
-              Embeddable Analytics
+              Embeddable Analytics - Coming Soon
             </div>
             <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
               Analytics That Feel{' '}
@@ -143,17 +162,17 @@ token = generate_embed_token(
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
-                href="/get-started"
+                href="https://forms.gle/embedding-waitlist"
                 className="inline-flex items-center rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
               >
-                Get Started
+                Join the Waitlist
                 <FiArrowRight className="ml-2 h-5 w-5" />
               </a>
               <a
-                href="https://embed-demo.visivo.io"
+                href="mailto:info@visivo.io?subject=Embedding%20Beta%20Interest"
                 className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-8 py-4 text-lg font-semibold text-gray-900 transition-all hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
               >
-                Live Demo
+                Contact Sales
               </a>
             </div>
           </div>
@@ -345,10 +364,10 @@ token = generate_embed_token(
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
         <div className="mx-auto max-w-3xl rounded-2xl bg-gradient-to-br from-green-50 to-teal-50 p-12 text-center shadow-xl dark:from-gray-800 dark:to-gray-700">
           <h2 className="mb-6 text-4xl font-extrabold text-gray-900 dark:text-white">
-            Ready to Embed Analytics?
+            Be First to Access Embedded Analytics
           </h2>
           <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
-            Join companies delivering analytics to millions of users with Visivo embedded dashboards.
+            Join the waitlist to get early access when our embedding features launch.
           </p>
           
           <div className="mb-8">
@@ -357,17 +376,17 @@ token = generate_embed_token(
           
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href="https://docs.visivo.io/embedding/quickstart"
+              href="https://forms.gle/embedding-waitlist"
               className="inline-flex items-center rounded-lg bg-green-600 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-green-700"
             >
               <FiCode className="mr-2 h-5 w-5" />
-              Integration Guide
+              Join Waitlist
             </a>
             <a
-              href="https://calendly.com/visivo-io/embedding-demo"
+              href="https://calendly.com/visivo-io/30-minute"
               className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-900 transition-all hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
             >
-              Schedule Demo
+              Learn More
             </a>
           </div>
         </div>

@@ -35,51 +35,69 @@ const CodeExample = ({ title, code, language = "yaml" }) => (
 );
 
 export default function BusinessIntelligence() {
-  const dashboardCode = `# dashboard.yaml
+  const dashboardCode = `# project.visivo.yml
 name: Sales Analytics
-pages:
-  - name: Overview
-    layout: 
-      - [kpi-revenue, kpi-customers, kpi-growth]
-      - [revenue-chart, category-breakdown]
-      - [customer-cohorts]
-    
-    charts:
-      - name: kpi-revenue
-        type: metric
-        sql: |
-          SELECT 
-            SUM(revenue) as value,
-            'Total Revenue' as label
-          FROM monthly_metrics
-          WHERE month = CURRENT_DATE`;
+
+traces:
+  - name: kpi-revenue
+    model: ref(monthly_metrics)
+    props:
+      type: indicator
+      mode: number+delta
+      value: ?{sum(revenue)}
+      title:
+        text: Total Revenue
+    filters:
+      - ?{month = date_trunc('month', current_date)}
+
+charts:
+  - name: revenue-kpi
+    traces:
+      - ref(kpi-revenue)
+
+dashboards:
+  - name: Sales Overview
+    rows:
+      - height: small
+        items:
+          - chart: ref(revenue-kpi)`;
 
   const gitWorkflowCode = `# .github/workflows/visivo.yml
-name: Deploy Dashboards
+name: Test & Deploy Dashboards
 on:
   push:
     branches: [main]
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: npm install -g @visivo/cli
-      - run: visivo deploy --env production`;
+      - name: Install Visivo
+        run: curl -fsSL https://visivo.sh | bash
+      - name: Test dashboards
+        run: visivo test
+      - name: Deploy to staging
+        run: visivo deploy -s staging
+        env:
+          VISIVO_TOKEN: \${{ secrets.VISIVO_TOKEN }}`;
 
-  const testingCode = `# tests/test_metrics.sql
--- Test that revenue is always positive
-SELECT COUNT(*) as failed_rows
-FROM monthly_metrics
-WHERE revenue < 0;
+  const testingCode = `# project.visivo.yml
+tests:
+  - name: revenue-is-positive
+    sql: |
+      SELECT COUNT(*) as failed_rows
+      FROM monthly_metrics
+      WHERE revenue < 0
+    expect:
+      - failed_rows == 0
 
--- Test for data freshness
-SELECT CASE 
-  WHEN MAX(updated_at) < CURRENT_DATE - 1 
-  THEN 1 ELSE 0 
-END as is_stale
-FROM monthly_metrics;`;
+  - name: data-freshness
+    sql: |
+      SELECT MAX(updated_at) as last_update
+      FROM monthly_metrics
+    expect:
+      - last_update >= current_date - 1`;
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
@@ -295,7 +313,7 @@ FROM monthly_metrics;`;
             Ready to Transform Your BI Workflow?
           </h2>
           <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
-            Join teams who've reduced dashboard development time by 70% with BI-as-Code.
+            Join teams building reliable, version-controlled analytics with BI-as-Code.
           </p>
           
           <div className="mb-8">
@@ -304,7 +322,7 @@ FROM monthly_metrics;`;
           
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href="https://docs.visivo.io/quickstart"
+              href="https://docs.visivo.io/"
               className="inline-flex items-center rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-blue-700"
             >
               <FiZap className="mr-2 h-5 w-5" />

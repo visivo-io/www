@@ -6,6 +6,53 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the marketing website for Visivo.io, a data visualization and business intelligence tool. It's built with React, Vite, and Tailwind CSS, deployed on Netlify.
 
+## Important: Visivo Product Capabilities
+
+When updating marketing content, ensure accuracy about Visivo's actual capabilities:
+
+### What Visivo IS:
+- **Python-based CLI tool** for creating data dashboards (`pip install visivo` or `curl -fsSL https://visivo.sh | bash`)
+- **YAML configuration** for defining dashboards, charts, and traces
+- **Local development** with `visivo serve` command
+- **Multiple data sources**: SQLite, PostgreSQL, MySQL, Snowflake, BigQuery, DuckDB
+- **Plotly.js visualizations** with extensive chart types
+- **Git-friendly** BI-as-code approach
+- **Testing framework** for data quality
+- **Alert system** with Slack/email destinations
+
+### What Visivo IS NOT (currently):
+- **No npm packages** - There is no `@visivo/cli` or `@visivo/react`
+- **No embedding SDK** - Embedding features are in development (beta)
+- **No Python SDK** for tracking - No `from visivo import track`
+- **Limited deployment** - Uses `visivo deploy -s [stage]` not continuous deployment
+
+### Correct Configuration Format:
+```yaml
+# project.visivo.yml
+name: My Project
+
+traces:
+  - name: my-trace
+    model: ref(my_model)
+    columns:
+      x: column_name
+      y: value_column
+    props:
+      type: scatter
+
+charts:
+  - name: my-chart
+    traces:
+      - ref(my-trace)
+
+dashboards:
+  - name: My Dashboard
+    rows:
+      - height: medium
+        items:
+          - chart: ref(my-chart)
+```
+
 ## Development Commands
 
 ```bash

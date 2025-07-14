@@ -71,25 +71,45 @@ SELECT
 FROM sales_metrics
 WHERE month >= CURRENT_DATE - INTERVAL '6 months'`;
 
-  const visivoCode = `# dashboard.yaml
-name: Sales Dashboard
-pages:
-  - name: Overview
-    charts:
-      - name: revenue-trend
-        type: line
-        sql: |
-          SELECT month, SUM(total_revenue) as revenue
-          FROM sales_metrics
-          GROUP BY month
-          ORDER BY month
-      
-      - name: category-breakdown
-        type: bar
-        sql: |
-          SELECT product_category, SUM(total_revenue) as revenue
-          FROM sales_metrics
-          GROUP BY product_category`;
+  const visivoCode = `# project.visivo.yml
+name: Sales Analytics
+
+traces:
+  - name: revenue-trend
+    model: ref(sales_metrics)
+    columns:
+      x: month
+      y: total_revenue
+    props:
+      type: scatter
+      mode: lines+markers
+      name: Revenue Trend
+
+  - name: category-sales
+    model: ref(sales_metrics)
+    columns:
+      x: product_category  
+      y: total_revenue
+    props:
+      type: bar
+      name: Sales by Category
+
+charts:
+  - name: revenue-chart
+    traces:
+      - ref(revenue-trend)
+  
+  - name: category-chart
+    traces:
+      - ref(category-sales)
+
+dashboards:
+  - name: Sales Overview
+    rows:
+      - height: medium
+        items:
+          - chart: ref(revenue-chart)
+          - chart: ref(category-chart)`;
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
@@ -121,7 +141,7 @@ pages:
                 <FiArrowRight className="ml-2 h-5 w-5" />
               </a>
               <a
-                href="https://docs.visivo.io/dddv-stack"
+                href="https://docs.visivo.io/topics/sources#duckdb"
                 className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-8 py-4 text-lg font-semibold text-gray-900 transition-all hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
               >
                 View Documentation
@@ -301,14 +321,14 @@ pages:
           
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href="https://github.com/visivo-io/dddv-template"
+              href="https://github.com/visivo-io/visivo/tree/main/test-projects"
               className="inline-flex items-center rounded-lg bg-gray-900 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-gray-800"
             >
               <FiDatabase className="mr-2 h-5 w-5" />
               Clone Starter Template
             </a>
             <a
-              href="https://docs.visivo.io/guides/dddv-quickstart"
+              href="https://docs.visivo.io/"
               className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-900 transition-all hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
             >
               Read the Guide

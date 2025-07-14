@@ -35,66 +35,103 @@ const CodeExample = ({ title, code, language = "python" }) => (
 );
 
 export default function SoftwareEngineering() {
-  const trackingCode = `# Track feature usage in your code
-from visivo import track
+  const trackingCode = `# models.visivo.yml
+models:
+  - name: feature_events
+    args:
+      - python
+      - track_features.py
+    table_name: feature_tracking
 
-@track.feature("new-checkout-flow")
-def process_checkout(cart_items):
-    # Your checkout logic here
-    total = calculate_total(cart_items)
-    
-    # Track conversion metrics
-    track.metric("checkout_value", total)
-    track.event("checkout_completed", {
-        "items": len(cart_items),
-        "value": total
-    })
-    
-    return process_payment(total)`;
+# track_features.py
+import pandas as pd
+import json
+from datetime import datetime
 
-  const dashboardCode = `# feature-dashboard.yaml
-name: Feature Performance
-pages:
-  - name: New Checkout Flow
-    charts:
-      - name: adoption-rate
-        type: line
-        sql: |
-          SELECT 
-            date_trunc('day', timestamp) as day,
-            COUNT(DISTINCT user_id) as users
-          FROM feature_usage
-          WHERE feature_name = 'new-checkout-flow'
-          GROUP BY day
-          
-      - name: conversion-impact
-        type: metric
-        sql: |
-          SELECT 
-            AVG(CASE WHEN feature_enabled THEN conversion_rate END) -
-            AVG(CASE WHEN NOT feature_enabled THEN conversion_rate END) 
-            as lift
-          FROM checkout_metrics`;
+# Collect feature usage from your application logs
+events = []
+with open('app_logs.json', 'r') as f:
+    for line in f:
+        log = json.loads(line)
+        if log.get('feature_flag'):
+            events.append({
+                'timestamp': log['timestamp'],
+                'feature': log['feature_flag'],
+                'user_id': log['user_id'],
+                'value': log.get('value', 0)
+            })
 
-  const alertCode = `# alerts.yaml
+df = pd.DataFrame(events)
+df.to_csv('output.csv', index=False)`;
+
+  const dashboardCode = `# project.visivo.yml
+traces:
+  - name: adoption-rate
+    model: ref(feature_events)
+    cohort_on: ?{feature}
+    props:
+      type: scatter
+      mode: lines+markers
+      name: Daily Active Users
+    columns:
+      x: date_trunc('day', timestamp)
+      y: user_id
+    aggregate:
+      - column: y
+        func: count_distinct
+    order_by:
+      - ?{x asc}
+    filters:
+      - ?{feature = 'new-checkout-flow'}
+
+  - name: conversion-impact
+    model: ref(checkout_metrics)
+    props:
+      type: indicator
+      mode: number+gauge
+      value: ?{avg(conversion_rate)}
+      gauge:
+        axis:
+          range: [0, 100]
+
+charts:
+  - name: feature-adoption
+    traces:
+      - ref(adoption-rate)
+
+dashboards:
+  - name: Feature Analytics
+    rows:
+      - height: medium
+        items:
+          - chart: ref(feature-adoption)`;
+
+  const alertCode = `# project.visivo.yml
 alerts:
   - name: feature-error-spike
-    condition: |
-      SELECT COUNT(*) > 100
+    sql: |
+      SELECT COUNT(*) as error_count
       FROM error_logs
       WHERE feature_name = 'new-checkout-flow'
-        AND timestamp > NOW() - INTERVAL '1 hour'
+        AND timestamp > current_timestamp - interval '1 hour'
+    condition: error_count > 100
+    destinations:
+      - name: engineering-slack
+        type: slack
+        webhook_url: \${SLACK_WEBHOOK_URL}
+        channel: "#engineering"
     
-    notify:
-      - slack: "#engineering"
-      - email: "oncall@company.com"
-    
-  - name: performance-degradation
-    condition: |
-      SELECT AVG(response_time) > 500
+  - name: performance-degradation  
+    sql: |
+      SELECT AVG(response_time) as avg_response
       FROM performance_metrics
       WHERE feature_name = 'new-checkout-flow'
-        AND timestamp > NOW() - INTERVAL '5 minutes'`;
+        AND timestamp > current_timestamp - interval '5 minutes'
+    condition: avg_response > 500
+    destinations:
+      - name: oncall-email
+        type: email
+        to: oncall@company.com`;
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
@@ -310,7 +347,7 @@ alerts:
             Start Shipping Features with Confidence
           </h2>
           <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
-            Join engineering teams who ship 2x faster with feature analytics built-in.
+            Join engineering teams using Visivo to track and visualize feature performance.
           </p>
           
           <div className="mb-8">
@@ -319,14 +356,14 @@ alerts:
           
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href="https://docs.visivo.io/quickstart/engineering"
+              href="https://docs.visivo.io/"
               className="inline-flex items-center rounded-lg bg-purple-600 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-purple-700"
             >
               <FiZap className="mr-2 h-5 w-5" />
               Quick Start for Engineers
             </a>
             <a
-              href="https://github.com/visivo-io/visivo/tree/main/examples/feature-monitoring"
+              href="https://github.com/visivo-io/visivo/tree/main/test-projects"
               className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-900 transition-all hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
             >
               <FiCode className="mr-2 h-5 w-5" />
