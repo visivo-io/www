@@ -25,6 +25,7 @@ When updating marketing content, ensure accuracy about Visivo's actual capabilit
 - **No embedding SDK** - Embedding features are in development (beta)
 - **No Python SDK** for tracking - No `from visivo import track`
 - **Limited deployment** - Uses `visivo deploy -s [stage]` not continuous deployment
+- **No SOC2 certification** - Not yet SOC2 certified (in progress)
 
 ### Correct Configuration Format:
 ```yaml
@@ -128,3 +129,4 @@ All routes are defined in `src/main.jsx`. The app uses React Router v7 with:
 3. **Netlify Functions**: Serverless functions in `/netlify/functions` for backend tasks
 4. **SPA Configuration**: Netlify redirects all routes to index.html for client-side routing
 5. **Analytics**: Page views tracked via Segment - ensure new pages include analytics
+6. **Trademark Usage**: Always use **dbt™** (with trademark symbol) when referring to dbt in marketing content

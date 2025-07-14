@@ -262,7 +262,7 @@ dashboards:
         
         <div className="grid gap-8 lg:grid-cols-2">
           <CodeExample title="1. Extract with DLT" code={dltCode} />
-          <CodeExample title="2. Transform with DBT" code={dbtCode} language="sql" />
+          <CodeExample title="2. Transform with dbt™" code={dbtCode} language="sql" />
           <CodeExample title="3. Query with DuckDB" code={duckdbCode} language="sql" />
           <CodeExample title="4. Visualize with Visivo" code={visivoCode} language="yaml" />
         </div>

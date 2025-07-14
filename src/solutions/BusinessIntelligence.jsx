@@ -82,22 +82,6 @@ jobs:
         env:
           VISIVO_TOKEN: \${{ secrets.VISIVO_TOKEN }}`;
 
-  const testingCode = `# project.visivo.yml
-tests:
-  - name: revenue-is-positive
-    sql: |
-      SELECT COUNT(*) as failed_rows
-      FROM monthly_metrics
-      WHERE revenue < 0
-    expect:
-      - failed_rows == 0
-
-  - name: data-freshness
-    sql: |
-      SELECT MAX(updated_at) as last_update
-      FROM monthly_metrics
-    expect:
-      - last_update >= current_date - 1`;
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
@@ -113,12 +97,12 @@ tests:
             <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
               BI-as-Code for{' '}
               <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Data Teams
+                Modern Data Teams
               </span>
             </h1>
             <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl">
               Build, test, and deploy analytics dashboards using software engineering best practices. 
-              Version control, CI/CD, and collaborative workflows for your entire BI stack.
+              Integrates seamlessly with your dbt™ workflows for a unified analytics stack.
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
@@ -190,65 +174,109 @@ tests:
         </div>
       </div>
 
-      {/* Workflow Visualization */}
+      {/* Faster Feedback Cycles */}
       <div className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
-          <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
-            Your New BI Workflow
-          </h2>
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
+              Faster Feedback Cycles, Better Analytics
+            </h2>
+            <p className="mb-12 text-lg text-gray-600 dark:text-gray-400">
+              Stop waiting days for dashboard changes. With Visivo, iterate on analytics as fast as you iterate on code.
+            </p>
+          </div>
           
-          <div className="relative">
-            <div className="flex flex-col items-center space-y-8 lg:flex-row lg:items-start lg:justify-between lg:space-x-8 lg:space-y-0">
-              {/* Step 1 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-2xl font-bold text-blue-600 dark:bg-blue-900 dark:text-blue-300">
-                  1
-                </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Develop Locally</h3>
-                <p className="text-gray-600 dark:text-gray-400">Create and test dashboards on your machine with hot reload</p>
+          <div className="grid gap-8 lg:grid-cols-3">
+            <div className="rounded-xl bg-white p-6 shadow-lg dark:bg-gray-900">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                <FiZap className="h-6 w-6" />
               </div>
+              <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Instant Local Preview</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                See changes immediately with `visivo serve`. No waiting for deployments or data refreshes.
+              </p>
+            </div>
+            
+            <div className="rounded-xl bg-white p-6 shadow-lg dark:bg-gray-900">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300">
+                <FiRefreshCw className="h-6 w-6" />
+              </div>
+              <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Hot Reload Everything</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Edit YAML, save, see results. Charts update live as you modify queries and configurations.
+              </p>
+            </div>
+            
+            <div className="rounded-xl bg-white p-6 shadow-lg dark:bg-gray-900">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-300">
+                <FiCode className="h-6 w-6" />
+              </div>
+              <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Test Before Deploy</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Validate data quality and dashboard accuracy locally before pushing to production.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-              {/* Arrow */}
-              <div className="hidden lg:block">
-                <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
-
-              {/* Step 2 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-2xl font-bold text-green-600 dark:bg-green-900 dark:text-green-300">
-                  2
-                </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Review & Test</h3>
-                <p className="text-gray-600 dark:text-gray-400">Automated tests run on every commit, peers review changes</p>
-              </div>
-
-              {/* Arrow */}
-              <div className="hidden lg:block">
-                <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
-
-              {/* Step 3 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 text-2xl font-bold text-purple-600 dark:bg-purple-900 dark:text-purple-300">
-                  3
-                </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Deploy Automatically</h3>
-                <p className="text-gray-600 dark:text-gray-400">Merge to main triggers deployment to production</p>
-              </div>
-
-              {/* Arrow */}
-              <div className="hidden lg:block">
-                <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
-
-              {/* Step 4 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-2xl font-bold text-orange-600 dark:bg-orange-900 dark:text-orange-300">
-                  4
-                </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Monitor & Iterate</h3>
-                <p className="text-gray-600 dark:text-gray-400">Track usage, gather feedback, and improve continuously</p>
-              </div>
+      {/* Multiple Environments */}
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-4 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+            Seamlessly Manage Multiple Environments
+          </h2>
+          <p className="mb-12 text-center text-lg text-gray-600 dark:text-gray-400">
+            From local development to production, maintain consistency across all your environments.
+          </p>
+          
+          <div className="mb-8 overflow-hidden rounded-xl shadow-xl">
+            <img 
+              src="/images/ci_cd.webp" 
+              alt="Visivo CI/CD Pipeline showing local development, PR stages, and production deployment"
+              className="w-full"
+            />
+          </div>
+          
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div>
+              <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                Works with Your Existing Workflow
+              </h3>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <FiCheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+                  <span className="text-gray-700 dark:text-gray-300">Branch-based development for isolated changes</span>
+                </li>
+                <li className="flex items-start">
+                  <FiCheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+                  <span className="text-gray-700 dark:text-gray-300">Automatic staging deployments for every PR</span>
+                </li>
+                <li className="flex items-start">
+                  <FiCheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+                  <span className="text-gray-700 dark:text-gray-300">Production deployments on merge to main</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                Integrates with dbt™
+              </h3>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <FiCheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+                  <span className="text-gray-700 dark:text-gray-300">Reference dbt™ models directly in your dashboards</span>
+                </li>
+                <li className="flex items-start">
+                  <FiCheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+                  <span className="text-gray-700 dark:text-gray-300">Leverage existing transformations and tests</span>
+                </li>
+                <li className="flex items-start">
+                  <FiCheckCircle className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
+                  <span className="text-gray-700 dark:text-gray-300">Maintain single source of truth for metrics</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -260,12 +288,9 @@ tests:
           Everything as Code
         </h2>
         
-        <div className="space-y-8">
+        <div className="grid gap-8 lg:grid-cols-2">
           <CodeExample title="Define Dashboards in YAML" code={dashboardCode} />
-          <div className="grid gap-8 lg:grid-cols-2">
-            <CodeExample title="Automated Deployment" code={gitWorkflowCode} />
-            <CodeExample title="Test Your Analytics" code={testingCode} language="sql" />
-          </div>
+          <CodeExample title="Automated Deployment" code={gitWorkflowCode} />
         </div>
       </div>
 

@@ -145,14 +145,14 @@ alerts:
               Ship Features with Confidence
             </div>
             <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
-              Feature Analytics for{' '}
+              Analytics Built Into Your{' '}
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Engineering Teams
+                Development Workflow
               </span>
             </h1>
             <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl">
-              Monitor feature adoption, performance, and business impact from day one. 
-              Make data-driven decisions about your product development.
+              Define analytics alongside your code. Version control your dashboards. Deploy insights with every release.
+              Analytics that evolve with your application.
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
@@ -187,8 +187,8 @@ alerts:
         <div className="grid gap-6 lg:grid-cols-3">
           <FeatureCard
             icon={<FiActivity className="h-6 w-6" />}
-            title="Real-Time Monitoring"
-            description="Track feature adoption, usage patterns, and performance metrics as they happen."
+            title="Batch Analytics & Insights"
+            description="Track feature adoption, usage patterns, and performance metrics with scheduled data updates."
             color="from-purple-500 to-purple-600"
           />
           <FeatureCard
@@ -228,7 +228,7 @@ alerts:
       <div className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
           <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
-            From Code to Insights
+            Analytics as Part of Your Development Process
           </h2>
           
           <div className="relative">
@@ -238,8 +238,8 @@ alerts:
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 text-2xl font-bold text-purple-600 dark:bg-purple-900 dark:text-purple-300">
                   1
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Instrument</h3>
-                <p className="text-gray-600 dark:text-gray-400">Add tracking to your feature with a simple decorator or function call</p>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Code & Define</h3>
+                <p className="text-gray-600 dark:text-gray-400">Write feature code and analytics config in the same PR</p>
               </div>
 
               {/* Arrow */}
@@ -252,8 +252,8 @@ alerts:
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-pink-100 text-2xl font-bold text-pink-600 dark:bg-pink-900 dark:text-pink-300">
                   2
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Deploy</h3>
-                <p className="text-gray-600 dark:text-gray-400">Ship your feature and start collecting real-world usage data</p>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Test & Review</h3>
+                <p className="text-gray-600 dark:text-gray-400">Test analytics locally, review dashboards in staging</p>
               </div>
 
               {/* Arrow */}
@@ -266,8 +266,8 @@ alerts:
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-2xl font-bold text-orange-600 dark:bg-orange-900 dark:text-orange-300">
                   3
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Monitor</h3>
-                <p className="text-gray-600 dark:text-gray-400">Watch real-time dashboards and get alerts on anomalies</p>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Deploy Together</h3>
+                <p className="text-gray-600 dark:text-gray-400">Ship features and analytics dashboards simultaneously</p>
               </div>
 
               {/* Arrow */}
@@ -280,8 +280,8 @@ alerts:
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-2xl font-bold text-green-600 dark:bg-green-900 dark:text-green-300">
                   4
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Iterate</h3>
-                <p className="text-gray-600 dark:text-gray-400">Make data-driven decisions about feature improvements</p>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Monitor & Learn</h3>
+                <p className="text-gray-600 dark:text-gray-400">Track adoption and impact, iterate based on data</p>
               </div>
             </div>
           </div>

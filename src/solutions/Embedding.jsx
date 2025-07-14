@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InstallCommand from '../components/InstallCommand';
-import { FiCode, FiLock, FiZap, FiArrowRight, FiCheckCircle, FiGrid, FiShield, FiPackage } from 'react-icons/fi';
+import { FiCode, FiLock, FiZap, FiArrowRight, FiCheckCircle, FiGrid, FiShield, FiPackage, FiMail } from 'react-icons/fi';
 import { HiOutlineCubeTransparent, HiOutlineTemplate, HiOutlineViewGrid } from 'react-icons/hi';
 import { BiCustomize, BiPalette } from 'react-icons/bi';
 
@@ -35,6 +35,37 @@ const CodeExample = ({ title, code, language = "javascript" }) => (
 );
 
 export default function Embedding() {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('/.netlify/functions/collect-embedding-waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setEmail('');
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   const reactCode = `// Coming Soon!
 import { VisivoEmbed } from '@visivo/react';
 
@@ -160,20 +191,42 @@ token = generate_embed_token(
               Embed beautiful, interactive dashboards directly into your application. 
               White-label analytics that match your brand perfectly.
             </p>
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a
-                href="https://forms.gle/embedding-waitlist"
-                className="inline-flex items-center rounded-lg bg-green-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300"
-              >
-                Join the Waitlist
-                <FiArrowRight className="ml-2 h-5 w-5" />
-              </a>
-              <a
-                href="mailto:info@visivo.io?subject=Embedding%20Beta%20Interest"
-                className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-8 py-4 text-lg font-semibold text-gray-900 transition-all hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
-              >
-                Contact Sales
-              </a>
+            <div className="mx-auto max-w-md">
+              <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
+                <div className="flex w-full flex-col gap-2 sm:flex-row">
+                  <div className="relative flex-1">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                      <FiMail className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      required
+                      className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-3 text-base placeholder-gray-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="inline-flex items-center rounded-lg bg-green-600 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                    <FiArrowRight className="ml-2 h-5 w-5" />
+                  </button>
+                </div>
+                {submitStatus === 'success' && (
+                  <p className="text-sm text-green-600 dark:text-green-400">
+                    Success! We'll notify you when embedding is available.
+                  </p>
+                )}
+                {submitStatus === 'error' && (
+                  <p className="text-sm text-red-600 dark:text-red-400">
+                    Something went wrong. Please try again.
+                  </p>
+                )}
+              </form>
             </div>
           </div>
         </div>
@@ -348,7 +401,7 @@ token = generate_embed_token(
                 <FiLock className="mb-2 inline h-6 w-6 text-green-600" /> Enterprise-Grade Security
               </h3>
               <div className="grid gap-4 lg:grid-cols-2">
-                <BenefitItem text="SOC 2 Type II certified infrastructure" />
+                <BenefitItem text="Enterprise-grade infrastructure" />
                 <BenefitItem text="GDPR and CCPA compliant" />
                 <BenefitItem text="End-to-end encryption" />
                 <BenefitItem text="SSO/SAML integration" />
@@ -374,20 +427,42 @@ token = generate_embed_token(
             <InstallCommand />
           </div>
           
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a
-              href="https://forms.gle/embedding-waitlist"
-              className="inline-flex items-center rounded-lg bg-green-600 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-green-700"
-            >
-              <FiCode className="mr-2 h-5 w-5" />
-              Join Waitlist
-            </a>
-            <a
-              href="https://calendly.com/visivo-io/30-minute"
-              className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-900 transition-all hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
-            >
-              Learn More
-            </a>
+          <div className="mx-auto max-w-md">
+            <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
+              <div className="flex w-full flex-col gap-2 sm:flex-row">
+                <div className="relative flex-1">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <FiMail className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-3 text-base placeholder-gray-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="inline-flex items-center rounded-lg bg-green-600 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Joining...' : 'Get Early Access'}
+                  <FiCode className="ml-2 h-5 w-5" />
+                </button>
+              </div>
+              {submitStatus === 'success' && (
+                <p className="text-sm text-green-600 dark:text-green-400">
+                  Success! We'll notify you when embedding is available.
+                </p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-sm text-red-600 dark:text-red-400">
+                  Something went wrong. Please try again.
+                </p>
+              )}
+            </form>
           </div>
         </div>
       </div>
