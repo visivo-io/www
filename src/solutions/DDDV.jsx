@@ -1,29 +1,78 @@
 import React from 'react';
 import InstallCommand from '../components/InstallCommand';
 import { FiDatabase, FiLayers, FiZap, FiBarChart2, FiArrowRight, FiCheckCircle, FiCode, FiPackage } from 'react-icons/fi';
-import { SiDbt, SiPython } from 'react-icons/si';
+import { SiDbt, SiPython, SiDuckdb } from 'react-icons/si';
 import { GiDuck } from 'react-icons/gi';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 }
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1 }
+};
+
+const slideInFromLeft = {
+  hidden: { opacity: 0, x: -50 },
+  visible: { opacity: 1, x: 0 }
+};
+
+const slideInFromRight = {
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0 }
+};
 
 const TechCard = ({ icon, title, description, color }) => (
-  <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800">
+  <motion.div 
+    className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800"
+    variants={fadeInUp}
+    whileHover={{ y: -8, transition: { duration: 0.3 } }}
+  >
     <div className={`absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gradient-to-br ${color} opacity-10`}></div>
     <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-white`}>
       {icon}
     </div>
     <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
     <p className="text-gray-600 dark:text-gray-400">{description}</p>
-  </div>
+  </motion.div>
 );
 
 const BenefitItem = ({ icon, text }) => (
-  <div className="flex items-start space-x-3">
+  <motion.div 
+    className="flex items-start space-x-3"
+    variants={fadeInUp}
+  >
     <FiCheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
     <p className="text-gray-700 dark:text-gray-300">{text}</p>
-  </div>
+  </motion.div>
 );
 
 const CodeExample = ({ title, code, language = "python" }) => (
-  <div className="rounded-xl bg-gray-900 p-6 shadow-lg">
+  <motion.div 
+    className="rounded-xl bg-gray-900 p-6 shadow-lg"
+    variants={scaleIn}
+    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+  >
     <div className="mb-4 flex items-center justify-between">
       <h4 className="text-lg font-semibold text-white">{title}</h4>
       <span className="rounded-md bg-gray-800 px-3 py-1 text-sm text-gray-400">{language}</span>
@@ -31,11 +80,14 @@ const CodeExample = ({ title, code, language = "python" }) => (
     <pre className="overflow-x-auto">
       <code className="text-sm text-gray-300">{code}</code>
     </pre>
-  </div>
+  </motion.div>
 );
 
 export default function DDDV() {
   // SEO optimized for: Triple D Stack, DDD Stack, DDD analytics, dlt duckdb dbt
+  const { scrollYProgress } = useScroll();
+  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  
   const dltCode = `import dlt
 from dlt.sources.sql_database import sql_database
 
@@ -114,26 +166,67 @@ dashboards:
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
+      {/* Scroll Progress Indicator */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-primary-600 origin-left z-50"
+        style={{ scaleX }}
+      />
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-purple-50 dark:from-gray-900 dark:to-gray-800"></div>
+      <motion.div 
+        className="relative overflow-hidden"
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+      >
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-br from-primary-50 to-purple-50 dark:from-gray-900 dark:to-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        ></motion.div>
         <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:py-24 lg:py-32">
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="mb-6 inline-flex items-center rounded-full bg-primary-100 px-4 py-2 text-sm font-semibold text-primary-700 dark:bg-primary-900 dark:text-primary-300">
+          <motion.div 
+            className="mx-auto max-w-4xl text-center"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div 
+              className="mb-6 inline-flex items-center rounded-full bg-primary-100 px-4 py-2 text-sm font-semibold text-primary-700 dark:bg-primary-900 dark:text-primary-300"
+              variants={fadeInUp}
+              transition={{ duration: 0.6 }}
+            >
               <FiZap className="mr-2 h-4 w-4" />
-              DDD Stack - The Modern Analytics Platform
-            </div>
-            <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
+              DDDV Stack - The Modern Analytics Platform
+            </motion.div>
+            <motion.h1 
+              className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl"
+              variants={fadeInUp}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               The Triple D Stack:{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
+              <motion.span 
+                className="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
                 DLT + dbt™ + DuckDB
-              </span>
-            </h1>
-            <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl">
+              </motion.span>
+            </motion.h1>
+            <motion.p 
+              className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl"
+              variants={fadeInUp}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
               The <strong>DDD Stack</strong> combines three powerful open-source tools: <strong>DLT, dbt™, and DuckDB</strong>. 
               Add <strong>Visivo</strong> for beautiful visualizations to complete your modern, open-source data stack.
-            </p>
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            </motion.p>
+            <motion.div 
+              className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+              variants={fadeInUp}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
               <a
                 href="/get-started"
                 className="inline-flex items-center rounded-lg bg-primary-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300"
@@ -147,37 +240,69 @@ dashboards:
               >
                 View Documentation
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Stack Overview */}
-      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">
+      <motion.div 
+        className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.div 
+          className="mx-auto max-w-3xl text-center"
+          variants={staggerContainer}
+        >
+          <motion.h2 
+            className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white"
+            variants={fadeInUp}
+          >
             The Open-Source DDD Stack Explained
-          </h2>
-          <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
+          </motion.h2>
+          <motion.p 
+            className="mb-6 text-lg text-gray-600 dark:text-gray-400"
+            variants={fadeInUp}
+          >
             The Triple D Stack combines best-in-class open-source tools for modern data pipelines. Each tool is free, powerful, and community-driven.
-          </p>
-          <div className="mb-12 flex flex-wrap justify-center gap-4">
-            <span className="inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
+          </motion.p>
+          <motion.div 
+            className="mb-12 flex flex-wrap justify-center gap-4"
+            variants={staggerContainer}
+          >
+            <motion.span 
+              className="inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200"
+              variants={scaleIn}
+            >
               <FiCode className="mr-2 h-4 w-4" />
               100% Open Source
-            </span>
-            <span className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+            </motion.span>
+            <motion.span 
+              className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+              variants={scaleIn}
+            >
               <FiPackage className="mr-2 h-4 w-4" />
               No Vendor Lock-in
-            </span>
-            <span className="inline-flex items-center rounded-full bg-purple-100 px-4 py-2 text-sm font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+            </motion.span>
+            <motion.span 
+              className="inline-flex items-center rounded-full bg-purple-100 px-4 py-2 text-sm font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-200"
+              variants={scaleIn}
+            >
               <FiZap className="mr-2 h-4 w-4" />
               Community Driven
-            </span>
-          </div>
-        </div>
+            </motion.span>
+          </motion.div>
+        </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-4">
+        <motion.div 
+          className="grid gap-6 lg:grid-cols-4"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           <TechCard
             icon={<SiPython className="h-6 w-6" />}
             title="DLT (Data Load Tool)"
@@ -191,7 +316,7 @@ dashboards:
             color="from-orange-500 to-orange-600"
           />
           <TechCard
-            icon={<GiDuck className="h-6 w-6" />}
+            icon={<SiDuckdb className="h-6 w-6" />}
             title="DuckDB"
             description="In-process SQL analytics database designed for fast analytical queries."
             color="from-yellow-500 to-yellow-600"
@@ -202,86 +327,147 @@ dashboards:
             description="Open-source dashboard creation with code. Version control your visualizations and deploy anywhere."
             color="from-primary-500 to-primary-600"
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Workflow Visualization */}
-      <div className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+      <motion.div 
+        className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
-          <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+          <motion.h2 
+            className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white"
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+          >
             How the Triple D Stack Works Together
-          </h2>
+          </motion.h2>
           
-          <div className="relative">
+          <motion.div 
+            className="relative"
+            variants={staggerContainer}
+          >
             <div className="flex flex-col items-center space-y-8 lg:flex-row lg:items-start lg:justify-between lg:space-x-8 lg:space-y-0">
               {/* Step 1 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
+              <motion.div 
+                className="relative flex flex-col items-center text-center lg:flex-1"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-2xl font-bold text-blue-600 dark:bg-blue-900 dark:text-blue-300">
                   1
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Extract with DLT</h3>
                 <p className="text-gray-600 dark:text-gray-400">DLT pulls data from 100+ sources into DuckDB with Python-based pipelines</p>
-              </div>
+              </motion.div>
 
               {/* Arrow */}
-              <div className="hidden lg:block">
+              <motion.div 
+                className="hidden lg:block"
+                variants={fadeIn}
+                transition={{ duration: 0.4, delay: 0.4 }}
+              >
                 <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
+              </motion.div>
 
               {/* Step 2 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
+              <motion.div 
+                className="relative flex flex-col items-center text-center lg:flex-1"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-2xl font-bold text-orange-600 dark:bg-orange-900 dark:text-orange-300">
                   2
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Transform with dbt™</h3>
                 <p className="text-gray-600 dark:text-gray-400">dbt™ transforms and models your data with version-controlled SQL</p>
-              </div>
+              </motion.div>
 
               {/* Arrow */}
-              <div className="hidden lg:block">
+              <motion.div 
+                className="hidden lg:block"
+                variants={fadeIn}
+                transition={{ duration: 0.4, delay: 0.7 }}
+              >
                 <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
+              </motion.div>
 
               {/* Step 3 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
+              <motion.div 
+                className="relative flex flex-col items-center text-center lg:flex-1"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-100 text-2xl font-bold text-yellow-600 dark:bg-yellow-900 dark:text-yellow-300">
                   3
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Analyze with DuckDB</h3>
                 <p className="text-gray-600 dark:text-gray-400">DuckDB provides lightning-fast analytical queries on your local machine or in the cloud</p>
-              </div>
+              </motion.div>
 
               {/* Arrow */}
-              <div className="hidden lg:block">
+              <motion.div 
+                className="hidden lg:block"
+                variants={fadeIn}
+                transition={{ duration: 0.4, delay: 1.0 }}
+              >
                 <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
+              </motion.div>
 
               {/* Step 4 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
+              <motion.div 
+                className="relative flex flex-col items-center text-center lg:flex-1"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 1.1 }}
+              >
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-100 text-2xl font-bold text-primary-600 dark:bg-primary-900 dark:text-primary-300">
                   4
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Visualize with Visivo</h3>
                 <p className="text-gray-600 dark:text-gray-400">Visivo creates beautiful, shareable dashboards from your DDD Stack</p>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* dbt Integration Section */}
-      <div className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+      <motion.div 
+        className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
-          <div className="mx-auto max-w-4xl">
-            <h2 className="mb-8 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+          <motion.div 
+            className="mx-auto max-w-4xl"
+            variants={staggerContainer}
+          >
+            <motion.h2 
+              className="mb-8 text-center text-4xl font-extrabold text-gray-900 dark:text-white"
+              variants={fadeInUp}
+            >
               Seamless dbt™ Integration
-            </h2>
-            <p className="mb-12 text-center text-lg text-gray-600 dark:text-gray-400">
+            </motion.h2>
+            <motion.p 
+              className="mb-12 text-center text-lg text-gray-600 dark:text-gray-400"
+              variants={fadeInUp}
+            >
               The DDD Stack works perfectly with your existing dbt™ projects and workflows
-            </p>
+            </motion.p>
             
-            <div className="grid gap-8 lg:grid-cols-2">
-              <div className="rounded-xl bg-white p-8 shadow-lg dark:bg-gray-900">
+            <motion.div 
+              className="grid gap-8 lg:grid-cols-2"
+              variants={staggerContainer}
+            >
+              <motion.div 
+                className="rounded-xl bg-white p-8 shadow-lg dark:bg-gray-900"
+                variants={slideInFromLeft}
+                transition={{ duration: 0.6 }}
+              >
                 <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
                   <SiDbt className="mb-2 inline h-6 w-6 text-orange-600" /> Native dbt™ Support
                 </h3>
@@ -303,9 +489,13 @@ dashboards:
                     <span>Maintain single source of truth for metrics</span>
                   </li>
                 </ul>
-              </div>
+              </motion.div>
               
-              <div className="rounded-xl bg-white p-8 shadow-lg dark:bg-gray-900">
+              <motion.div 
+                className="rounded-xl bg-white p-8 shadow-lg dark:bg-gray-900"
+                variants={slideInFromRight}
+                transition={{ duration: 0.6 }}
+              >
                 <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
                   <FiZap className="mb-2 inline h-6 w-6 text-yellow-600" /> Why dbt™ + DuckDB?
                 </h3>
@@ -327,25 +517,36 @@ dashboards:
                     <span>Git-friendly analytics workflow</span>
                   </li>
                 </ul>
-              </div>
-            </div>
-          </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Code Examples */}
-      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
-        <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+      <motion.div 
+        className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.h2 
+          className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white"
+          variants={fadeInUp}
+        >
           See the DDD Stack In Action
-        </h2>
+        </motion.h2>
         
-        <div className="grid gap-8 lg:grid-cols-2">
+        <motion.div 
+          className="grid gap-8 lg:grid-cols-2"
+          variants={staggerContainer}
+        >
           <CodeExample title="1. Extract with DLT" code={dltCode} />
           <CodeExample title="2. Transform with dbt™" code={dbtCode} language="sql" />
           <CodeExample title="3. Query with DuckDB" code={duckdbCode} language="sql" />
           <CodeExample title="4. Visualize with Visivo" code={visivoCode} language="yaml" />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Benefits Section */}
       <div className="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
@@ -385,68 +586,129 @@ dashboards:
       </div>
 
       {/* SEO Section for DDD Stack */}
-      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl mb-12">
-          <h2 className="mb-6 text-3xl font-bold text-gray-900 dark:text-white">
+      <motion.div 
+        className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.div 
+          className="mx-auto max-w-4xl mb-12"
+          variants={staggerContainer}
+        >
+          <motion.h2 
+            className="mb-6 text-3xl font-bold text-gray-900 dark:text-white"
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+          >
             What is the Triple D Stack (DDD Stack)?
-          </h2>
-          <p className="mb-4 text-lg text-gray-700 dark:text-gray-300">
+          </motion.h2>
+          <motion.p 
+            className="mb-4 text-lg text-gray-700 dark:text-gray-300"
+            variants={fadeInUp}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             The <strong>Triple D Stack</strong> (or <strong>DDD Stack</strong>) is a modern, fully open-source data architecture that combines three powerful tools:
-          </p>
-          <ul className="mb-6 space-y-2 text-lg text-gray-700 dark:text-gray-300">
-            <li className="flex items-start">
+          </motion.p>
+          <motion.ul 
+            className="mb-6 space-y-2 text-lg text-gray-700 dark:text-gray-300"
+            variants={staggerContainer}
+          >
+            <motion.li 
+              className="flex items-start"
+              variants={slideInFromLeft}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               <span className="mr-2">•</span>
               <span><strong>DLT (Data Load Tool)</strong> - The first D in the DDD Stack for data extraction and loading</span>
-            </li>
-            <li className="flex items-start">
+            </motion.li>
+            <motion.li 
+              className="flex items-start"
+              variants={slideInFromLeft}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
               <span className="mr-2">•</span>
               <span><strong>dbt™ (Data Build Tool)</strong> - The second D for data transformation and modeling</span>
-            </li>
-            <li className="flex items-start">
+            </motion.li>
+            <motion.li 
+              className="flex items-start"
+              variants={slideInFromLeft}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               <span className="mr-2">•</span>
               <span><strong>DuckDB</strong> - The third D for fast analytical queries and processing</span>
-            </li>
-          </ul>
-          <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+            </motion.li>
+          </motion.ul>
+          <motion.p 
+            className="mb-6 text-lg text-gray-700 dark:text-gray-300"
+            variants={fadeInUp}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
             This powerful combination of <em>dlt duckdb dbt</em> enables modern data teams to build scalable, maintainable analytics pipelines without expensive proprietary tools. The open-source Triple D Stack represents the future of data engineering.
-          </p>
-        </div>
-      </div>
+          </motion.p>
+        </motion.div>
+      </motion.div>
 
       {/* FAQ Section for SEO */}
-      <div className="border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <motion.div 
+        className="border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
-          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 dark:text-white">
+          <motion.h2 
+            className="mb-12 text-center text-3xl font-bold text-gray-900 dark:text-white"
+            variants={fadeInUp}
+          >
             Frequently Asked Questions about the DDD Stack
-          </h2>
-          <div className="mx-auto max-w-3xl space-y-8">
-            <div>
+          </motion.h2>
+          <motion.div 
+            className="mx-auto max-w-3xl space-y-8"
+            variants={staggerContainer}
+          >
+            <motion.div
+              variants={fadeInUp}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+              className="p-6 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
                 What does DDD Stack stand for?
               </h3>
               <p className="text-gray-700 dark:text-gray-300">
                 The DDD Stack (or Triple D Stack) stands for DLT + dbt™ + DuckDB. It's a modern data analytics stack that combines Data Load Tool (DLT), data build tool (dbt™), and DuckDB for comprehensive data pipeline management.
               </p>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              variants={fadeInUp}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+              className="p-6 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
                 Why use dlt duckdb dbt together?
               </h3>
               <p className="text-gray-700 dark:text-gray-300">
                 Using dlt duckdb dbt together creates a powerful, cost-effective analytics platform. DLT handles data ingestion, dbt™ manages transformations, and DuckDB provides lightning-fast analytical queries - all without expensive cloud infrastructure.
               </p>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              variants={fadeInUp}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+              className="p-6 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
               <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
                 Is the DDD Stack really open source?
               </h3>
               <p className="text-gray-700 dark:text-gray-300">
                 Yes! The entire Triple D Stack is 100% open source. DLT, dbt™, and DuckDB are all freely available with active communities. This means no licensing fees, no vendor lock-in, and complete control over your data infrastructure.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Getting Started */}
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
