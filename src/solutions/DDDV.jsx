@@ -3,90 +3,29 @@ import InstallCommand from '../components/InstallCommand';
 import { FiDatabase, FiLayers, FiZap, FiBarChart2, FiArrowRight, FiCheckCircle, FiCode, FiPackage } from 'react-icons/fi';
 import { SiDbt, SiPython, SiDuckdb } from 'react-icons/si';
 import { GiDuck } from 'react-icons/gi';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { 
+  AnimatedFeatureCard, 
+  AnimatedBenefitItem, 
+  AnimatedCodeExample,
+  AnimatedSection,
+  AnimatedStaggerContainer,
+  AnimatedH1,
+  AnimatedH2,
+  AnimatedP,
+  AnimatedDiv
+} from '../components/animated/AnimatedComponents';
+import ScrollProgressBar from '../components/animated/ScrollProgressBar';
+import { fadeInUp, fadeIn, staggerContainer, scaleIn, slideInFromLeft, slideInFromRight, defaultViewport } from '../utils/animations';
+import FeatureCard from '../components/cards/FeatureCard';
 
-// Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 }
-};
-
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { opacity: 1, scale: 1 }
-};
-
-const slideInFromLeft = {
-  hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0 }
-};
-
-const slideInFromRight = {
-  hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0 }
-};
-
+// Custom TechCard that extends AnimatedFeatureCard functionality
 const TechCard = ({ icon, title, description, color }) => (
-  <motion.div 
-    className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800"
-    variants={fadeInUp}
-    whileHover={{ y: -8, transition: { duration: 0.3 } }}
-  >
-    <div className={`absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gradient-to-br ${color} opacity-10`}></div>
-    <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-white`}>
-      {icon}
-    </div>
-    <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
-    <p className="text-gray-600 dark:text-gray-400">{description}</p>
-  </motion.div>
-);
-
-const BenefitItem = ({ icon, text }) => (
-  <motion.div 
-    className="flex items-start space-x-3"
-    variants={fadeInUp}
-  >
-    <FiCheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
-    <p className="text-gray-700 dark:text-gray-300">{text}</p>
-  </motion.div>
-);
-
-const CodeExample = ({ title, code, language = "python" }) => (
-  <motion.div 
-    className="rounded-xl bg-gray-900 p-6 shadow-lg"
-    variants={scaleIn}
-    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-  >
-    <div className="mb-4 flex items-center justify-between">
-      <h4 className="text-lg font-semibold text-white">{title}</h4>
-      <span className="rounded-md bg-gray-800 px-3 py-1 text-sm text-gray-400">{language}</span>
-    </div>
-    <pre className="overflow-x-auto">
-      <code className="text-sm text-gray-300">{code}</code>
-    </pre>
-  </motion.div>
+  <AnimatedFeatureCard icon={icon} title={title} description={description} color={color} />
 );
 
 export default function DDDV() {
   // SEO optimized for: Triple D Stack, DDD Stack, DDD analytics, dlt duckdb dbt
-  const { scrollYProgress } = useScroll();
-  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
   
   const dltCode = `import dlt
 from dlt.sources.sql_database import sql_database
@@ -166,11 +105,7 @@ dashboards:
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
-      {/* Scroll Progress Indicator */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-primary-600 origin-left z-50"
-        style={{ scaleX }}
-      />
+      <ScrollProgressBar />
       {/* Hero Section */}
       <motion.div 
         className="relative overflow-hidden"
@@ -541,10 +476,10 @@ dashboards:
           className="grid gap-8 lg:grid-cols-2"
           variants={staggerContainer}
         >
-          <CodeExample title="1. Extract with DLT" code={dltCode} />
-          <CodeExample title="2. Transform with dbt™" code={dbtCode} language="sql" />
-          <CodeExample title="3. Query with DuckDB" code={duckdbCode} language="sql" />
-          <CodeExample title="4. Visualize with Visivo" code={visivoCode} language="yaml" />
+          <AnimatedCodeExample title="1. Extract with DLT" code={dltCode} />
+          <AnimatedCodeExample title="2. Transform with dbt™" code={dbtCode} language="sql" />
+          <AnimatedCodeExample title="3. Query with DuckDB" code={duckdbCode} language="sql" />
+          <AnimatedCodeExample title="4. Visualize with Visivo" code={visivoCode} language="yaml" />
         </motion.div>
       </motion.div>
 
@@ -562,10 +497,10 @@ dashboards:
                   <FiCode className="mb-2 inline h-6 w-6 text-primary-600" /> For Developers
                 </h3>
                 <div className="space-y-4">
-                  <BenefitItem text="Everything is code - version control your entire analytics stack" />
-                  <BenefitItem text="Python and SQL only - no proprietary languages to learn" />
-                  <BenefitItem text="Local development with production parity" />
-                  <BenefitItem text="Automated testing and CI/CD for your data pipelines" />
+                  <AnimatedBenefitItem text="Everything is code - version control your entire analytics stack" />
+                  <AnimatedBenefitItem text="Python and SQL only - no proprietary languages to learn" />
+                  <AnimatedBenefitItem text="Local development with production parity" />
+                  <AnimatedBenefitItem text="Automated testing and CI/CD for your data pipelines" />
                 </div>
               </div>
               
@@ -574,10 +509,10 @@ dashboards:
                   <FiPackage className="mb-2 inline h-6 w-6 text-primary-600" /> For Organizations
                 </h3>
                 <div className="space-y-4">
-                  <BenefitItem text="100% open source - no vendor lock-in with the DDD Stack" />
-                  <BenefitItem text="Scales from laptop to cloud seamlessly" />
-                  <BenefitItem text="Reduce infrastructure costs by 90% compared to proprietary tools" />
-                  <BenefitItem text="Complete data lineage and governance built-in" />
+                  <AnimatedBenefitItem text="100% open source - no vendor lock-in with the DDD Stack" />
+                  <AnimatedBenefitItem text="Scales from laptop to cloud seamlessly" />
+                  <AnimatedBenefitItem text="Reduce infrastructure costs by 90% compared to proprietary tools" />
+                  <AnimatedBenefitItem text="Complete data lineage and governance built-in" />
                 </div>
               </div>
             </div>

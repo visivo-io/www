@@ -3,36 +3,20 @@ import InstallCommand from '../components/InstallCommand';
 import { FiCode, FiLock, FiZap, FiArrowRight, FiCheckCircle, FiGrid, FiShield, FiPackage, FiMail } from 'react-icons/fi';
 import { HiOutlineCubeTransparent, HiOutlineTemplate, HiOutlineViewGrid } from 'react-icons/hi';
 import { BiCustomize, BiPalette } from 'react-icons/bi';
-
-const FeatureCard = ({ icon, title, description, color }) => (
-  <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800">
-    <div className={`absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gradient-to-br ${color} opacity-10`}></div>
-    <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-white`}>
-      {icon}
-    </div>
-    <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
-    <p className="text-gray-600 dark:text-gray-400">{description}</p>
-  </div>
-);
-
-const BenefitItem = ({ text }) => (
-  <div className="flex items-start space-x-3">
-    <FiCheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
-    <p className="text-gray-700 dark:text-gray-300">{text}</p>
-  </div>
-);
-
-const CodeExample = ({ title, code, language = "javascript" }) => (
-  <div className="rounded-xl bg-gray-900 p-6 shadow-lg">
-    <div className="mb-4 flex items-center justify-between">
-      <h4 className="text-lg font-semibold text-white">{title}</h4>
-      <span className="rounded-md bg-gray-800 px-3 py-1 text-sm text-gray-400">{language}</span>
-    </div>
-    <pre className="overflow-x-auto">
-      <code className="text-sm text-gray-300">{code}</code>
-    </pre>
-  </div>
-);
+import { motion } from 'framer-motion';
+import { 
+  AnimatedFeatureCard, 
+  AnimatedBenefitItem, 
+  AnimatedCodeExample,
+  AnimatedSection,
+  AnimatedStaggerContainer,
+  AnimatedH1,
+  AnimatedH2,
+  AnimatedP,
+  AnimatedDiv
+} from '../components/animated/AnimatedComponents';
+import ScrollProgressBar from '../components/animated/ScrollProgressBar';
+import { fadeInUp, fadeIn, staggerContainer, defaultViewport } from '../utils/animations';
 
 export default function Embedding() {
   const [email, setEmail] = useState('');
@@ -154,13 +138,33 @@ token = generate_embed_token(
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
+      <ScrollProgressBar />
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-teal-50 dark:from-gray-900 dark:to-gray-800"></div>
+      <motion.div 
+        className="relative overflow-hidden"
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+      >
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-br from-green-50 to-teal-50 dark:from-gray-900 dark:to-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        ></motion.div>
         <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:py-24 lg:py-32">
           {/* Beta Banner */}
-          <div className="mx-auto mb-8 max-w-3xl">
-            <div className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-900/20">
+          <motion.div 
+            className="mx-auto mb-8 max-w-3xl"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div 
+              className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-900/20"
+              animate={{ scale: [1, 1.02, 1] }}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            >
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <svg className="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -173,24 +177,33 @@ token = generate_embed_token(
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
           
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="mb-6 inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900 dark:text-green-300">
+          <AnimatedStaggerContainer className="mx-auto max-w-4xl text-center">
+            <motion.div 
+              className="mb-6 inline-flex items-center rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900 dark:text-green-300"
+              variants={fadeInUp}
+              transition={{ duration: 0.6 }}
+            >
               <HiOutlineCubeTransparent className="mr-2 h-4 w-4" />
               Embeddable Analytics - Coming Soon
-            </div>
-            <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
+            </motion.div>
+            <AnimatedH1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl" delay={0.2}>
               Analytics That Feel{' '}
-              <span className="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
+              <motion.span 
+                className="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
                 Native to Your App
-              </span>
-            </h1>
-            <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl">
+              </motion.span>
+            </AnimatedH1>
+            <AnimatedP className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl" delay={0.4}>
               Embed beautiful, interactive dashboards directly into your application. 
               White-label analytics that match your brand perfectly.
-            </p>
+            </AnimatedP>
             <div className="mx-auto max-w-md">
               <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
                 <div className="flex w-full flex-col gap-2 sm:flex-row">
@@ -228,9 +241,9 @@ token = generate_embed_token(
                 )}
               </form>
             </div>
-          </div>
+          </AnimatedStaggerContainer>
         </div>
-      </div>
+      </motion.div>
 
       {/* Core Features */}
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
@@ -243,109 +256,149 @@ token = generate_embed_token(
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <FeatureCard
+        <AnimatedStaggerContainer className="grid gap-6 lg:grid-cols-3">
+          <AnimatedFeatureCard
             icon={<BiPalette className="h-6 w-6" />}
             title="White-Label Ready"
             description="Complete control over branding, colors, fonts, and styling to match your application."
             color="from-green-500 to-green-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<FiShield className="h-6 w-6" />}
             title="Enterprise Security"
             description="Row-level security, SSO integration, and encrypted embed tokens keep data safe."
             color="from-teal-500 to-teal-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<HiOutlineViewGrid className="h-6 w-6" />}
             title="Multi-Tenant Ready"
             description="Isolate data between customers with built-in multi-tenancy support."
             color="from-blue-500 to-blue-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<FiZap className="h-6 w-6" />}
             title="Lightning Fast"
             description="Optimized for embedded use with lazy loading and efficient data fetching."
             color="from-yellow-500 to-yellow-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<BiCustomize className="h-6 w-6" />}
             title="Fully Customizable"
             description="Hide elements, add custom CSS, inject JavaScript, and control every interaction."
             color="from-purple-500 to-purple-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<FiPackage className="h-6 w-6" />}
             title="SDK & APIs"
             description="React, Vue, Angular components plus REST APIs for any framework."
             color="from-orange-500 to-orange-600"
           />
-        </div>
+        </AnimatedStaggerContainer>
       </div>
 
       {/* Integration Flow */}
-      <div className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+      <motion.div 
+        className="border-y border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
-          <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+          <motion.h2 
+            className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white"
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+          >
             Embed in Minutes
-          </h2>
+          </motion.h2>
           
-          <div className="relative">
+          <motion.div 
+            className="relative"
+            variants={staggerContainer}
+          >
             <div className="flex flex-col items-center space-y-8 lg:flex-row lg:items-start lg:justify-between lg:space-x-8 lg:space-y-0">
               {/* Step 1 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
+              <motion.div 
+                className="relative flex flex-col items-center text-center lg:flex-1"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-2xl font-bold text-green-600 dark:bg-green-900 dark:text-green-300">
                   1
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Install SDK</h3>
                 <p className="text-gray-600 dark:text-gray-400">Add our lightweight SDK to your application</p>
-              </div>
+              </motion.div>
 
               {/* Arrow */}
-              <div className="hidden lg:block">
+              <motion.div 
+                className="hidden lg:block"
+                variants={fadeIn}
+                transition={{ duration: 0.4, delay: 0.4 }}
+              >
                 <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
+              </motion.div>
 
               {/* Step 2 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
+              <motion.div 
+                className="relative flex flex-col items-center text-center lg:flex-1"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-teal-100 text-2xl font-bold text-teal-600 dark:bg-teal-900 dark:text-teal-300">
                   2
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Generate Token</h3>
                 <p className="text-gray-600 dark:text-gray-400">Create secure tokens with user permissions</p>
-              </div>
+              </motion.div>
 
               {/* Arrow */}
-              <div className="hidden lg:block">
+              <motion.div 
+                className="hidden lg:block"
+                variants={fadeIn}
+                transition={{ duration: 0.4, delay: 0.7 }}
+              >
                 <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
+              </motion.div>
 
               {/* Step 3 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
+              <motion.div 
+                className="relative flex flex-col items-center text-center lg:flex-1"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-2xl font-bold text-blue-600 dark:bg-blue-900 dark:text-blue-300">
                   3
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Embed Component</h3>
                 <p className="text-gray-600 dark:text-gray-400">Drop in the component and customize</p>
-              </div>
+              </motion.div>
 
               {/* Arrow */}
-              <div className="hidden lg:block">
+              <motion.div 
+                className="hidden lg:block"
+                variants={fadeIn}
+                transition={{ duration: 0.4, delay: 1.0 }}
+              >
                 <FiArrowRight className="h-8 w-8 text-gray-400" />
-              </div>
+              </motion.div>
 
               {/* Step 4 */}
-              <div className="relative flex flex-col items-center text-center lg:flex-1">
+              <motion.div 
+                className="relative flex flex-col items-center text-center lg:flex-1"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 1.1 }}
+              >
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 text-2xl font-bold text-purple-600 dark:bg-purple-900 dark:text-purple-300">
                   4
                 </div>
                 <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Ship to Users</h3>
                 <p className="text-gray-600 dark:text-gray-400">Your customers get powerful analytics instantly</p>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Code Examples */}
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
@@ -353,65 +406,69 @@ token = generate_embed_token(
           Developer-Friendly Integration
         </h2>
         
-        <div className="space-y-8">
-          <CodeExample title="Simple React Integration" code={reactCode} />
-          <div className="grid gap-8 lg:grid-cols-2">
-            <CodeExample title="Secure Multi-Tenancy" code={securityCode} language="python" />
-            <CodeExample title="Complete Customization" code={customizationCode} />
-          </div>
-        </div>
+        <AnimatedStaggerContainer className="space-y-8">
+          <AnimatedCodeExample title="Simple React Integration" code={reactCode} />
+          <AnimatedStaggerContainer className="grid gap-8 lg:grid-cols-2">
+            <AnimatedCodeExample title="Secure Multi-Tenancy" code={securityCode} language="python" />
+            <AnimatedCodeExample title="Complete Customization" code={customizationCode} />
+          </AnimatedStaggerContainer>
+        </AnimatedStaggerContainer>
       </div>
 
       {/* Use Cases */}
-      <div className="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+      <AnimatedSection className="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
+            <AnimatedH2 className="mb-12 text-center text-4xl font-extrabold text-gray-900 dark:text-white">
               Perfect for Every Use Case
-            </h2>
+            </AnimatedH2>
             
-            <div className="grid gap-12 lg:grid-cols-2">
-              <div>
+            <AnimatedStaggerContainer className="grid gap-12 lg:grid-cols-2">
+              <AnimatedDiv>
                 <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
                   <HiOutlineTemplate className="mb-2 inline h-6 w-6 text-green-600" /> SaaS Platforms
                 </h3>
-                <div className="space-y-4">
-                  <BenefitItem text="Give each customer their own analytics portal" />
-                  <BenefitItem text="Charge premium for advanced analytics features" />
-                  <BenefitItem text="Reduce churn with sticky data insights" />
-                  <BenefitItem text="Scale to millions of users effortlessly" />
-                </div>
-              </div>
+                <AnimatedStaggerContainer className="space-y-4">
+                  <AnimatedBenefitItem text="Give each customer their own analytics portal" />
+                  <AnimatedBenefitItem text="Charge premium for advanced analytics features" />
+                  <AnimatedBenefitItem text="Reduce churn with sticky data insights" />
+                  <AnimatedBenefitItem text="Scale to millions of users effortlessly" />
+                </AnimatedStaggerContainer>
+              </AnimatedDiv>
               
-              <div>
+              <AnimatedDiv>
                 <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
                   <FiGrid className="mb-2 inline h-6 w-6 text-green-600" /> Internal Tools
                 </h3>
-                <div className="space-y-4">
-                  <BenefitItem text="Embed dashboards in admin panels" />
-                  <BenefitItem text="Create customer success dashboards" />
-                  <BenefitItem text="Build executive reporting tools" />
-                  <BenefitItem text="Integrate with existing workflows" />
-                </div>
-              </div>
-            </div>
+                <AnimatedStaggerContainer className="space-y-4">
+                  <AnimatedBenefitItem text="Embed dashboards in admin panels" />
+                  <AnimatedBenefitItem text="Create customer success dashboards" />
+                  <AnimatedBenefitItem text="Build executive reporting tools" />
+                  <AnimatedBenefitItem text="Integrate with existing workflows" />
+                </AnimatedStaggerContainer>
+              </AnimatedDiv>
+            </AnimatedStaggerContainer>
 
-            <div className="mt-12 rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-900">
+            <motion.div 
+              className="mt-12 rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-900"
+              variants={fadeInUp}
+              whileHover={{ y: -4, transition: { duration: 0.3 } }}
+            >
               <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
                 <FiLock className="mb-2 inline h-6 w-6 text-green-600" /> Enterprise-Grade Security
               </h3>
-              <div className="grid gap-4 lg:grid-cols-2">
-                <BenefitItem text="Enterprise-grade infrastructure" />
-                <BenefitItem text="GDPR and CCPA compliant" />
-                <BenefitItem text="End-to-end encryption" />
-                <BenefitItem text="SSO/SAML integration" />
-                <BenefitItem text="Row-level security (RLS)" />
-                <BenefitItem text="Audit logs and compliance reports" />
-              </div>
-            </div>
+              <AnimatedStaggerContainer className="grid gap-4 lg:grid-cols-2">
+                <AnimatedBenefitItem text="Enterprise-grade infrastructure" />
+                <AnimatedBenefitItem text="GDPR and CCPA compliant" />
+                <AnimatedBenefitItem text="End-to-end encryption" />
+                <AnimatedBenefitItem text="SSO/SAML integration" />
+                <AnimatedBenefitItem text="Row-level security (RLS)" />
+                <AnimatedBenefitItem text="Audit logs and compliance reports" />
+              </AnimatedStaggerContainer>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </AnimatedSection>
 
       {/* CTA Section */}
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">

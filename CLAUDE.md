@@ -122,6 +122,45 @@ All routes are defined in `src/main.jsx`. The app uses React Router v7 with:
 - **Community**: Slack workspace and GitHub repository
 - **Support**: Chatlio widget for customer support
 
+## Component Architecture
+
+### Animation System
+The website uses a centralized animation system with Framer Motion:
+- Animation variants are defined in `/src/utils/animations.js`
+- Animated components are in `/src/components/animated/AnimatedComponents.jsx`
+- Base components (without animations) are in `/src/components/cards/`
+- Scroll progress bar component is in `/src/components/animated/ScrollProgressBar.jsx`
+
+Example usage:
+```jsx
+import { 
+  AnimatedFeatureCard, 
+  AnimatedBenefitItem, 
+  AnimatedCodeExample,
+  AnimatedSection
+} from '../components/animated/AnimatedComponents';
+import ScrollProgressBar from '../components/animated/ScrollProgressBar';
+
+// Use directly - animations built in!
+<AnimatedFeatureCard 
+  icon={<FiCode />} 
+  title="Feature" 
+  description="Description" 
+  color="from-blue-500 to-blue-600" 
+/>
+```
+
+### File Naming Convention
+**IMPORTANT**: Never use `index.jsx` files. Always use descriptive, named files:
+- ✅ `AnimatedComponents.jsx` - Good, descriptive name
+- ❌ `index.jsx` - Avoid, makes files hard to find
+
+Named files improve:
+- File search and navigation
+- Debugging and error tracking
+- Import clarity
+- Overall developer experience
+
 ## Important Notes
 
 1. **Mixed JSX/TypeScript**: Despite having TypeScript configuration, the codebase uses `.jsx` files
@@ -130,3 +169,7 @@ All routes are defined in `src/main.jsx`. The app uses React Router v7 with:
 4. **SPA Configuration**: Netlify redirects all routes to index.html for client-side routing
 5. **Analytics**: Page views tracked via Segment - ensure new pages include analytics
 6. **Trademark Usage**: Always use **dbt™** (with trademark symbol) when referring to dbt in marketing content
+
+## Development Workflow
+
+- Always test changes by curling the site or by running the server

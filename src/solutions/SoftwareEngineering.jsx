@@ -3,36 +3,20 @@ import InstallCommand from '../components/InstallCommand';
 import { FiActivity, FiAlertCircle, FiTrendingUp, FiUsers, FiArrowRight, FiCheckCircle, FiCode, FiZap } from 'react-icons/fi';
 import { HiOutlineChartSquareBar, HiOutlineLightningBolt, HiOutlineSparkles } from 'react-icons/hi';
 import { BiLineChart, BiCodeBlock } from 'react-icons/bi';
-
-const FeatureCard = ({ icon, title, description, color }) => (
-  <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800">
-    <div className={`absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gradient-to-br ${color} opacity-10`}></div>
-    <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-white`}>
-      {icon}
-    </div>
-    <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
-    <p className="text-gray-600 dark:text-gray-400">{description}</p>
-  </div>
-);
-
-const BenefitItem = ({ text }) => (
-  <div className="flex items-start space-x-3">
-    <FiCheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
-    <p className="text-gray-700 dark:text-gray-300">{text}</p>
-  </div>
-);
-
-const CodeExample = ({ title, code, language = "python" }) => (
-  <div className="rounded-xl bg-gray-900 p-6 shadow-lg">
-    <div className="mb-4 flex items-center justify-between">
-      <h4 className="text-lg font-semibold text-white">{title}</h4>
-      <span className="rounded-md bg-gray-800 px-3 py-1 text-sm text-gray-400">{language}</span>
-    </div>
-    <pre className="overflow-x-auto">
-      <code className="text-sm text-gray-300">{code}</code>
-    </pre>
-  </div>
-);
+import { motion } from 'framer-motion';
+import { 
+  AnimatedFeatureCard, 
+  AnimatedBenefitItem, 
+  AnimatedCodeExample,
+  AnimatedSection,
+  AnimatedStaggerContainer,
+  AnimatedH1,
+  AnimatedH2,
+  AnimatedP,
+  AnimatedDiv
+} from '../components/animated/AnimatedComponents';
+import ScrollProgressBar from '../components/animated/ScrollProgressBar';
+import { fadeInUp, fadeIn, staggerContainer, defaultViewport } from '../utils/animations';
 
 export default function SoftwareEngineering() {
   const trackingCode = `# models.visivo.yml
@@ -135,26 +119,50 @@ alerts:
 
   return (
     <section className="w-full bg-white dark:bg-gray-900">
+      <ScrollProgressBar />
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800"></div>
+      <motion.div 
+        className="relative overflow-hidden"
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+      >
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        ></motion.div>
         <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:py-24 lg:py-32">
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="mb-6 inline-flex items-center rounded-full bg-purple-100 px-4 py-2 text-sm font-semibold text-purple-700 dark:bg-purple-900 dark:text-purple-300">
+          <AnimatedStaggerContainer className="mx-auto max-w-4xl text-center">
+            <motion.div 
+              className="mb-6 inline-flex items-center rounded-full bg-purple-100 px-4 py-2 text-sm font-semibold text-purple-700 dark:bg-purple-900 dark:text-purple-300"
+              variants={fadeInUp}
+              transition={{ duration: 0.6 }}
+            >
               <HiOutlineLightningBolt className="mr-2 h-4 w-4" />
               Ship Features with Confidence
-            </div>
-            <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
+            </motion.div>
+            <AnimatedH1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl" delay={0.2}>
               Analytics Built Into Your{' '}
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <motion.span 
+                className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
                 Development Workflow
-              </span>
-            </h1>
-            <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl">
+              </motion.span>
+            </AnimatedH1>
+            <AnimatedP className="mx-auto mb-8 max-w-3xl text-lg text-gray-600 dark:text-gray-400 md:text-xl" delay={0.4}>
               Define analytics alongside your code. Version control your dashboards. Deploy insights with every release.
               Analytics that evolve with your application.
-            </p>
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            </AnimatedP>
+            <motion.div 
+              className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+              variants={fadeInUp}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
               <a
                 href="/get-started"
                 className="inline-flex items-center rounded-lg bg-purple-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300"
@@ -168,10 +176,10 @@ alerts:
               >
                 View Documentation
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatedStaggerContainer>
         </div>
-      </div>
+      </motion.div>
 
       {/* Core Features */}
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:py-24">
@@ -184,44 +192,44 @@ alerts:
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <FeatureCard
+        <AnimatedStaggerContainer className="grid gap-6 lg:grid-cols-3">
+          <AnimatedFeatureCard
             icon={<FiActivity className="h-6 w-6" />}
             title="Batch Analytics & Insights"
             description="Track feature adoption, usage patterns, and performance metrics with scheduled data updates."
             color="from-purple-500 to-purple-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<HiOutlineChartSquareBar className="h-6 w-6" />}
             title="Business Impact"
             description="Connect feature changes to business metrics like conversion, retention, and revenue."
             color="from-pink-500 to-pink-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<FiAlertCircle className="h-6 w-6" />}
             title="Smart Alerts"
             description="Get notified about performance regressions, error spikes, or unusual usage patterns."
             color="from-orange-500 to-orange-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<BiLineChart className="h-6 w-6" />}
             title="A/B Testing Analytics"
             description="Built-in support for experiment analysis with statistical significance testing."
             color="from-green-500 to-green-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<FiUsers className="h-6 w-6" />}
             title="User Segmentation"
             description="Understand how different user cohorts interact with your features."
             color="from-blue-500 to-blue-600"
           />
-          <FeatureCard
+          <AnimatedFeatureCard
             icon={<FiTrendingUp className="h-6 w-6" />}
             title="Trend Analysis"
             description="Spot patterns and predict future behavior with historical trend analysis."
             color="from-indigo-500 to-indigo-600"
           />
-        </div>
+        </AnimatedStaggerContainer>
       </div>
 
       {/* Workflow Visualization */}
@@ -294,13 +302,13 @@ alerts:
           Simple Integration, Powerful Insights
         </h2>
         
-        <div className="space-y-8">
-          <CodeExample title="Track Feature Usage" code={trackingCode} />
-          <div className="grid gap-8 lg:grid-cols-2">
-            <CodeExample title="Auto-Generated Dashboards" code={dashboardCode} language="yaml" />
-            <CodeExample title="Smart Alerting" code={alertCode} language="yaml" />
-          </div>
-        </div>
+        <AnimatedStaggerContainer className="space-y-8">
+          <AnimatedCodeExample title="Track Feature Usage" code={trackingCode} />
+          <AnimatedStaggerContainer className="grid gap-8 lg:grid-cols-2">
+            <AnimatedCodeExample title="Auto-Generated Dashboards" code={dashboardCode} language="yaml" />
+            <AnimatedCodeExample title="Smart Alerting" code={alertCode} language="yaml" />
+          </AnimatedStaggerContainer>
+        </AnimatedStaggerContainer>
       </div>
 
       {/* Use Cases */}
@@ -316,24 +324,24 @@ alerts:
                 <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
                   <BiCodeBlock className="mb-2 inline h-6 w-6 text-purple-600" /> Feature Flags & Rollouts
                 </h3>
-                <div className="space-y-4">
-                  <BenefitItem text="Monitor adoption rates during gradual rollouts" />
-                  <BenefitItem text="Compare performance between control and treatment groups" />
-                  <BenefitItem text="Automatically detect and alert on rollout issues" />
-                  <BenefitItem text="Make rollback decisions based on real data" />
-                </div>
+                <AnimatedStaggerContainer className="space-y-4">
+                  <AnimatedBenefitItem text="Monitor adoption rates during gradual rollouts" />
+                  <AnimatedBenefitItem text="Compare performance between control and treatment groups" />
+                  <AnimatedBenefitItem text="Automatically detect and alert on rollout issues" />
+                  <AnimatedBenefitItem text="Make rollback decisions based on real data" />
+                </AnimatedStaggerContainer>
               </div>
               
               <div>
                 <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
                   <HiOutlineSparkles className="mb-2 inline h-6 w-6 text-purple-600" /> Product Development
                 </h3>
-                <div className="space-y-4">
-                  <BenefitItem text="Validate product hypotheses with real usage data" />
-                  <BenefitItem text="Identify which features drive engagement" />
-                  <BenefitItem text="Prioritize development based on impact" />
-                  <BenefitItem text="Share insights across product and engineering" />
-                </div>
+                <AnimatedStaggerContainer className="space-y-4">
+                  <AnimatedBenefitItem text="Validate product hypotheses with real usage data" />
+                  <AnimatedBenefitItem text="Identify which features drive engagement" />
+                  <AnimatedBenefitItem text="Prioritize development based on impact" />
+                  <AnimatedBenefitItem text="Share insights across product and engineering" />
+                </AnimatedStaggerContainer>
               </div>
             </div>
           </div>
