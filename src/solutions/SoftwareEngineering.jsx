@@ -118,7 +118,7 @@ alerts:
         to: oncall@company.com`;
 
   return (
-    <section className="w-full bg-white dark:bg-gray-900">
+    <section className="w-full overflow-x-hidden bg-white dark:bg-gray-900">
       <ScrollProgressBar />
       {/* Hero Section */}
       <motion.div 
@@ -304,7 +304,7 @@ alerts:
         
         <AnimatedStaggerContainer className="space-y-8">
           <AnimatedCodeExample title="Track Feature Usage" code={trackingCode} />
-          <AnimatedStaggerContainer className="grid gap-8 lg:grid-cols-2">
+          <AnimatedStaggerContainer className="grid gap-8 xl:grid-cols-2">
             <AnimatedCodeExample title="Auto-Generated Dashboards" code={dashboardCode} language="yaml" />
             <AnimatedCodeExample title="Smart Alerting" code={alertCode} language="yaml" />
           </AnimatedStaggerContainer>

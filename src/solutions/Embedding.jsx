@@ -137,7 +137,7 @@ token = generate_embed_token(
 />`;
 
   return (
-    <section className="w-full bg-white dark:bg-gray-900">
+    <section className="w-full overflow-x-hidden bg-white dark:bg-gray-900">
       <ScrollProgressBar />
       {/* Hero Section */}
       <motion.div 
@@ -408,7 +408,7 @@ token = generate_embed_token(
         
         <AnimatedStaggerContainer className="space-y-8">
           <AnimatedCodeExample title="Simple React Integration" code={reactCode} />
-          <AnimatedStaggerContainer className="grid gap-8 lg:grid-cols-2">
+          <AnimatedStaggerContainer className="grid gap-8 xl:grid-cols-2">
             <AnimatedCodeExample title="Secure Multi-Tenancy" code={securityCode} language="python" />
             <AnimatedCodeExample title="Complete Customization" code={customizationCode} />
           </AnimatedStaggerContainer>

@@ -68,7 +68,7 @@ jobs:
 
 
   return (
-    <section className="w-full bg-white dark:bg-gray-900">
+    <section className="w-full overflow-x-hidden bg-white dark:bg-gray-900">
       <ScrollProgressBar />
       {/* Hero Section */}
       <motion.div 
@@ -296,7 +296,7 @@ jobs:
           Everything as Code
         </h2>
         
-        <AnimatedStaggerContainer className="grid gap-8 lg:grid-cols-2">
+        <AnimatedStaggerContainer className="grid gap-8 xl:grid-cols-2">
           <AnimatedCodeExample title="Define Dashboards in YAML" code={dashboardCode} />
           <AnimatedCodeExample title="Automated Deployment" code={gitWorkflowCode} />
         </AnimatedStaggerContainer>

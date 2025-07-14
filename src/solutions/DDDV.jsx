@@ -104,7 +104,7 @@ dashboards:
           - chart: ref(category-chart)`;
 
   return (
-    <section className="w-full bg-white dark:bg-gray-900">
+    <section className="w-full overflow-x-hidden bg-white dark:bg-gray-900">
       <ScrollProgressBar />
       {/* Hero Section */}
       <motion.div 
@@ -473,7 +473,7 @@ dashboards:
         </motion.h2>
         
         <motion.div 
-          className="grid gap-8 lg:grid-cols-2"
+          className="grid gap-8 xl:grid-cols-2"
           variants={staggerContainer}
         >
           <AnimatedCodeExample title="1. Extract with DLT" code={dltCode} />
