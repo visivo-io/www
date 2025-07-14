@@ -1,5 +1,7 @@
 import { Carousel } from 'flowbite-react';
 import { TESTIMONIALS } from './Testimonials';
+import { motion } from 'framer-motion';
+import { fadeIn, fadeInUp } from '../utils/animations';
 
 export default function TestimonialCarousel() {
   return (
@@ -28,23 +30,40 @@ export default function TestimonialCarousel() {
       >
         {TESTIMONIALS.map((testimonial, index) => (
           <div key={index} className="flex h-full items-center justify-center px-12">
-            <div className="max-w-screen-xl text-center">
+            <motion.div 
+              className="max-w-screen-xl text-center"
+              initial="hidden"
+              animate="visible"
+              variants={fadeIn}
+              transition={{ duration: 0.8 }}
+            >
               <figure className="mx-auto max-w-screen-md">
-                <img 
+                <motion.img 
                   src={testimonial.companyLogoUrl} 
                   alt={`${testimonial.author.name}'s company logo`}
                   className="mx-auto mb-4 h-7 "
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6 }}
                 />
-                <blockquote>
+                <motion.blockquote
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
                   <p className="text-xl font-medium text-gray-900 dark:text-white md:text-2xl">
                     "{testimonial.content}"
                   </p>
-                </blockquote>
-                <figcaption className="mt-6 flex items-center justify-center space-x-3">
-                  <img 
+                </motion.blockquote>
+                <motion.figcaption 
+                  className="mt-6 flex items-center justify-center space-x-3"
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  <motion.img 
                     className="h-10 w-10 rounded-full"
                     src={testimonial.author.avatarUrl}
                     alt={testimonial.author.name}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                   />
                   <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
                     <div className="pr-3 font-medium text-gray-900 dark:text-white">
@@ -54,9 +73,9 @@ export default function TestimonialCarousel() {
                       {testimonial.author.title}
                     </div>
                   </div>
-                </figcaption>
+                </motion.figcaption>
               </figure>
-            </div>
+            </motion.div>
           </div>
         ))}
       </Carousel>

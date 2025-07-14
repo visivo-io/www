@@ -24,7 +24,7 @@ export default function Testimonials() {
             {TESTIMONIALS.map((singleTestimonial) => (
               <figure className="mx-auto w-full max-w-screen-md" data-carousel-item>
                 <blockquote>
-                  <p className="text-lg font-medium text-gray-900 sm:text-2xl dark:text-white">{singleTestimonial.content}</p>
+                  <p className="text-lg font-medium text-gray-900 dark:text-white sm:text-2xl">{singleTestimonial.content}</p>
                 </blockquote>
                 <figcaption className="mt-6 flex items-center justify-center space-x-3">
                   <img className="size-6 rounded-full"
