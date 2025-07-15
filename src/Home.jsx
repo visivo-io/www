@@ -6,7 +6,7 @@ import ScrollProgressBar from "./components/animated/ScrollProgressBar";
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer, defaultViewport } from './utils/animations';
 
-// Lazy load heavy components
+// Lazy load heavy components - needed for react-flow-renderer
 const VisivoDataFlow = lazy(() => import("./Lineage"));
 const Features = lazy(() => import("./components/Features"));
 
