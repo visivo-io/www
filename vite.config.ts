@@ -26,14 +26,15 @@ export default defineConfig({
         manualChunks: (id) => {
           // More granular chunking strategy
           if (id.includes('node_modules')) {
+            // Keep React ecosystem together to avoid scheduler issues
+            if (id.includes('react') && !id.includes('react-icons') && !id.includes('react-flow')) {
+              return 'react-vendor';
+            }
             if (id.includes('react-icons')) {
               return 'icons';
             }
             if (id.includes('@fortawesome')) {
               return 'icons-fa';
-            }
-            if (id.includes('react-router') || id.includes('react-dom') || id.includes('/react/')) {
-              return 'react-vendor';
             }
             if (id.includes('flowbite') || id.includes('framer-motion')) {
               return 'ui-vendor';
@@ -72,16 +73,15 @@ export default defineConfig({
         comments: false,
       },
     },
-    // Tree shaking
+    // Tree shaking - less aggressive to preserve React internals
     treeshake: {
-      preset: 'recommended',
-      manualPureFunctions: ['console.log', 'console.info'],
+      moduleSideEffects: true,
     },
     // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
   },
   // Optimize dependencies
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'flowbite-react'],
+    include: ['react-router-dom', 'flowbite-react'],
   },
 });

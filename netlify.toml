@@ -10,14 +10,3 @@
 
 [functions]
   directory = "netlify/functions"
-
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  [plugins.inputs]
-    # Run audits for the homepage
-    audits = [
-      { path = "/" }
-    ]
-    # Give more time for dynamic content to load
-    output_path = "lighthouse.html"
