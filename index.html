@@ -12,17 +12,60 @@
   <meta property="og:image:height" content="400" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Visivo | Lineage-based BI-as-code for the Modern Data Stack.</title>
-  <script src="https://js.chatlio.com/widget.js" async></script>
+  
+  <!-- Preconnect to critical third-party origins only -->
+  <link rel="preconnect" href="https://api.segment.io">
+  <link rel="preconnect" href="https://cdn.segment.com">
+  
+  <!-- Google tag (gtag.js) - Defer loading until after page load -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-FV9Z927531';
+        script.async = true;
+        script.onload = () => {
+          gtag('js', new Date());
+          gtag('config', 'G-FV9Z927531');
+        };
+        document.head.appendChild(script);
+      });
+    } else {
+      window.addEventListener('load', () => {
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-FV9Z927531';
+        script.async = true;
+        script.onload = () => {
+          gtag('js', new Date());
+          gtag('config', 'G-FV9Z927531');
+        };
+        document.head.appendChild(script);
+      });
+    }
+  </script>
+  
+  <!-- Defer Chatlio loading until after page load -->
+  <script>
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        const script = document.createElement('script');
+        script.src = 'https://js.chatlio.com/widget.js';
+        script.async = true;
+        document.head.appendChild(script);
+      });
+    } else {
+      window.addEventListener('load', () => {
+        const script = document.createElement('script');
+        script.src = 'https://js.chatlio.com/widget.js';
+        script.async = true;
+        document.head.appendChild(script);
+      });
+    }
+  </script>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FV9Z927531"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-
-  gtag('config', 'G-FV9Z927531');
-</script>
 
 <body class="bg-white dark:bg-gray-900">
   <div id="root"></div>

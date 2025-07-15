@@ -14,4 +14,30 @@ export default defineConfig({
       hostname: 'https://visivo.io', 
     }),
   ],
+  build: {
+    // Enable minification
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        passes: 2,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.trace'],
+      },
+      mangle: {
+        safari10: true,
+      },
+      format: {
+        comments: false,
+      },
+    },
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000,
+    // Disable automatic modulepreload injection
+    modulePreload: false,
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react-router-dom', 'flowbite-react'],
+  },
 });

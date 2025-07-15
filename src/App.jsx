@@ -20,7 +20,7 @@ function App() {
     <Flowbite theme={{ theme: customTheme }}>
       <Navbar fluid={true} className="sticky top-0 z-50 w-full bg-gray-100">
         <Navbar.Brand href="/">
-          <img src="/images/logo.webp" className="mr-3 h-6 sm:h-9" alt="Visivo Logo" />
+          <img src="/images/logo.webp" className="mr-3 h-6 sm:h-9" alt="Visivo Logo" width={36} height={36} />
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Visivo</span>
         </Navbar.Brand>
 
@@ -99,6 +99,12 @@ function App() {
                 className="text-lg text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
               >
                 Embedding
+              </Dropdown.Item>
+              <Dropdown.Item
+                href="/solutions/dddv"
+                className="text-lg text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:hover:text-cyan-700"
+              >
+                DDDV Stack
               </Dropdown.Item>
             </Dropdown>
           </div>
