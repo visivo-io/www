@@ -33,6 +33,17 @@ export default defineConfig({
     },
     // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router', 'react-router-dom'],
+          'ui-vendor': ['flowbite-react', 'framer-motion', 'react-icons'],
+          'utils': ['gray-matter', 'react-markdown', '@mdx-js/react'],
+          'analytics': ['@segment/analytics-next'],
+          'react-flow': ['react-flow-renderer', 'dagre'],
+        },
+      },
+    },
   },
   // Optimize dependencies
   optimizeDeps: {

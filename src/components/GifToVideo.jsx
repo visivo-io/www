@@ -1,29 +1,44 @@
 // components/GifToVideo.js
-import { useState } from 'react';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
+import { FaPlay } from 'react-icons/fa';
 
 const GifToVideo = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isWebmLoaded, setIsWebmLoaded] = useState(false);
 
   const handleButtonClick = () => {
     setIsVideoPlaying(true);
   };
 
+  useEffect(() => {
+    // Preload the webm video in the background
+    const video = document.createElement('video');
+    video.src = '/gifs/visivo-demo.webm';
+    video.onloadeddata = () => {
+      setIsWebmLoaded(true);
+    };
+  }, []);
+
   return (
-    <Container>
+    <div className="w-[95%] relative mx-auto max-w-[120rem] overflow-hidden rounded-[35px] md:rounded-[15px]">
       {!isVideoPlaying ? (
-        <video
-          src="/gifs/visivo-demo.webm" // Use the WebM file for initial display
-          style={{ width: '100%' }}
-          muted
-          loop
-          autoPlay
-          currentTime={2}
-          preload="metadata"
-          loading="lazy"
-        />
+        isWebmLoaded ? (
+          <video
+            src="/gifs/visivo-demo.webm"
+            style={{ width: '100%' }}
+            muted
+            loop
+            autoPlay
+            currentTime={2}
+          />
+        ) : (
+          <img
+            src="/images/visivo-demo-placeholder.webp"
+            alt="Visivo Demo"
+            style={{ width: '100%' }}
+            loading="eager"
+          />
+        )
       ) : (
         <video
           src="/videos/visivo-demo.mp4"
@@ -33,76 +48,16 @@ const GifToVideo = () => {
         />
       )}
       {!isVideoPlaying && (
-        <Button
+        <button
           onClick={handleButtonClick}
+          className="absolute flex justify-center items-center top-1/2 left-1/2 max-w-[20rem] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2.5 text-base cursor-pointer bg-[rgba(113,59,87,0.95)] text-white border-none rounded-[5px] md:p-0 md:rounded-[5px] md:w-10 md:h-10 md:max-w-none"
         >
-          <Icon icon={faPlay} />
-          <ButtonText>Watch 86<br />Second Demo</ButtonText>
-        </Button>
+          <FaPlay className="w-[1.7em] h-[1.7em] mr-0 text-white z-[1] md:w-[1.7em] md:h-[1.7em]" />
+          <span className="md:hidden ml-2">Watch 86<br />Second Demo</span>
+        </button>
       )}
-    </Container>
+    </div>
   );
 };
 
 export default GifToVideo;
-
-
-const Icon = styled(FontAwesomeIcon)`
-    width: 1.7em;
-    height: 1.7em;
-    margin-right: 0;
-    color: white;
-    z-index: 1;
-    @media (max-width: 768px) {
-        width: 1.7em;
-        height: 1.7em;
-    }
-`;
-
-const ButtonText = styled.span`
-    @media (max-width: 768px) {
-        display: none;
-    }
-`;
-
-const Container = styled.div`
-    width: 95%;
-    position: relative;
-    margin: 0 auto;
-    max-width: 120rem;
-    overflow: hidden;
-    border-radius: 35px;
-    @media (max-width: 768px) {
-      border-radius: 15px;
-    }
-    `
-
-const Button = styled.button`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 50%;
-  left: 50%;
-  max-width: 20rem;
-  transform: translate(-50%, -50%);
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: rgba(113, 59, 87, 0.95);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  
-  @media (max-width: 768px) {
-    padding: 0;
-    border-radius: 5px;
-    width: 40px;
-    height: 40px;
-    max-width: none;
-    font-size: inherit; /* Don't set to 0, so icon remains visible */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;

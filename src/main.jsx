@@ -1,12 +1,12 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import Home from "./Home.jsx";
 import "./index.css";
 import vendorData from "./vendor-data.json";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Lazy load all non-critical routes
+const Home = lazy(() => import("./Home.jsx"));
 const Privacy = lazy(() => import("./Privacy.jsx"));
 const AboutUs = lazy(() => import("./AboutUs.jsx"));
 const Pricing = lazy(() => import("./Pricing.jsx"));
