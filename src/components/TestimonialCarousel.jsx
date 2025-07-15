@@ -42,6 +42,9 @@ export default function TestimonialCarousel() {
                   src={testimonial.companyLogoUrl} 
                   alt={`${testimonial.author.name}'s company logo`}
                   className="mx-auto mb-4 h-7 "
+                  loading="lazy"
+                  width={120}
+                  height={28}
                   variants={fadeInUp}
                   transition={{ duration: 0.6 }}
                 />

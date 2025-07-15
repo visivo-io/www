@@ -21,6 +21,8 @@ const GifToVideo = () => {
           loop
           autoPlay
           currentTime={2}
+          preload="metadata"
+          loading="lazy"
         />
       ) : (
         <video

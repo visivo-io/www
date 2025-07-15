@@ -14,16 +14,22 @@ const Section = ({ imageUrl, title, description, details, reversed }) => {
         transition={{ duration: 0.8 }}
       >
         <motion.img 
-          className="w-full object-contain dark:hidden max-h-[500px]" 
+          className="w-full object-contain dark:hidden max-h-[280px] mx-auto" 
           src={imageUrl}
           alt="Feature illustration"
+          loading="lazy"
+          width={500}
+          height={280}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
         />
         <motion.img 
-          className="hidden w-full object-cover dark:block"
+          className="hidden w-full object-contain dark:block max-h-[280px] mx-auto"
           src={imageUrl} 
           alt="Feature illustration"
+          loading="lazy"
+          width={500}
+          height={280}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
         />

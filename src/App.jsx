@@ -20,7 +20,7 @@ function App() {
     <Flowbite theme={{ theme: customTheme }}>
       <Navbar fluid={true} className="sticky top-0 z-50 w-full bg-gray-100">
         <Navbar.Brand href="/">
-          <img src="/images/logo.webp" className="mr-3 h-6 sm:h-9" alt="Visivo Logo" />
+          <img src="/images/logo.webp" className="mr-3 h-6 sm:h-9" alt="Visivo Logo" width={36} height={36} />
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Visivo</span>
         </Navbar.Brand>
 

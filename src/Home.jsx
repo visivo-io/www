@@ -1,11 +1,14 @@
+import { lazy, Suspense } from 'react';
 import Hero from "./components/Hero";
-import Features from "./components/Features";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 import InstallCommand from "./components/InstallCommand";
-import VisivoDataFlow from "./Lineage";
 import ScrollProgressBar from "./components/animated/ScrollProgressBar";
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer, defaultViewport } from './utils/animations';
+
+// Lazy load heavy components
+const VisivoDataFlow = lazy(() => import("./Lineage"));
+const Features = lazy(() => import("./components/Features"));
 
 const Home = () => {
   return (
@@ -26,9 +29,13 @@ const Home = () => {
         viewport={defaultViewport}
         transition={{ duration: 0.8 }}
       >
-        <VisivoDataFlow />
+        <Suspense fallback={<div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div></div>}>
+          <VisivoDataFlow />
+        </Suspense>
       </motion.div>
-      <Features />
+      <Suspense fallback={<div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div></div>}>
+        <Features />
+      </Suspense>
       <motion.section 
         className="border-y border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
         initial="hidden"

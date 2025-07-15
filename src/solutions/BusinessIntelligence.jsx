@@ -243,6 +243,9 @@ jobs:
               src="/images/ci_cd.webp" 
               alt="Visivo CI/CD Pipeline showing local development, PR stages, and production deployment"
               className="w-full"
+              loading="lazy"
+              width={1200}
+              height={600}
             />
           </div>
           
