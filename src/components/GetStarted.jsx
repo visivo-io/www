@@ -87,6 +87,9 @@ const GetStarted = () => {
                   src="/images/editor.webp"
                   alt="Data modeling screenshot"
                   className="mt-6 rounded-lg border border-gray-200 dark:border-gray-700"
+                  loading="lazy"
+                  width={800}
+                  height={400}
                 />
               </div>
               {/* Step 3 */}
@@ -104,6 +107,9 @@ const GetStarted = () => {
                   src="/images/ci_cd.webp"
                   alt="Dashboard sharing screenshot"
                   className="mt-6 rounded-lg border border-gray-200 dark:border-gray-700"
+                  loading="lazy"
+                  width={800}
+                  height={400}
                 />
                 <a
                   href="https://app.visivo.io/register"

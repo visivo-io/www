@@ -53,6 +53,9 @@ export default function Examples() {
                   className="rounded-t-lg w-full h-48 object-cover" 
                   src={item.imageUrl} 
                   alt={item.title} 
+                  loading="lazy"
+                  width={800}
+                  height={192}
                 />
               </a>
               <div className="p-5">

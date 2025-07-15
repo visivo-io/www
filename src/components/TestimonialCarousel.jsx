@@ -62,6 +62,8 @@ export default function TestimonialCarousel() {
                     className="h-10 w-10 rounded-full"
                     src={testimonial.author.avatarUrl}
                     alt={testimonial.author.name}
+                    width={40}
+                    height={40}
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   />

@@ -173,3 +173,7 @@ Named files improve:
 ## Development Workflow
 
 - Always test changes by curling the site or by running the server
+
+## Performance Optimization Strategies
+
+- To optimize performance of our site we should get the PR comments, find the deploy preview in the netlify comment, run lighthouse on it

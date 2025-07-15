@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const fetch = require('node-fetch');
 
 exports.handler = async function(event) {

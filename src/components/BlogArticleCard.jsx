@@ -12,7 +12,7 @@ const BlogArticleCard = ({ slug, imgSrc, imgAlt, tag, title, description, author
   return (
     <article className="p-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
       <CardLink>
-        <img className="mb-5 rounded-lg" src={imgSrc} alt={imgAlt} />
+        <img className="mb-5 rounded-lg w-full" src={imgSrc} alt={imgAlt} loading="lazy" width={800} height={400} />
       </CardLink>
       <span className="bg-purple-100 text-purple-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-purple-200 dark:text-purple-900">
         {tag}
@@ -24,7 +24,7 @@ const BlogArticleCard = ({ slug, imgSrc, imgAlt, tag, title, description, author
         {description}
       </p>
       <div className="flex items-center space-x-4">
-        <img className="w-10 h-10 rounded-full" src={authorImg} alt={`${authorName} avatar`} />
+        <img className="w-10 h-10 rounded-full" src={authorImg} alt={`${authorName} avatar`} loading="lazy" width={40} height={40} />
         <div className="font-medium dark:text-white">
           <div>{authorName}</div>
           <div className="text-sm font-normal text-gray-500 dark:text-gray-400">

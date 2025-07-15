@@ -23,7 +23,7 @@ export const TESTIMONIALS = [
     author: {
       name: 'Clara Davison',
       title: 'Analytics - Empora',
-      avatarUrl: '/images/clara-davison.jpeg',
+      avatarUrl: '/images/clara-davison.webp',
     },
   },
 
