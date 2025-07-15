@@ -14,49 +14,7 @@ export default defineConfig({
       hostname: 'https://visivo.io', 
     }),
   ],
-  css: {
-    // Extract CSS to separate files for better caching
-    extract: true,
-    // Enable CSS code splitting
-    codeSplit: true,
-  },
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          // More granular chunking strategy
-          if (id.includes('node_modules')) {
-            // Keep React ecosystem together to avoid scheduler issues
-            if (id.includes('react') && !id.includes('react-icons') && !id.includes('react-flow')) {
-              return 'react-vendor';
-            }
-            if (id.includes('react-icons')) {
-              return 'icons';
-            }
-            if (id.includes('@fortawesome')) {
-              return 'icons-fa';
-            }
-            if (id.includes('flowbite') || id.includes('framer-motion')) {
-              return 'ui-vendor';
-            }
-            if (id.includes('@segment')) {
-              return 'analytics-vendor';
-            }
-            if (id.includes('styled-components')) {
-              return 'styling-vendor';
-            }
-            if (id.includes('@mdx-js') || id.includes('react-markdown')) {
-              return 'markdown-vendor';
-            }
-            if (id.includes('dagre') || id.includes('react-flow')) {
-              return 'diagram-vendor';
-            }
-            // All other vendor modules
-            return 'vendor';
-          }
-        },
-      },
-    },
     // Enable minification
     minify: 'terser',
     terserOptions: {
@@ -72,10 +30,6 @@ export default defineConfig({
       format: {
         comments: false,
       },
-    },
-    // Tree shaking - less aggressive to preserve React internals
-    treeshake: {
-      moduleSideEffects: true,
     },
     // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
