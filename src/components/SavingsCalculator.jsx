@@ -7,7 +7,7 @@ import EmailCaptureForm from './EmailCaptureForm';
 const SavingsCalculator = () => {
   // Constants
   const HOURLY_RATE = 100; // $100/hr for data professionals
-  const TRADITIONAL_DASHBOARD_HOURS = 15; // hours per week per dashboard
+  const TRADITIONAL_DASHBOARD_HOURS = 7; // hours per week per dashboard
   const VISIVO_DASHBOARD_HOURS = 2; // hours per week per dashboard
   const ANALYST_HOURS_SAVED = 20; // hours per week per analyst
   const INFRASTRUCTURE_SAVINGS_PERCENT = 0.30; // 30% savings
@@ -56,54 +56,55 @@ const SavingsCalculator = () => {
   const [showAnalysisForm, setShowAnalysisForm] = useState(false);
   const [hasTriggeredConfetti, setHasTriggeredConfetti] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [previousValues, setPreviousValues] = useState({
-    dashboards: initialDashboards,
-    stakeholders: initialStakeholders,
-    analysts: initialAnalysts,
-    currentBIHours: initialBIHours,
-    revenueImpact: initialRevenue
-  });
+  const [debounceTimer, setDebounceTimer] = useState(null);
 
   // Calculate savings whenever inputs change
   useEffect(() => {
-    // Check if values actually changed
-    const valuesChanged = 
-      dashboards !== previousValues.dashboards ||
-      stakeholders !== previousValues.stakeholders ||
-      analysts !== previousValues.analysts ||
-      currentBIHours !== previousValues.currentBIHours ||
-      revenueImpact !== previousValues.revenueImpact;
-    
-    if (!valuesChanged) return;
-    
-    // Update previous values
-    setPreviousValues({ dashboards, stakeholders, analysts, currentBIHours, revenueImpact });
+    // Clear existing timer
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
     
     // Calculate new values
     const { totalTimeSaved, totalCostSavings, calculatedRoi } = calculateValues(
       dashboards, stakeholders, analysts, currentBIHours, revenueImpact
     );
     
-    // Update state with animations
-    setTimeSaved(totalTimeSaved);
-    setCostSavings(totalCostSavings);
-    setRoi(calculatedRoi);
-    setIsAnimating(true);
     
-    // Show confetti after animation completes if ROI > 300%
-    if (calculatedRoi > 300 && !hasTriggeredConfetti) {
-      setTimeout(() => {
-        setShowConfetti(true);
-        setHasTriggeredConfetti(true);
-        setTimeout(() => setShowConfetti(false), 3000);
-      }, 1200); // Wait for number animation to complete
-    } else if (calculatedRoi <= 300) {
-      setHasTriggeredConfetti(false);
-    }
+    // Set a new timer to trigger animation after 500ms
+    const newTimer = setTimeout(() => {
+      // Trigger animation
+      setIsAnimating(true);
+      
+      // Update the values (this will trigger the animation)
+      setTimeSaved(totalTimeSaved);
+      setCostSavings(totalCostSavings);
+      setRoi(calculatedRoi);
+      
+      // Show confetti after animation completes if ROI > 300%
+      if (calculatedRoi > 300 && !hasTriggeredConfetti) {
+        setTimeout(() => {
+          setShowConfetti(true);
+          setHasTriggeredConfetti(true);
+          setTimeout(() => setShowConfetti(false), 3000);
+        }, 1200); // Wait for number animation to complete
+      } else if (calculatedRoi <= 300) {
+        setHasTriggeredConfetti(false);
+      }
+      
+      // Reset animation flag after animation completes
+      setTimeout(() => setIsAnimating(false), 1100);
+    }, 500); // Wait 500ms after slider stops moving
     
-    // Reset animation flag
-    setTimeout(() => setIsAnimating(false), 1000);
-  }, [dashboards, stakeholders, analysts, currentBIHours, revenueImpact, previousValues, hasTriggeredConfetti]);
+    setDebounceTimer(newTimer);
+    
+    // Cleanup function
+    return () => {
+      if (newTimer) {
+        clearTimeout(newTimer);
+      }
+    };
+  }, [dashboards, stakeholders, analysts, currentBIHours, revenueImpact, hasTriggeredConfetti]);
 
   // Format currency
   const formatCurrency = (amount) => {
@@ -117,44 +118,40 @@ const SavingsCalculator = () => {
   // Animated counter component
   const AnimatedCounter = ({ value, format = 'number', suffix = '' }) => {
     const [displayValue, setDisplayValue] = useState(value);
-    const [previousValue, setPreviousValue] = useState(value);
-    const [hasInitialized, setHasInitialized] = useState(false);
+    const [animationKey, setAnimationKey] = useState(0);
     
     useEffect(() => {
-      // Set initial value without animation
-      if (!hasInitialized) {
-        setDisplayValue(value);
-        setPreviousValue(value);
-        setHasInitialized(true);
+      // Only animate if animation flag is set and value changed
+      if (!isAnimating) {
+        // If not animating, just update the display value
+        if (displayValue !== value) {
+          setDisplayValue(value);
+        }
         return;
       }
       
-      // Only animate if animating flag is true and value changed
-      if (!isAnimating || value === previousValue) {
-        setDisplayValue(value);
-        return;
-      }
+      // Force a new animation by changing the key
+      setAnimationKey(prev => prev + 1);
       
-      setPreviousValue(value);
       const duration = 1000; // 1 second
       const steps = 60;
       const startValue = displayValue;
       const difference = value - startValue;
       const increment = difference / steps;
-      let step = 0;
+      let currentStep = 0;
       
       const timer = setInterval(() => {
-        step++;
-        if (step >= steps) {
+        currentStep++;
+        if (currentStep >= steps) {
           setDisplayValue(value);
           clearInterval(timer);
         } else {
-          setDisplayValue(startValue + (increment * step));
+          setDisplayValue(startValue + (increment * currentStep));
         }
       }, duration / steps);
       
       return () => clearInterval(timer);
-    }, [value, isAnimating, previousValue, displayValue, hasInitialized]);
+    }, [value, isAnimating, animationKey]);
     
     const formattedValue = format === 'currency' 
       ? formatCurrency(displayValue)
@@ -194,10 +191,18 @@ const SavingsCalculator = () => {
           step={step}
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-primary-500"
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-primary-500 
+            [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 
+            [&::-webkit-slider-thumb]:bg-primary-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer
+            [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-10 [&::-webkit-slider-thumb]:transition-transform
+            [&::-webkit-slider-thumb]:hover:scale-110
+            [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:bg-primary-500 
+            [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-0
+            [&::-moz-range-thumb]:relative [&::-moz-range-thumb]:z-10 [&::-moz-range-thumb]:transition-transform
+            [&::-moz-range-thumb]:hover:scale-110"
         />
         <div 
-          className="absolute h-2 bg-primary-500 rounded-lg pointer-events-none"
+          className="absolute h-2 bg-primary-500 rounded-lg pointer-events-none top-0 transition-all duration-150"
           style={{ width: `${((value - min) / (max - min)) * 100}%` }}
         />
       </div>
@@ -306,14 +311,14 @@ const SavingsCalculator = () => {
                 <AnimatedCounter value={timeSaved} suffix=" hours" />
               </div>
               <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                = {dashboards} dashboards × 13 hrs + {analysts} analysts × 20 hrs + {stakeholders} stakeholders × 3 hrs
+                = {dashboards} dashboards × 7 hrs + {analysts} analysts × 20 hrs + {stakeholders} stakeholders × 3 hrs
               </div>
             </div>
 
             {/* Cost Savings */}
             <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Annual Cost Savings</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">Total Benefit</span>
                 <FiDollarSign className="h-5 w-5 text-green-600 dark:text-green-400" />
               </div>
               <div className="text-3xl font-bold text-green-600 dark:text-green-400">
