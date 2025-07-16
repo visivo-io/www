@@ -6,6 +6,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the marketing website for Visivo.io, a data visualization and business intelligence tool. It's built with React, Vite, and Tailwind CSS, deployed on Netlify.
 
+## Important: Marketing Site Scope
+
+This repository contains ONLY the marketing website for Visivo. It does NOT contain:
+- Product features or functionality
+- User onboarding flows  
+- Dashboard creation tools
+- Authentication/user management (except email capture)
+
+The marketing site's sole purpose is to convert visitors to:
+1. **Open source users** - via CLI installation (`pip install visivo` or `curl -fsSL https://visivo.sh | bash`)
+2. **Cloud users** - via signup at app.visivo.io
+3. **Email subscribers** - for newsletters, waitlists, and product updates
+
+All actual product functionality exists in app.visivo.io and the open source CLI tool. This marketing site should focus on clearly communicating value propositions and reducing friction to these conversion paths.
+
 ## Important: Visivo Product Capabilities
 
 When updating marketing content, ensure accuracy about Visivo's actual capabilities:
