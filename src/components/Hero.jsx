@@ -1,29 +1,34 @@
+import { useState } from 'react';
 import GifToVideo from "./GifToVideo";
 import { FiCode, FiTrendingUp, FiUsers } from 'react-icons/fi';
 import InstallVisivoPrompt from './InstallVisivoPrompt';
 import { Carousel } from 'flowbite-react';
 import { motion } from 'framer-motion';
 import { fadeInUp, fadeIn, staggerContainer, scaleIn, defaultViewport } from '../utils/animations';
+import MetricsBar from './MetricsBar';
+import NewsletterModal from './NewsletterModal';
 
 const cardData = [
   {
     icon: <FiCode className="h-6 w-6" />, 
-    title: "Open Source BI-As-Code",
-    desc: "We're commited to OSS. BI-as-code made easy. Extend your lineage into BI."
+    title: "Instant Local Development",
+    desc: "Work offline with instant feedback. No waiting for cloud deployments - see changes immediately with hot reload."
   },
   {
     icon: <FiTrendingUp className="h-6 w-6" />, 
-    title: "Leverage Insights Faster",
-    desc: "10x your data team's productivity. Fast UI and zero noise for stakeholders."
+    title: "Zero Dashboard Downtime",
+    desc: "Deploy-based architecture with automatic lineage tracking means your dashboards never break in production."
   },
   {
     icon: <FiUsers className="h-6 w-6" />, 
-    title: "Data Centric Collaboration",
-    desc: "Unlock data centric collaboration across your organization."
+    title: "True Team Collaboration",
+    desc: "Git workflow + semantic layer + AI assistance enables both analysts and engineers to contribute."
   }
 ];
 
 export default function Hero() {
+  const [showNewsletterModal, setShowNewsletterModal] = useState(false);
+
   return (
     <section className="w-full overflow-x-hidden bg-white dark:bg-gray-900">
       <motion.div 
@@ -38,25 +43,25 @@ export default function Hero() {
             variants={fadeInUp}
             transition={{ duration: 0.8 }}
           >
-            BI for The Modern Data Stack
+            10x Your BI Productivity with Git-Native Dashboards
           </motion.h1>
           
           {/* Mobile version - shorter text */}
           <motion.p 
-            className="block md:hidden text-gray-500 dark:text-gray-400"
+            className="block md:hidden text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto"
             variants={fadeInUp}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Unlock data centric collaboration across your organization with developer tools & visual building that stakeholders love.
+            Develop locally. Deploy with confidence. Collaborate without conflicts.
           </motion.p>
           
           {/* Desktop version - longer, more detailed text */}
           <motion.p 
-            className="hidden md:block text-gray-500 dark:text-gray-400"
+            className="hidden md:block text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto"
             variants={fadeInUp}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Create a semantic layer that is actually useful. Connect it to your tranformations in minutes. Enable data centric collaboration across your organization.
+            Develop locally with instant feedback. Deploy without breaking production. Enable true collaboration between analysts and engineers.
           </motion.p>
         </motion.div>
         <motion.div 
@@ -66,6 +71,9 @@ export default function Hero() {
         >
           <InstallVisivoPrompt />
         </motion.div>
+        
+        {/* Metrics Bar */}
+        <MetricsBar />
 
         {/* Carousel for mobile/tablet */}
         <div className="block md:hidden mt-1 h-48">
@@ -155,18 +163,18 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.6, delay: 0.8 }}
           >
-            Get Started
+            Start Free Cloud Trial
           </motion.a>
 
-          <motion.a 
-            href="https://calendly.com/visivo-io/30-minute" 
+          <motion.button 
+            onClick={() => setShowNewsletterModal(true)}
             className="inline-flex items-center justify-center rounded-lg border border-gray-200 px-5 py-3 text-center text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-800"
             variants={fadeInUp}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.6, delay: 0.9 }}
           >
-            Let's Talk
+            Join the Newsletter
             <motion.svg 
               className="-mr-1 ml-2 size-5" 
               fill="currentColor" 
@@ -177,7 +185,7 @@ export default function Hero() {
             >
               <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
             </motion.svg>
-          </motion.a>
+          </motion.button>
         </motion.div>
       </motion.div>
 
@@ -215,6 +223,11 @@ export default function Hero() {
           </div>
         </div>
       </div> */}
+      
+      <NewsletterModal 
+        isOpen={showNewsletterModal} 
+        onClose={() => setShowNewsletterModal(false)} 
+      />
     </section>
   );
 }

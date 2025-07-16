@@ -121,7 +121,7 @@ jobs:
                 <FiArrowRight className="ml-2 h-5 w-5" />
               </a>
               <a
-                href="https://github.com/visivo-io/visivo/tree/main/examples"
+                href="/examples"
                 className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-8 py-4 text-lg font-semibold text-gray-900 transition-all hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
               >
                 View Examples

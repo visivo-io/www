@@ -3,7 +3,9 @@ import { Outlet } from "react-router-dom";
 import { useAnalytics } from "./analytics/segment";
 import { FaGithub, FaSlack } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
-import { HiDotsVertical, HiSun, HiMoon, HiLogin } from "react-icons/hi";
+import { HiDotsVertical, HiSun, HiMoon, HiLogin, HiDownload, HiCloud, HiMail } from "react-icons/hi";
+import { useState } from "react";
+import NewsletterModal from "./components/NewsletterModal";
 
 const customTheme = {
   button: {
@@ -15,6 +17,14 @@ const customTheme = {
 
 function App() {
   useAnalytics();
+  const [showNewsletterModal, setShowNewsletterModal] = useState(false);
+  const [showCopiedMessage, setShowCopiedMessage] = useState(false);
+
+  const handleCopyCommand = () => {
+    navigator.clipboard.writeText('curl -fsSL https://visivo.sh | bash');
+    setShowCopiedMessage(true);
+    setTimeout(() => setShowCopiedMessage(false), 2000);
+  };
 
   return (
     <Flowbite theme={{ theme: customTheme }}>
@@ -47,9 +57,44 @@ function App() {
               <FaGithub className="w-6 h-6" />
             </a>
           </Tooltip>
-          <a href="/get-started" className="mr-2">
-            <Button color="primary">Get Started</Button>
-          </a>
+          <Dropdown
+            label="Get Visivo"
+            inline={false}
+            dismissOnClick={false}
+            className="mr-2"
+            renderTrigger={() => (
+              <Button color="primary" className="mr-2">
+                Get Visivo
+              </Button>
+            )}
+          >
+            <Dropdown.Item
+              icon={HiDownload}
+              onClick={handleCopyCommand}
+              className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              <div className="flex items-center justify-between w-full">
+                <span>Install CLI</span>
+                {showCopiedMessage && (
+                  <span className="text-xs text-green-600 dark:text-green-400 ml-2">Copied!</span>
+                )}
+              </div>
+            </Dropdown.Item>
+            <Dropdown.Item
+              icon={HiCloud}
+              href="https://app.visivo.io/register"
+              className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              Try Cloud Free
+            </Dropdown.Item>
+            <Dropdown.Item
+              icon={HiMail}
+              onClick={() => setShowNewsletterModal(true)}
+              className="text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              Join Newsletter
+            </Dropdown.Item>
+          </Dropdown>
           <Dropdown
             arrowIcon={false}
             inline
@@ -141,6 +186,11 @@ function App() {
         </div>
         <chatlio-widget widgetid="9b6c297a-87af-43b4-4a16-fa838c02755c"></chatlio-widget>
       </Footer>
+      
+      <NewsletterModal 
+        isOpen={showNewsletterModal} 
+        onClose={() => setShowNewsletterModal(false)} 
+      />
     </Flowbite>
   );
 }
