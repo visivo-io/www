@@ -106,13 +106,15 @@ const BlogPost = () => {
 
   return (
     <section className="bg-white dark:bg-gray-900">
-      <div className="relative flex mx-auto max-w-screen-2xl">
+      <div className="relative flex mx-auto max-w-[1920px]">
         {/* Table of Contents */}
         <TableOfContents headings={headings} />
         
-        {/* Main Content */}
-        <div className="flex-1 py-8 px-4 lg:px-6 lg:py-16 min-w-0">
-          <article className="mx-auto w-full max-w-3xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+        {/* Main Content Container */}
+        <div className="flex-1 flex justify-center min-w-0">
+          {/* Content with max width and padding */}
+          <div className="w-full max-w-4xl py-8 px-6 sm:px-8 lg:px-12 lg:py-16">
+            <article className="format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
           <header className="mb-4 lg:mb-6 not-format">
             <address className="flex items-center mb-6 not-italic">
               <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
@@ -142,11 +144,9 @@ const BlogPost = () => {
               <post.Content />
             </MDXProvider>
           </div>
-          </article>
+            </article>
+          </div>
         </div>
-        
-        {/* Right spacer for balance on large screens */}
-        <div className="hidden xl:block w-64" />
       </div>
     </section>
   );

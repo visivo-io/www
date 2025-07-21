@@ -74,7 +74,7 @@ const TableOfContents = ({ headings = [] }) => {
           bg-white dark:bg-gray-900 
           border-r border-gray-200 dark:border-gray-700
           transition-transform duration-300 ease-in-out
-          lg:block
+          lg:block flex-shrink-0
         `}
       >
         <nav className="p-4 lg:p-6 h-full overflow-y-auto">
