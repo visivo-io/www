@@ -174,6 +174,46 @@ Named files improve:
 
 - Always test changes by curling the site or by running the server
 
+## Blog System
+
+### Overview
+The blog system uses MDX (Markdown with JSX) for content authoring, with dynamic routing and a mix of internal and external articles.
+
+### MDX Blog Post Structure
+Blog posts are stored in `/posts/` directory as `.mdx` files with required frontmatter:
+
+```javascript
+export const frontmatter = {
+  title: "Post Title",
+  date: "Jan 28, 2025",
+  description: "Brief description of the post",
+  author: "Author Name", // Must match an author in mdxUtils.js
+  tag: "Tutorial", // Used for filtering
+  imgSrc: "./images/example.webp", // Thumbnail image
+  imgAlt: "Image description",
+  readTime: "5 min"
+};
+```
+
+### Blog Components
+- **BlogSection.jsx**: Lists all blog posts (both MDX posts and external articles)
+- **BlogPost.jsx**: Renders individual MDX posts with styled components
+- **BlogArticleCard.jsx**: Card component for blog listing
+- **mdxUtils.js**: Handles MDX file loading and author metadata
+
+### Routing
+- `/blog` - Blog listing page (all articles)
+- `/blog/:slug` - Individual blog post (slug matches MDX filename without extension)
+
+### Adding New Blog Posts
+1. Create new `.mdx` file in `/posts/` directory
+2. Add required frontmatter export
+3. Write content using Markdown and JSX components
+4. If new author, add their info to `authors` object in `mdxUtils.js`
+
+### External Articles
+External articles (hosted elsewhere) are defined in `BlogSection.jsx` with `external_link` property.
+
 ## Performance Optimization Strategies
 
 - To optimize performance of our site we should get the PR comments, find the deploy preview in the netlify comment, run lighthouse on it
