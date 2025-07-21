@@ -21,6 +21,12 @@ export async function getPostBySlug(slug) {
     
     const authorInfo = authors[frontmatter.author] 
 
+    // Transform relative image paths to absolute paths
+    let imgSrc = frontmatter.imgSrc;
+    if (imgSrc && imgSrc.startsWith('./')) {
+      imgSrc = imgSrc.replace('./', '/');
+    }
+
     return {
       title: frontmatter.title,
       Content, // Return the MDX component directly
@@ -32,7 +38,7 @@ export async function getPostBySlug(slug) {
       date: frontmatter.date,
       slug: slug,
       tag: frontmatter.tag,
-      imgSrc: frontmatter.imgSrc,
+      imgSrc: imgSrc,
       imgAlt: frontmatter.imgAlt || "Blog Post Image",
       readTime: frontmatter.readTime || "4 min read", 
       description: frontmatter.description

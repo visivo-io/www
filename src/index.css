@@ -13,3 +13,79 @@
 .pulse-glow-green {
   animation: pulse-glow 2s infinite;
 }
+
+/* MDX Blog Styling */
+.prose pre code {
+  @apply text-gray-800 dark:text-gray-100;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Improved code block styling */
+.prose pre {
+  @apply shadow-md;
+}
+
+/* Better inline code styling */
+.prose code {
+  @apply before:content-[''] after:content-[''];
+}
+
+/* Syntax highlighting for code blocks */
+.prose pre code .keyword {
+  @apply text-purple-600 dark:text-purple-400 font-semibold;
+}
+
+.prose pre code .string {
+  @apply text-green-600 dark:text-green-400;
+}
+
+.prose pre code .comment {
+  @apply text-gray-500 dark:text-gray-400 italic;
+}
+
+.prose pre code .function {
+  @apply text-blue-600 dark:text-blue-400;
+}
+
+/* Improve blockquote styling */
+.prose blockquote {
+  @apply border-l-4 border-primary-500 bg-gray-50 dark:bg-gray-900 p-4 my-6 italic;
+}
+
+/* Better table styling */
+.prose table {
+  @apply shadow-sm rounded-lg overflow-hidden;
+}
+
+.prose thead {
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.prose tbody tr {
+  @apply border-b border-gray-200 dark:border-gray-700;
+}
+
+/* Responsive images in blog posts */
+.prose img {
+  @apply max-w-full h-auto rounded-lg shadow-md my-6;
+}
+
+/* Add smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll margin for headings to account for fixed navbar and TOC */
+.scroll-mt-24 {
+  scroll-margin-top: 6rem; /* 96px */
+}
+
+/* Improve list styling */
+.prose ul > li::marker {
+  @apply text-primary-600 dark:text-primary-400;
+}
+
+.prose ol > li::marker {
+  @apply text-primary-600 dark:text-primary-400 font-semibold;
+}

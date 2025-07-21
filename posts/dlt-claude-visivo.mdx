@@ -1,0 +1,277 @@
+export const frontmatter = {
+  title: "Leveraging Claude Code to Build a DLT & Visivo Project",
+  date: "Jul 21, 2025",
+  description: "Leveraging AI to build a DLT extract and load of coldplay data from spotify and visualize it in Visivo.",
+  author: "Jared Jesionek",
+  tag: "AI",
+  imgSrc: "./images/conversational-bi.webp",
+  imgAlt: "Chart with annotations example",
+  readTime: "9 min"
+};
+
+# AI-Native Business Intelligence: How I Built a Complete Analytics Dashboard in Under 15 Minutes with Claude Code
+
+*Building data analytics projects used to take weeks. With AI-native business intelligence tools, I created a production-ready Spotify analytics dashboard in a single conversation. Here's how the future of BI development looks.*
+
+## The "Aha!" Moment That Changed Everything
+
+Picture this: You have an idea for a business intelligence dashboard. Traditionally, you'd spend days reading API documentation, learning visualization frameworks, debugging SQL queries, and wrestling with deployment configurations. 
+
+What if I told you I built a complete analytics solution—extracting data from Spotify's API, storing it in a modern data warehouse, and creating four interactive dashboards—all through a conversation with AI?
+
+This isn't science fiction. It's AI-native business intelligence, and it's here today.
+
+## What is AI-Native Business Intelligence?
+
+AI-native BI represents a fundamental shift in how we approach data analytics. Instead of manually coding every component, you describe what you want in natural language, and AI handles the implementation details. It's not just about using AI to analyze data—it's about using AI to build the entire analytics infrastructure.
+
+In my case, I wanted to analyze Coldplay's music catalog on Spotify. Here's what I said to Claude Code:
+
+> "We're going to create a DLT + Visivo project to extract Coldplay data from Spotify, store it in DuckDB, and create dashboards."
+
+That simple request kicked off an incredible journey that would have taken weeks using traditional methods.
+
+## The Modern AI-Native Stack
+
+Before diving into the magic, let me introduce the tools that make AI-native business intelligence possible:
+
+- **Claude Code**: The AI development assistant that orchestrates everything
+- **DLT (Data Load Tool)**: Python library for building data pipelines
+- **DuckDB**: Lightning-fast embedded analytics database
+- **Visivo**: Modern data visualization framework with YAML-based configuration
+
+The beauty? I didn't need to be an expert in any of these tools. Claude Code handled all the complexity.
+
+## From Idea to Dashboard: The Surprisingly Simple Journey
+
+### Step 1: Natural Language Planning
+
+I started by describing my goal. Claude Code immediately created a comprehensive project plan, breaking down the work into phases:
+
+1. Project setup with dependency management
+2. Data extraction pipeline
+3. Dashboard creation
+4. Testing and documentation
+
+The AI didn't just create a plan—it tracked progress using a built-in task management system, ensuring nothing was missed.
+
+### Step 2: Effortless Data Pipeline Creation
+
+Here's where traditional BI development gets complex. You need to:
+- Read API documentation
+- Handle authentication
+- Write extraction logic
+- Manage rate limits
+- Store data efficiently
+
+Claude Code did all of this automatically. It:
+- Researched the Spotify API endpoints
+- Implemented OAuth2 authentication
+- Created a [DLT](https://dlthub.com/product/dlt) pipeline that extracted:
+  - Artist information with 81.7M followers tracked
+  - 110 albums (including singles and compilations)
+  - 405 individual tracks with metadata
+  - Top 10 most popular songs
+
+The entire pipeline was production-ready in minutes, not days.
+
+### Step 3: Instant Analytics Without SQL Headaches
+
+This is where it gets interesting. I needed complex SQL queries to analyze:
+- Musical evolution over 25+ years
+- Album release patterns
+- Track duration trends
+- Popularity metrics
+
+Instead of writing SQL manually, I described what I wanted to see. Claude Code generated queries like:
+
+```sql
+WITH album_stats AS (
+  SELECT 
+    COUNT(DISTINCT album_id) as total_albums,
+    COUNT(*) as total_tracks,
+    MIN(CAST(substr(album_release_date, 1, 4) AS INTEGER)) as first_year,
+    MAX(CAST(substr(album_release_date, 1, 4) AS INTEGER)) as latest_year
+  FROM coldplay_data_20250718022923.tracks
+)
+SELECT 
+  total_albums,
+  total_tracks,
+  latest_year - first_year as years_active
+FROM album_stats
+```
+
+Complex? Yes. Did I write it? No. Claude Code understood my intent and translated it to optimized SQL.
+
+### Step 4: Beautiful Visualizations in Natural Language
+
+Creating dashboards typically requires:
+- Understanding charting libraries
+- Writing configuration files
+- Debugging layout issues
+- Handling data bindings
+
+With AI-native BI, I simply described the visualizations I wanted:
+
+> "Create an artist overview dashboard with follower count, popularity gauge, and genre visualization"
+
+Claude Code created four complete dashboards:
+
+1. **Artist Overview**: Popularity metrics, follower counts, career statistics
+2. **Album Analysis**: Timeline visualizations, release patterns, album type distribution
+3. **Musical Evolution**: Track duration trends, release strategy changes over time
+4. **Top Tracks**: Popularity rankings, duration analysis, interactive bubble charts
+
+Each dashboard included multiple interactive visualizations, proper styling, and responsive layouts.
+
+## Overcoming Challenges with AI Intelligence
+
+The real test of AI-native development came when we hit roadblocks. Spotify had restricted certain API endpoints (audio features) for new applications. 
+
+In traditional development, this would mean:
+1. Discovering the issue through failed API calls
+2. Reading documentation to understand limitations
+3. Redesigning the solution
+4. Rewriting significant portions of code
+
+With Claude Code, the pivot was seamless. The AI:
+- Detected the API restrictions
+- Automatically adjusted the data pipeline
+- Redesigned visualizations to work with available data
+- Created alternative metrics that were equally insightful
+
+No frustration. No wasted time. Just intelligent adaptation.
+
+## The Ease Factor: What Makes This Revolutionary
+
+Let me emphasize what I *didn't* have to do:
+
+- ❌ Read any API documentation
+- ❌ Learn [DLT](https://dlthub.com/product/dlt)'s pipeline syntax
+- ❌ Study Visivo's YAML schema
+- ❌ Write complex SQL joins manually
+- ❌ Debug authentication flows
+- ❌ Handle pagination or rate limits
+- ❌ Fix YAML indentation errors
+- ❌ Research visualization best practices
+
+Everything was handled through natural conversation. When errors occurred (like validation issues in the dashboard configuration), I simply shared the error message, and Claude Code fixed it immediately.
+
+## Real Results, Real Fast
+
+Here's what was built in under an hour:
+
+- **4 Production-Ready Dashboards**
+- **15+ Interactive Visualizations** including:
+  - Time series analysis
+  - Distribution charts
+  - Ranking tables
+  - Bubble plots
+  - Gauge metrics
+- **500+ Data Points Analyzed**
+- **Complete Documentation**
+- **Deployment-Ready Configuration**
+
+This isn't a prototype or proof-of-concept. It's a fully functional business intelligence solution that could be deployed to production immediately.
+
+## The Game-Changing Benefits of AI-Native BI
+
+### 1. Democratization of Analytics
+You don't need to be a data engineer or BI developer. If you can describe what you want, you can build it.
+
+### 2. 10x Faster Development
+What traditionally takes weeks now takes hours. The time savings are transformative.
+
+### 3. Intelligent Error Handling
+When things go wrong (and they always do), AI doesn't just show error messages—it fixes them.
+
+### 4. Best Practices Built-In
+The AI applies industry best practices automatically. Code is clean, queries are optimized, and visualizations follow design principles.
+
+### 5. Living Documentation
+The conversation itself becomes documentation. Every decision and implementation detail is recorded.
+
+## Getting Started with AI-Native Business Intelligence
+
+Ready to experience this yourself? Here's how to begin:
+
+### Prerequisites (Simplified!)
+- Python 3.10+
+- Claude Code access
+- A data source (API, database, or files)
+
+### Your First AI-Native BI Project
+
+1. **Start with a clear goal**: "I want to analyze [your data] and visualize [your metrics]"
+
+2. **Let Claude Code plan**: Share your idea and let the AI create a comprehensive plan
+
+3. **Iterate naturally**: Describe what you want to see, and watch it materialize
+
+4. **Refine through conversation**: Don't like something? Just say so!
+
+### Pro Tips for Success
+
+- **Be specific about your data**: Share sample data or API documentation if available
+- **Describe visualizations conceptually**: "Show trends over time" rather than "create a line chart"
+- **Trust the AI's expertise**: It knows the tools better than most developers
+- **Iterate freely**: Changes that would normally take hours take seconds
+
+## The Future of Business Intelligence is Conversational
+
+We're witnessing a paradigm shift in how business intelligence solutions are built. AI-native BI isn't just faster—it's fundamentally more accessible, more intelligent, and more adaptable.
+
+Traditional BI tools tried to make analytics "self-service" through drag-and-drop interfaces. AI-native BI achieves true self-service through natural language. You don't need to learn a tool; you just need to know what questions you want answered.
+
+## Why This Matters for Your Organization
+
+### For Business Leaders
+- **Faster insights**: Get from question to answer in hours, not weeks
+- **Lower costs**: Reduce dependency on specialized BI developers
+- **Better adoption**: Teams can create their own dashboards without training
+
+### For Developers
+- **Focus on value**: Spend time on analysis, not implementation
+- **Learn faster**: See best practices implemented automatically
+- **Iterate rapidly**: Test ideas without commitment
+
+### For Data Teams
+- **Scale efficiency**: Support more projects with the same resources
+- **Standardize quality**: AI ensures consistent implementation
+- **Accelerate innovation**: Try new approaches without overhead
+
+## Your Turn: Join the AI-Native BI Revolution
+
+The Coldplay analytics dashboard was just the beginning. Imagine applying this to your business data:
+- Sales performance dashboards built in an afternoon
+- Customer analytics created during a meeting
+- Financial reports generated from natural language descriptions
+
+The tools are here. The approach is proven. The only question is: what will you build first?
+
+## Start Building Today
+
+Ready to experience AI-native business intelligence yourself? Here's your challenge:
+
+1. Think of a dataset you want to analyze
+2. Open Claude Code
+3. Describe your vision in plain English
+4. Watch your analytics solution come to life
+
+Share your creations and join the growing community of builders who are redefining what's possible with AI-native business intelligence.
+
+---
+
+*The future of BI isn't about learning complex tools—it's about having intelligent conversations. Welcome to the AI-native era.*
+
+## Technical Addendum: Tools Used
+
+For those interested in the technical stack:
+
+- **Claude Code**: AI development assistant (claude.ai/code)
+- **[DLT](https://dlthub.com/product/dlt)**: Data Load Tool for Python (dlthub.com)
+- **DuckDB**: Embedded analytics database (duckdb.org)
+- **Visivo**: Modern visualization framework (visivo.io)
+- **UV**: Fast Python package manager (github.com/astral-sh/uv)
+
+Each tool was chosen for its AI-native compatibility and modern architecture, creating a stack that's both powerful and accessible through conversational interfaces.
