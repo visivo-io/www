@@ -3,6 +3,9 @@ import Hero from "./components/Hero";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 import InstallCommand from "./components/InstallCommand";
 import ScrollProgressBar from "./components/animated/ScrollProgressBar";
+import ProblemSolutionTabs from "./components/ProblemSolutionTabs";
+import DifferentiationGrid from "./components/DifferentiationGrid";
+import BuiltInPublic from "./components/BuiltInPublic";
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer, defaultViewport } from './utils/animations';
 
@@ -15,6 +18,15 @@ const Home = () => {
     <div>
       <ScrollProgressBar />
       <Hero />
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={defaultViewport}
+        transition={{ duration: 0.8 }}
+      >
+        <ProblemSolutionTabs />
+      </motion.div>
+      <DifferentiationGrid />
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -36,6 +48,7 @@ const Home = () => {
       <Suspense fallback={<div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div></div>}>
         <Features />
       </Suspense>
+      <BuiltInPublic />
       <motion.section 
         className="border-y border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800"
         initial="hidden"
