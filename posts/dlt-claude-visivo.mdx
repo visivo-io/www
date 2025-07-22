@@ -1,3 +1,7 @@
+import InstallCommand from '../src/components/InstallCommand';
+import InstallVisivoPrompt  from '../src/components/InstallVisivoPrompt';
+import ToolStackAnimation from '../src/components/ToolStackAnimation';
+
 export const frontmatter = {
   title: "Leveraging Claude Code to Build a DLT & Visivo Project",
   date: "Jul 21, 2025",
@@ -9,38 +13,58 @@ export const frontmatter = {
   readTime: "9 min"
 };
 
-# AI-Native Business Intelligence: How I Built a Complete Analytics Dashboard in Under 15 Minutes with Claude Code
+# AI-Native Business Intelligence: How I Built a Complete Analytics Stack in Under 15 Minutes with Claude Code
 
 *Building data analytics projects used to take weeks. With AI-native business intelligence tools, I created a production-ready Spotify analytics dashboard in a single conversation. Here's how the future of BI development looks.*
+
+🔗 **[View the complete project on GitHub](https://github.com/visivo-io/coldplay-spotify)**  
+🎵 **[Explore the live dashboard](https://visivo-coldplay-spotify-metrics.netlify.app/coldplay-musical-evolution)**
 
 ## The "Aha!" Moment That Changed Everything
 
 Picture this: You have an idea for a business intelligence dashboard. Traditionally, you'd spend days reading API documentation, learning visualization frameworks, debugging SQL queries, and wrestling with deployment configurations. 
 
-What if I told you I built a complete analytics solution—extracting data from Spotify's API, storing it in a modern data warehouse, and creating four interactive dashboards—all through a conversation with AI?
+What if I told you I built a complete analytics solution, extracting data from Spotify's API, storing it in a modern data warehouse, and creating four interactive dashboards, all through a conversation with AI?
 
 This isn't science fiction. It's AI-native business intelligence, and it's here today.
 
 ## What is AI-Native Business Intelligence?
 
-AI-native BI represents a fundamental shift in how we approach data analytics. Instead of manually coding every component, you describe what you want in natural language, and AI handles the implementation details. It's not just about using AI to analyze data—it's about using AI to build the entire analytics infrastructure.
+AI-native BI represents a fundamental shift in how we approach data analytics. Instead of manually coding every component, you describe what you want in natural language, and AI handles the implementation details. It's not just about using AI to analyze data; it's about using AI to build the entire analytics infrastructure.
 
 In my case, I wanted to analyze Coldplay's music catalog on Spotify. Here's what I said to Claude Code:
 
-> "We're going to create a DLT + Visivo project to extract Coldplay data from Spotify, store it in DuckDB, and create dashboards."
+> "This repo is currently empty but we're going to create a DLT + Visivo project that extracts data from spotify, stores it in a duckdb database that's checked into this repo and then builds visivo dashboards based on the dataset. I want you to examine the dlt docs - https://dlthub.com/docs/intro docs, and the visivo docs - https://docs.visivo.io/. I already have the spotify client ID. We're going to extract a bunch of information on coldplay and then create some interesting dashboards with it using visivo. Here's the spotify docs https://developer.spotify.com/documentation/web-api"
 
-That simple request kicked off an incredible journey that would have taken weeks using traditional methods.
+And it got to work...
+```
+I'll help you create a DLT + Visivo project for analyzing Coldplay data from Spotify. Let me examine the documentation for both tools and Spotify's API to understand how to best structure this project.
+
+⏺ Fetch(https://dlthub.com/docs/intro)
+  ⎿  Received 61.5KB (200 OK)
+
+⏺ Fetch(https://docs.visivo.io/)
+  ⎿  Received 156.2KB (200 OK)
+
+⏺ Fetch(https://developer.spotify.com/documentation/web-api)
+```
+
+I used plan mode to get the job done, so from here it came up with a plan, which we'll dive into in a moment.
 
 ## The Modern AI-Native Stack
 
 Before diving into the magic, let me introduce the tools that make AI-native business intelligence possible:
+<ToolStackAnimation />
 
 - **Claude Code**: The AI development assistant that orchestrates everything
-- **DLT (Data Load Tool)**: Python library for building data pipelines
-- **DuckDB**: Lightning-fast embedded analytics database
-- **Visivo**: Modern data visualization framework with YAML-based configuration
+- **[DLT (Data Load Tool)](https://dlthub.com)**: Python library for building data pipelines
+- **[DuckDB](https://duckdb.org)**: Lightning-fast embedded analytics database
+- **[Visivo](https://visivo.io)**: Modern data visualization framework with YAML-based configuration
 
-The beauty? I didn't need to be an expert in any of these tools. Claude Code handled all the complexity.
+The beauty? I didn't need to be an expert in any of these tools. Claude Code handled all the complexity. 
+
+<InstallCommand />
+
 
 ## From Idea to Dashboard: The Surprisingly Simple Journey
 
@@ -53,21 +77,102 @@ I started by describing my goal. Claude Code immediately created a comprehensive
 3. Dashboard creation
 4. Testing and documentation
 
-The AI didn't just create a plan—it tracked progress using a built-in task management system, ensuring nothing was missed.
+The AI didn't just create a plan; it tracked progress using a built-in task management system, ensuring nothing was missed.
 
 ### Step 2: Effortless Data Pipeline Creation
 
 Here's where traditional BI development gets complex. You need to:
-- Read API documentation
-- Handle authentication
-- Write extraction logic
-- Manage rate limits
-- Store data efficiently
+- 📖 Read API documentation
+- 🔐 Handle authentication
+- ⚙️ Write extraction logic
+- ⏱️ Manage rate limits
+- 💾 Store data efficiently
 
-Claude Code did all of this automatically. It:
-- Researched the Spotify API endpoints
-- Implemented OAuth2 authentication
-- Created a [DLT](https://dlthub.com/product/dlt) pipeline that extracted:
+With DLT handling the rate limits & data writing, duckdb managing storage and Visivo providing schema informed 100% code based BI- Claude Code did all of this automatically. Here's the plan it came up with:
+
+```
+Based on my research, I'm ready to present a comprehensive plan for creating a DLT + Visivo project that analyzes Coldplay data from Spotify.
+  ⎿  User rejected Claude's plan:
+     ╭─────────────────────────────────────────────────────────────────╮
+     │ Plan: Create Coldplay Spotify Analytics with DLT + Visivo       │
+     │                                                                 │
+     │ Project Structure:                                              │
+     │                                                                 │
+     │ coldplay-spotify/                                               │
+     │ ├── .env                    # Spotify credentials               │
+     │ ├── requirements.txt        # Python dependencies               │
+     │ ├── extract_spotify_data.py # DLT pipeline for Spotify data     │
+     │ ├── coldplay_data.duckdb   # DuckDB database (will be created)  │
+     │ ├── visivo_project/        # Visivo dashboard configuration     │
+     │ │   ├── project.yml        # Main Visivo config                 │
+     │ │   ├── traces/            # Chart trace definitions            │
+     │ │   └── dashboards/        # Dashboard layouts                  │
+     │ └── README.md              # Project documentation              │
+     │                                                                 │
+     │ Phase 1: Setup & Dependencies                                   │
+     │                                                                 │
+     │ 1. Create virtual environment and install dependencies:         │
+     │   - dlt[duckdb] for data extraction                             │
+     │   - visivo for dashboards                                       │
+     │   - requests for API calls                                      │
+     │   - python-dotenv for environment variables                     │
+     │ 2. Set up .env file with Spotify credentials                    │
+     │                                                                 │
+     │ Phase 2: DLT Pipeline Implementation                            │
+     │                                                                 │
+     │ Create extract_spotify_data.py to:                              │
+     │ 1. Authenticate with Spotify using Client Credentials flow      │
+     │ 2. Extract Coldplay data:                                       │
+     │   - Artist profile and statistics                               │
+     │   - All albums with release dates and popularity                │
+     │   - Top tracks with audio features (danceability, energy, etc.) │
+     │   - Related artists for network analysis                        │
+     │   - Track audio analysis for deeper insights                    │
+     │ 3. Store data in DuckDB tables:                                 │
+     │   - artists - Coldplay profile data                             │
+     │   - albums - Album metadata                                     │
+     │   - tracks - All tracks with features                           │
+     │   - audio_features - Detailed audio characteristics             │
+     │   - related_artists - Artist relationships                      │
+     │                                                                 │
+     │ Phase 3: Visivo Dashboard Creation                              │
+     │                                                                 │
+     │ Build interactive dashboards showing:                           │
+     │ 1. Artist Overview Dashboard:                                   │
+     │   - Follower count and popularity metrics                       │
+     │   - Genre distribution                                          │
+     │   - Career timeline                                             │
+     │ 2. Album Analysis Dashboard:                                    │
+     │   - Album popularity over time                                  │
+     │   - Release timeline visualization                              │
+     │   - Track count per album                                       │
+     │ 3. Musical Evolution Dashboard:                                 │
+     │   - Audio features trends (energy, danceability, valence)       │
+     │   - Tempo and key distribution                                  │
+     │   - Acoustic vs. electronic evolution                           │
+     │ 4. Top Tracks Dashboard:                                        │
+     │   - Most popular songs with audio features                      │
+     │   - Correlation between features and popularity                 │
+     │   - Geographic availability                                     │
+     │                                                                 │
+     │ Phase 4: Implementation Details                                 │
+     │                                                                 │
+     │ - Use DLT's REST API source for clean Spotify integration       │
+     │ - Implement incremental loading for updates                     │
+     │ - Create reusable Visivo components                             │
+     │ - Add filters for interactive exploration                       │
+     │                                                                 │
+     │ Would you like me to proceed with implementing this plan?       │
+     ╰─────────────────────────────────────────────────────────────────╯
+
+> Let's put all of the visivo files at the top level. Also every visivo yaml file should follow the pattern <name>.visivo.yml including the project file which would be project.visivo.yml Also can you write all of these steps to a TASKS.MD that we can update as we go?
+
+⏺ I'll update the plan to place Visivo files at the top level with the .visivo.yml naming convention and include a TASKS.MD file.
+```
+It handled some things that I didn't expect it to, like:
+- 🔍 Researched the Spotify API endpoints
+- 🔒 Implemented OAuth2 authentication
+- 📦 Created a [DLT](https://dlthub.com/product/dlt) pipeline that extracted:
   - Artist information with 81.7M followers tracked
   - 110 albums (including singles and compilations)
   - 405 individual tracks with metadata
@@ -119,10 +224,13 @@ Claude Code created four complete dashboards:
 
 1. **Artist Overview**: Popularity metrics, follower counts, career statistics
 2. **Album Analysis**: Timeline visualizations, release patterns, album type distribution
-3. **Musical Evolution**: Track duration trends, release strategy changes over time
+3. **[Musical Evolution](https://visivo-coldplay-spotify-metrics.netlify.app/coldplay-musical-evolution)**: Track duration trends, release strategy changes over time
 4. **Top Tracks**: Popularity rankings, duration analysis, interactive bubble charts
 
 Each dashboard included multiple interactive visualizations, proper styling, and responsive layouts.
+
+![Coldplay Musical Evolution Dashboard](/images/coldplay-musical-evolution.webp)
+*The Musical Evolution dashboard showing track duration trends, album release patterns, and track distribution over Coldplay's 25+ year career*
 
 ## Overcoming Challenges with AI Intelligence
 
@@ -140,7 +248,7 @@ With Claude Code, the pivot was seamless. The AI:
 - Redesigned visualizations to work with available data
 - Created alternative metrics that were equally insightful
 
-No frustration. No wasted time. Just intelligent adaptation.
+Pretty cool huh? No frustration. No wasted time. Just intelligent adaptation. Granted not all of the metrics and charts were perfect, but it was a great starting point and it's super easy to iterate on. More on that later.
 
 ## The Ease Factor: What Makes This Revolutionary
 
@@ -174,6 +282,21 @@ Here's what was built in under an hour:
 
 This isn't a prototype or proof-of-concept. It's a fully functional business intelligence solution that could be deployed to production immediately.
 
+## See It In Action
+
+Want to explore the actual Coldplay analytics project? Check out the complete code and dashboards on GitHub:
+
+🔗 **[GitHub Repository: visivo-io/coldplay-spotify](https://github.com/visivo-io/coldplay-spotify)**  
+🎵 **[Live Dashboard: Musical Evolution](https://visivo-coldplay-spotify-metrics.netlify.app/coldplay-musical-evolution)**
+
+The repository includes:
+- Complete DLT pipeline for Spotify data extraction
+- All four Visivo dashboards with configurations
+- Sample data and visualizations
+- Step-by-step instructions to run it yourself
+
+Fork it, modify it, and create your own artist analytics dashboard in minutes!
+
 ## The Game-Changing Benefits of AI-Native BI
 
 ### 1. Democratization of Analytics
@@ -183,7 +306,7 @@ You don't need to be a data engineer or BI developer. If you can describe what y
 What traditionally takes weeks now takes hours. The time savings are transformative.
 
 ### 3. Intelligent Error Handling
-When things go wrong (and they always do), AI doesn't just show error messages—it fixes them.
+When things go wrong (and they always do), AI doesn't just show error messages; it fixes them.
 
 ### 4. Best Practices Built-In
 The AI applies industry best practices automatically. Code is clean, queries are optimized, and visualizations follow design principles.
@@ -212,16 +335,18 @@ Ready to experience this yourself? Here's how to begin:
 
 ### Pro Tips for Success
 
-- **Be specific about your data**: Share sample data or API documentation if available
-- **Describe visualizations conceptually**: "Show trends over time" rather than "create a line chart"
-- **Trust the AI's expertise**: It knows the tools better than most developers
-- **Iterate freely**: Changes that would normally take hours take seconds
+- **Be specific about your data**: Share sample data or API documentation if available. In a lot of cases the AI will be able to `curl` the data for you, so give that a shot before you pull the data yourself.
+- **Describe visualizations conceptually**: "Show trends over time" rather than "create a line chart" This can be really helpful if you want something specific, but it's not always necessary.
+- **Trust the AI's expertise**: While it will make mistakes, it will also fix them and learn from them. If you're too prescriptive, you may miss out on some novel ideas that you wouldn't have thought of otherwise.
+- **Iterate freely**: Changes that would normally take hours take seconds. This is expecially powerful when you're trying to iterate on a dashboard. 
 
 ## The Future of Business Intelligence is Conversational
 
-We're witnessing a paradigm shift in how business intelligence solutions are built. AI-native BI isn't just faster—it's fundamentally more accessible, more intelligent, and more adaptable.
+We're witnessing a paradigm shift in how business intelligence solutions are built. AI-native BI isn't just faster; it's fundamentally more accessible, more intelligent, and more adaptable.
 
 Traditional BI tools tried to make analytics "self-service" through drag-and-drop interfaces. AI-native BI achieves true self-service through natural language. You don't need to learn a tool; you just need to know what questions you want answered.
+
+That being said, governance is now more important than ever. The better structured your data & semantic layer is, the more effective you will find AI-native BI. This is where Visivo shines 📈.
 
 ## Why This Matters for Your Organization
 
@@ -262,16 +387,18 @@ Share your creations and join the growing community of builders who are redefini
 
 ---
 
-*The future of BI isn't about learning complex tools—it's about having intelligent conversations. Welcome to the AI-native era.*
+*The future of BI isn't about learning complex tools; it's about having intelligent conversations. Welcome to the AI-native era.*
 
 ## Technical Addendum: Tools Used
 
 For those interested in the technical stack:
 
-- **Claude Code**: AI development assistant (claude.ai/code)
-- **[DLT](https://dlthub.com/product/dlt)**: Data Load Tool for Python (dlthub.com)
-- **DuckDB**: Embedded analytics database (duckdb.org)
-- **Visivo**: Modern visualization framework (visivo.io)
-- **UV**: Fast Python package manager (github.com/astral-sh/uv)
+- **[Claude Code](https://claude.ai/code)**: AI development assistant
+- **[DLT](https://dlthub.com)**: Data Load Tool for Python
+- **[DuckDB](https://duckdb.org)**: Embedded analytics database
+- **[Visivo](https://visivo.io)**: Modern visualization framework
+- **[UV](https://github.com/astral-sh/uv)**: Fast Python package manager
 
 Each tool was chosen for its AI-native compatibility and modern architecture, creating a stack that's both powerful and accessible through conversational interfaces.
+
+<InstallVisivoPrompt />

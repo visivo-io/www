@@ -49,7 +49,7 @@ const BlogSection = () => {
       title: "The World Still Runs on Spreadsheets",
       description: "Why spreadsheets remain so popular, the hidden costs of constantly importing CSVs, and how we can make dashboards “first-class citizens” through BI-as-code",
       tag: "Community",
-      imgSrc: "/images/spreadsheet-world-domination.png",
+      imgSrc: "/images/spreadsheet-world-domination.webp",
       imgAlt: "Spreadsheet World Domination",
       authorName: "Kristian Sigston",
       authorImg: "/images/kristian.jpeg",
